@@ -5,12 +5,10 @@ env:
   BASE_URL: https://opensource-demo.orangehrmlive.com
   BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
   BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
-  AUT1US: ${{ secrets.AUT1US }}
-  AUT2US: ${{ secrets.AUT2US }}
-  AUTOPASS1: ${{ secrets.AUTOPASS1 }}
-  AUTOPASS2: ${{ secrets.AUTOPASS2 }}
-  TESTRAIL_PROJECT_ID: "120"
-  TEST_PLAN_ID: "15095"
+  HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
+  HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+#  TESTRAIL_PROJECT_ID: "120"
+#  TEST_PLAN_ID: "15095"
 
 on:
   schedule:

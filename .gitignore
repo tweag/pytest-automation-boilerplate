@@ -138,10 +138,10 @@ Pipfile
 Pipfile.lock
 
 # Sensitive data
-#/binaries/webdriver/BrowserStackLocal*
-#/binaries/webdriver/chromedriver*
-#/binaries/webdriver/geckodriver*
-#/binaries/webdriver/msedgedriver*
+/binaries/webdriver/BrowserStackLocal*
+/binaries/webdriver/chromedriver*
+/binaries/webdriver/geckodriver*
+/binaries/webdriver/msedgedriver*
 
 # output contents
 /output/visualtesting/diff/*
@@ -149,14 +149,14 @@ Pipfile.lock
 /output/temp_screenshots/*
 /output/reports/*
 /output/run_logs/*
-#/output/allure/reports/
-#/output/allure/results/
+/output/allure/reports/
+/output/allure/results/
 #*.apk
 #*.ipa
 
 # testing persistent storage
 /*.pickle
-#allure-report/*
-#reports/screenshots/*
-#/test_data/visualtesting/test/
-#/output/
+allure-report/*
+reports/screenshots/*
+/test_data/visualtesting/test/
+/output/
