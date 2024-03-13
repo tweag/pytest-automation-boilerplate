@@ -3,7 +3,7 @@ wheel == 0.38.1
 Appium-Python-Client == 3.1.1
 selenium == 4.12
 requests == 2.31.0
-Pillow == 9.3.0
+Pillow == 10.2.0
 beautifulsoup4 == 4.11.0
 polling == 0.3.0
 opencv-python == 4.5.5.64
