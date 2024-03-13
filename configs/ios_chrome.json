@@ -10,7 +10,6 @@
             "acceptInsecureCerts": "true",
             "autoAcceptAlerts": "true",
             "localIdentifier": "Python-Automation-Boilerplate",
-            "browserstack.idleTimeout": "150",
             "disableCorsRestrictions": true
         }
     }
