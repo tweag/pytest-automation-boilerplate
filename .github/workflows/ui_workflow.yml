@@ -105,6 +105,24 @@ jobs:
             testrail_configuration_name: 'Chrome, MacOS'
             testrail_run_name: 'MAC Desktop Chrome'
 
+          - name: Mac Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/mac_edge.json
+            html_report: mac-edge
+            concurrent_thread: 1
+            testrail_configuration_name: 'Edge, MacOS'
+            testrail_run_name: 'MAC Desktop Edge'
+
+          - name: Mac Safari
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/mac_safari.json
+            html_report: mac-safari
+            concurrent_thread: 1
+            testrail_configuration_name: 'Safari, MacOS'
+            testrail_run_name: 'MAC Desktop Safari'
+
     name: ${{ matrix.name }} - Regression
     runs-on: ubuntu-latest
     steps:
@@ -143,7 +161,7 @@ jobs:
             --capability headless False \
             --reruns 1 --reruns-delay 5 \
             --html=report.html \
-            --self-contained-html \
+            --self-contained-html -n ${{ matrix.concurrent_thread }} \
 #            --pytest-testrail-export-test-results \
 #            --testrail-project-id "${{ env.TESTRAIL_PROJECT_ID }}" \
 #            --pytest-testrail-test-plan-id "${{ env.TEST_PLAN_ID }}" \
