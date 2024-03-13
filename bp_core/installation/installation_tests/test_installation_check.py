@@ -23,7 +23,8 @@ def test_check_root_folder():
 def test_check_bp_core_folder():
     assert_that(os.path.isfile("./bp_core/.pylintrc")).is_true()
     assert_that(os.path.isfile("./bp_core/plugin.py")).is_true()
-    assert_that(os.path.isfile("./bp_core/slack_plugin.py")).is_true()
+    assert_that(os.path.isfile("./bp_core/notifications/slack_plugin.py")).is_true()
+    assert_that(os.path.isfile("./bp_core/notifications/teams_plugin.py")).is_true()
     assert_that(os.path.isdir("./bp_core/backend")).is_true()
     assert_that(os.path.isdir("./bp_core/frontend")).is_true()
     assert_that(os.path.isdir("./bp_core/installation")).is_true()
