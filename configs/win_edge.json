@@ -12,7 +12,6 @@
             "debug": true,
             "timezone": "UTC",
             "localIdentifier": "Python-Automation-Boilerplate",
-            "browserstack.idleTimeout": "150",
             "edge": {
                 "enablePopups": true
             }

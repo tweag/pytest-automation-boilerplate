@@ -9,7 +9,6 @@
             "projectName": "Pytest-Automation-Boilerplate",
             "acceptInsecureCerts": "true",
             "localIdentifier": "Python-Automation-Boilerplate",
-            "browserstack.idleTimeout": "150",
             "unhandledPromptBehavior": "ignore",
             "local" : "true",
             "debug" : "true",

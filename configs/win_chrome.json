@@ -10,8 +10,7 @@
             "local": true,
             "debug": true,
             "timezone": "UTC",
-            "localIdentifier": "Python-Automation-Boilerplate",
-            "browserstack.idleTimeout": "150"
+            "localIdentifier": "Python-Automation-Boilerplate"
         }
     }
 }
