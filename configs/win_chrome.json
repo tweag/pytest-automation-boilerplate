@@ -1,0 +1,17 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "browserName": "Chrome",
+        "bstack:options": {
+            "os": "Windows",
+            "osVersion": "11",
+            "browserVersion": "latest",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate",
+            "browserstack.idleTimeout": "150"
+        }
+    }
+}

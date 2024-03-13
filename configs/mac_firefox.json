@@ -1,0 +1,18 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "browserName": "Firefox",
+        "acceptInsecureCerts": true,
+        "bstack:options": {
+            "os": "OS X",
+            "osVersion": "Sonoma",
+            "browserVersion": "latest",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate",
+            "browserstack.idleTimeout": "150"
+        }
+    }
+}

@@ -1,0 +1,301 @@
+name: Web UI Tests
+
+env:
+  TAGS: web_tests
+  BASE_URL: https://opensource-demo.orangehrmlive.com
+  BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
+  BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+  AUT1US: ${{ secrets.AUT1US }}
+  AUT2US: ${{ secrets.AUT2US }}
+  AUTOPASS1: ${{ secrets.AUTOPASS1 }}
+  AUTOPASS2: ${{ secrets.AUTOPASS2 }}
+  TESTRAIL_PROJECT_ID: "120"
+  TEST_PLAN_ID: "15095"
+
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: Gherkin Tags
+        required: true
+        default: web_tests
+
+      baseurl:
+        description: Base URL
+        required: true
+        type: choice
+        default: https://opensource-demo.orangehrmlive.com
+        options:
+          - https://opensource-demo.orangehrmlive.com
+          - other
+
+      inputurl:
+        description: Other than default Base URL (e.g portal url)
+        required: true
+        default: https://opensource-demo.orangehrmlive.com
+
+      browser:
+        description: Browser Name
+        required: true
+        type: choice
+        default: chrome
+        options:
+          - chrome
+          - firefox
+          - edge
+      os:
+        description: 'Operating system (window or mac)'
+        required: true
+        type: choice
+        default: mac
+        options:
+          - mac
+          - window
+
+jobs:
+  cart-scheduled-regression:
+    if: github.event_name == 'schedule'
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        include:
+          - name: Win Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/win_chrome.json
+            html_report: win-chrome
+            concurrent_thread: 1
+            testrail_configuration_name: 'Chrome, Windows'
+            testrail_run_name: 'Desktop Chrome'
+
+          - name: Win Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/win_firefox.json
+            html_report: win-firefox
+            concurrent_thread: 1
+            testrail_configuration_name: 'Firefox, Windows'
+            testrail_run_name: 'Desktop Firefox'
+
+          - name: Win Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/win_edge.json
+            html_report: win-edge
+            concurrent_thread: 1
+            testrail_configuration_name: 'Edge, Windows'
+            testrail_run_name: 'Desktop Edge'
+
+          - name: Mac Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/mac_firefox.json
+            html_report: mac-firefox
+            concurrent_thread: 1
+            testrail_configuration_name: 'Firefox, MacOS'
+            testrail_run_name: 'MAC Desktop Chrome'
+
+          - name: Mac Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/mac_chrome.json
+            html_report: mac-chrome
+            concurrent_thread: 1
+            testrail_configuration_name: 'Chrome, MacOS'
+            testrail_run_name: 'MAC Desktop Chrome'
+
+    name: ${{ matrix.name }} - Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.1
+        with:
+          python-version: "3.9"
+
+      - name: BrowserStack Env Setup
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username: ${{secrets.BROWSERSTACK_API_USERNAME}}
+          access-key: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+      - name: BrowserStack Local Tunnel Setup
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        run: |
+          sh install.sh
+
+      - name: Run All Tests
+        run: |
+          env
+           source $HOME/.bp-venv/bin/activate
+
+           python -m pytest -v --driver Remote --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
+            --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
+            --base-url="${{ matrix.baseurl }}" \
+            --capability headless False \
+            --reruns 1 --reruns-delay 5 \
+            --html=report.html \
+            --self-contained-html \
+#            --pytest-testrail-export-test-results \
+#            --testrail-project-id "${{ env.TESTRAIL_PROJECT_ID }}" \
+#            --pytest-testrail-test-plan-id "${{ env.TEST_PLAN_ID }}" \
+#            --pytest-testrail-test-run-name "${{ matrix.testrail_run_name }}" \
+#            --pytest-testrail-test-configuration-name "${{ matrix.testrail_configuration_name }}" \
+#            --pytest-testrail-skip-step-results
+
+      - name: BrowserStackLocal Stop
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop
+        if: ${{ always() }}
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.html_report }}
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}
+
+  web-manual-run:
+    if: github.event_name != 'schedule'
+    name: Manual - ${{ inputs.os }} ${{ inputs.browser }} - ${{ inputs.tags }} - ${{ inputs.baseurl }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.baseurl }}" ]]; then
+            echo "Invalid input: 'baseurl' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.browser }}" ]]; then
+            echo "Invalid input: 'browser' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.os }}" ]]; then
+            echo "Invalid input: 'os' is required but not provided."
+            exit 1
+          fi
+
+          if [[ "${{ inputs.os }}" == "window" && "${{ inputs.browser }}" == "safari" ]]; then
+            echo "Invalid input: Safari is not supported on Windows OS."
+            exit 1
+          fi
+
+          if [[ "${{ inputs.os }}" == "mac" && "${{ inputs.browser }}" == "edge" ]]; then
+            echo "Invalid input: Edge is not supported on MAC OS."
+            exit 1
+          fi
+
+      - name: Setup Python
+        id: setup_python
+        if: steps.validate_input.outcome == 'success'
+        uses: actions/setup-python@v2.2.1
+        with:
+          python-version: "3.9"
+
+      - name: BrowserStack Env Setup
+        id: bs_env_setup
+        if: steps.validate_input.outcome == 'success'
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username: ${{secrets.BROWSERSTACK_API_USERNAME}}
+          access-key: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+      - name: BrowserStack Local Tunnel Setup
+        id: bs_local_tunnel_setup
+        if: steps.bs_env_setup.outcome == 'success'
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+
+      - name: Check out code
+        id: co_code
+        if: steps.bs_local_tunnel_setup.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh install.sh
+
+      - name: Run Manual Job Tests
+        id: run_manual_job
+        if: steps.setup_dependencies.outcome == 'success'
+        run: |
+          TAGS="${{ github.event.inputs.tags }}"
+
+          if [[ "${{ github.event.inputs.baseurl }}" == "other" ]]; then
+            BASE_URL="${{ github.event.inputs.inputurl }}"
+          else
+            BASE_URL="${{ github.event.inputs.baseurl }}"
+          fi
+
+          number_of_threads=1
+
+          if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./configs/win_chrome.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./configs/win_firefox.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./configs/win_edge.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./configs/mac_chrome.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./configs/mac_firefox.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "safari" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./configs/mac_safari.json
+          fi
+
+          env
+          source $HOME/.bp-venv/bin/activate
+          python -m pytest -v --driver Remote \
+            --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
+            --variables "$BROWSER" \
+            --capability headless False \
+            --reruns 1 --reruns-delay 5 \
+            --tags="$TAGS" --base-url="$BASE_URL" --html=report.html \
+            --self-contained-html -n 1
+
+      - name: BrowserStackLocal Stop
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop
+        if: ${{ always() }}
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}

@@ -1,0 +1,13 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "platformVersion": "13.0",
+        "deviceName": "Samsung Galaxy S23",
+        "browserName": "chrome",
+        "bstack:options": {
+            "os": "Android",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "localIdentifier": "Python-Automation-Boilerplate"
+        }
+    }
+}

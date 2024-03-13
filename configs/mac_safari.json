@@ -1,0 +1,24 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "browserName": "Safari",
+        "acceptInsecureCerts": true,
+        "acceptSslCerts": true,
+        "bstack:options": {
+            "os": "OS X",
+            "osVersion": "Sonoma",
+            "browserVersion": "latest",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "networkLogs" : "true",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate",
+            "browserstack.idleTimeout": "150",
+            "safari": {
+                "enablePopups": true
+            }
+        }
+    }
+}
+

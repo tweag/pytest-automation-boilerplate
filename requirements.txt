@@ -1,0 +1,61 @@
+# Core Libraries
+wheel == 0.37.1
+Appium-Python-Client == 3.1.1
+selenium == 4.12
+requests == 2.28.0
+Pillow == 9.3.0
+beautifulsoup4 == 4.11.0
+polling == 0.3.0
+opencv-python == 4.5.5.64
+pymsteams == 0.2.2
+
+
+# Pytest & its plugins
+pytest == 6.2.5
+pytest-bdd == 6.0.1
+pytest-rerunfailures == 11.1.2
+pytest-xdist == 3.3.1
+pytest-html == 3.1.1
+pytest-base-url == 2.0.0
+pytest-selenium == 4.0.0
+pytest-dataset == 0.3.1
+setuptools-scm==8.0.3
+pytest-selenium-enhancer == 1.7.1
+pytest-json == 0.4.0
+allure-pytest-bdd == 2.13.2
+
+# Gherkin
+cucumber-tag-expressions == 4.1.0
+gherkin-official == 24.1.0
+
+# Added during API Implementation
+structlog == 21.5.0
+rich == 10.16.2
+better-exceptions == 0.3.3
+jsonpath-ng == 1.5.3
+fastnumbers == 3.2.1
+slackclient == 2.9.4
+
+# Utilities
+assertpy == 1.1.0
+python-dotenv == 1.0.0
+Faker == 23.2.1
+python-dateutil == 2.8.2
+PyYAML == 6.0.0
+browserstack-local == 1.2.7
+lxml == 4.9.0
+openpyxl == 3.1.2
+
+# Code Linters and Formatters
+pylint == 2.14.3
+black == 22.3.0
+isort == 5.10.1
+pyclean == 2.7.3
+
+# Soft assertion
+pytest-check == 2.0.0
+
+# Gamil api
+google-api-python-client==2.105.0
+google-auth-httplib2==0.1.1
+google-auth-oauthlib==1.1.0

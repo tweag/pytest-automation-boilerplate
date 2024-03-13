@@ -1,0 +1,19 @@
+h3.red {
+  color: red;
+}
+
+h3.green{
+  color: green;
+}
+
+div.image {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 180px;
+  margin-left: 5px;
+  overflow: hidden;
+  width: 240px;
+}
+div.image img {
+  width: 240px;
+}

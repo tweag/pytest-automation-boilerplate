@@ -1,0 +1,162 @@
+name: IOS Tests Workflow
+
+env:
+    TAGS: "ios_mobile_test"
+    BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
+    BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+on:
+    schedule:
+        -   cron: '30 3 * * *'
+    workflow_dispatch:
+        inputs:
+            tags:
+                description: Gherkin Tags
+                required: true
+                default: ios_mobile_test
+
+jobs:
+    scheduled-regression:
+        if: github.event_name == 'schedule'
+        strategy:
+            max-parallel: 1
+            fail-fast: false
+            matrix:
+                include:
+                    -   name: IOS Mobile
+                        tags: 'ios_mobile_test'
+                        config_file: ./configs/ios_mobile_BS.json
+                        html_report: ios-mobile
+                        testrail_configuration_name: 'iPhone 15 Plus'
+
+        name: ${{ matrix.name }} - Regression
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Setup Python
+                uses: actions/setup-python@v2.2.1
+                with:
+                    python-version: "3.9"
+
+            -   name: BrowserStack Env Setup
+                uses: browserstack/github-actions/setup-env@master
+                with:
+                    username: ${{secrets.BROWSERSTACK_API_USERNAME}}
+                    access-key: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+            -   name: BrowserStack Local Tunnel Setup
+                uses: browserstack/github-actions/setup-local@master
+                with:
+                    local-testing: start
+                    local-identifier: random
+
+            -   name: Check out code
+                uses: actions/checkout@v4
+
+            -   name: Setup dependencies
+                run: |
+                    sh install.sh
+
+            -   name: Run All Tests
+                run: |
+                    env
+                     source $HOME/.bp-venv/bin/activate
+
+                     python -m pytest -v --driver Appium --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
+                      --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
+                      --html=report.html \
+                      --self-contained-html \
+
+
+            -   name: BrowserStackLocal Stop
+                uses: browserstack/github-actions/setup-local@master
+                with:
+                    local-testing: stop
+                if: ${{ always() }}
+
+            -   name: Upload HTML run report in the Artifacts Folder
+                uses: actions/upload-artifact@v2
+                with:
+                    name: ${{ matrix.html_report }}
+                    path: |
+                        ./*.html
+                        ./output/
+                        ./assets/
+                if: ${{ always() }}
+
+    manual-run:
+        if: github.event_name != 'schedule'
+        name: Manual - ${{ inputs.tags }}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Validate Input Parameter
+                id: validate_input
+                run: |
+                    if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+                      echo "Invalid input: 'tags' is required but not provided."
+                      exit 1
+                    fi
+
+            -   name: Setup Python
+                id: setup_python
+                if: steps.validate_input.outcome == 'success'
+                uses: actions/setup-python@v2.2.1
+                with:
+                    python-version: "3.9"
+
+            -   name: BrowserStack Env Setup
+                id: bs_env_setup
+                if: steps.validate_input.outcome == 'success'
+                uses: browserstack/github-actions/setup-env@master
+                with:
+                    username: ${{secrets.BROWSERSTACK_API_USERNAME}}
+                    access-key: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+            -   name: BrowserStack Local Tunnel Setup
+                id: bs_local_tunnel_setup
+                if: steps.bs_env_setup.outcome == 'success'
+                uses: browserstack/github-actions/setup-local@master
+                with:
+                    local-testing: start
+                    local-identifier: random
+
+            -   name: Check out code
+                id: co_code
+                if: steps.bs_local_tunnel_setup.outcome == 'success'
+                uses: actions/checkout@v4
+
+            -   name: Setup dependencies
+                id: setup_dependencies
+                if: steps.co_code.outcome == 'success'
+                run: |
+                    sh install.sh
+
+            -   name: Run Manual Job Tests
+                id: run_manual_job
+                if: steps.setup_dependencies.outcome == 'success'
+                run: |
+                    TAGS="${{ github.event.inputs.tags }}"
+
+
+                    env
+                    source $HOME/.bp-venv/bin/activate
+                    python -m pytest -v --driver Appium \
+                      --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
+                      --variables './configs/ios_mobile_BS.json' \
+                      --tags="$TAGS" --html=report.html \
+                      --self-contained-html
+
+            -   name: BrowserStackLocal Stop
+                uses: browserstack/github-actions/setup-local@master
+                with:
+                    local-testing: stop
+                if: ${{ always() }}
+
+            -   name: Upload HTML run report in the Artifacts Folder
+                uses: actions/upload-artifact@v2
+                with:
+                    name: pytest-results
+                    path: |
+                        ./*.html
+                        ./output/
+                        ./assets/
+                if: ${{ always() }}

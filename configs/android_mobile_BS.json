@@ -1,0 +1,19 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "platformVersion": "13.0",
+        "deviceName": "Samsung Galaxy S23 Ultra",
+        "platformName": "android",
+        "app": "bs://6f3b02627d8239a16be63df67a128e5558966a8c",
+        "noReset": false,
+        "newCommandTimeout": 3600,
+        "bstack:options": {
+            "projectName": "Pytest-Automation-Boilerplate",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate"
+
+        }
+    }
+}
