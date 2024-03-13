@@ -57,7 +57,7 @@ def test_check_common_ui_folder():
 @pytest.mark.automated
 @pytest.mark.installation_check
 def test_check_screenshots_folder():
-    assert_that(os.path.isdir("./output/screenshots")).is_true()
+    assert_that(os.path.isdir("./output/screenshots1")).is_true()
 
 
 @pytest.mark.nondestructive
