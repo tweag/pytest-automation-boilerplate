@@ -158,5 +158,5 @@ Pipfile.lock
 /*.pickle
 allure-report/*
 reports/screenshots/*
-/test_data/visualtesting/test/
+/test_data/visualtesting/test/*
 /output/
