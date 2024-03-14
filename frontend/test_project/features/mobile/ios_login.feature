@@ -2,7 +2,7 @@
 Feature: Basic IOS App functionality
 
     @mobile_test @ios
-    Scenario: Verify login/logout
+    Scenario: Verify login/logout on IOS app
         Given I open the mobile application
         When The element '_mob > MyDemoApp > Catalog' is displayed
         And I click on element '_mob > MyDemoApp > Catalog'
@@ -31,7 +31,7 @@ Feature: Basic IOS App functionality
         And The element '_mob > MyDemoApp > username' is displayed
 
     @mobile_test @ios
-    Scenario: Verify Add/Remove items from cart
+    Scenario: Verify Add/Remove items from cart on IOS app
         Given I open the mobile application
         When The element '_mob > MyDemoApp > menu_icon' is displayed
         And I click on element '_mob > MyDemoApp > menu_icon'
@@ -63,7 +63,7 @@ Feature: Basic IOS App functionality
         And The element '_mob > MyDemoApp > username' is displayed
 
     @mobile_test @ios
-    Scenario: Verify Place Order
+    Scenario: Verify Place Order on IOS app
         Given I open the mobile application
         When The element '_mob > MyDemoApp > menu_icon' is displayed
         And I click on element '_mob > MyDemoApp > menu_icon'

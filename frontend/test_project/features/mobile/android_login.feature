@@ -16,7 +16,7 @@ Feature: Basic App functionality
         When The element 'Android > _mob > MyDemoApp > menu_icon' is displayed
 
     @mobile_test @android
-    Scenario: Verify logout from app
+    Scenario: Verify logout from app on android app
         When I click on element 'Android > _mob > MyDemoApp > menu_icon'
         Then The element 'Android > _mob > MyDemoApp > logout' is displayed
         When I click on element 'Android > _mob > MyDemoApp > logout'
@@ -27,7 +27,7 @@ Feature: Basic App functionality
         Then The element 'Android > _mob > MyDemoApp > username' is displayed
 
     @mobile_test @android
-    Scenario: Verify Add and Remove items from cart
+    Scenario: Verify Add and Remove items from cart on android app
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
@@ -52,7 +52,7 @@ Feature: Basic App functionality
         Then The element 'Android > _mob > MyDemoApp > username' is displayed
 
     @mobile_test @android
-    Scenario: Verify Place Order
+    Scenario: Verify Place Order on android app
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
