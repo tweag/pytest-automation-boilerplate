@@ -8,7 +8,7 @@ env:
 
 on:
     schedule:
-        -   cron: '30 2 * * *'
+        -   cron: '0 21 * * *'
     workflow_dispatch:
         inputs:
             tags:
