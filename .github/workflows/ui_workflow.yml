@@ -53,7 +53,7 @@ on:
           - window
 
 jobs:
-  cart-scheduled-regression:
+  web-scheduled-regression:
     if: github.event_name == 'schedule'
     strategy:
       max-parallel: 1
@@ -123,7 +123,7 @@ jobs:
             testrail_configuration_name: 'Safari, MacOS'
             testrail_run_name: 'MAC Desktop Safari'
 
-          - name: Mac Chrome
+          - name: Mac Chrome Visual
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: visual
             config_file: ./configs/mac_chrome.json
