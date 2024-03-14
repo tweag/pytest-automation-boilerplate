@@ -1,7 +1,12 @@
+from os import environ
+
 import pytest
 from bp_core.backend.common.step_definitions.steps_common import *
+from assertpy import assert_that
+from openai import OpenAI
 
 logger = structlog.get_logger(__name__)
+client = OpenAI(api_key=environ.get("OPEN_KEY"))
 
 
 API_POST_CALL = "post_call"
@@ -32,3 +37,28 @@ def test_send_post_request(request, api_response_container):
         request_name=API_POST_CALL,
         test_case_name=request.node.name,
     )
+
+
+@pytest.mark.nondestructive
+@pytest.mark.automated
+@pytest.mark.api
+@pytest.mark.apitest1
+@pytest.mark.test_name("Verify open api call")
+def test_search_text():
+    prompt = "get a header from chatgpt"
+    response_message = search_text(prompt)
+    expected_message = "ChatGPT"
+    assert_that(response_message).contains(expected_message)
+
+
+def search_text(text: str):
+    response = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": text,
+            }
+        ],
+        model="gpt-3.5-turbo",
+    )
+    return response.choices[0].message.content

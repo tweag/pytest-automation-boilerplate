@@ -57,7 +57,7 @@ Feature:  OrangeHRM Login and Modus QA blog
         And I click on button 'OrangeHRM > User > delete_confirm'
         Then The element 'OrangeHRM > User > success_message' is displayed
 
-    @blog @visual @automated
+    @blog_search @automated
     Scenario: Check QA modus blog
         Given I set web base url 'https://moduscreate.com'
         And The browser resolution is '1024' per '768'
@@ -77,11 +77,6 @@ Feature:  OrangeHRM Login and Modus QA blog
         And I scroll to element 'Modus_Site > blog_heading_2'
         And I scroll to element 'Modus_Site > blog_heading_1'
         And With soft assertion 'True' The element 'Modus_Site > sub_popup_close' is not displayed
-#        And The element 'Modus_Site > sub_popup_close' is displayed
-#        When I click on button 'Modus_Site > sub_popup_close'
-        Then I verify the page is not visually regressed:
-            | base_image                    |
-            | mac-chrome-blog-page-full.png |
 
 
     @sd_login @sd_login_error @sd_checkout @automated

@@ -123,6 +123,15 @@ jobs:
             testrail_configuration_name: 'Safari, MacOS'
             testrail_run_name: 'MAC Desktop Safari'
 
+          - name: Mac Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: visual
+            config_file: ./configs/mac_chrome.json
+            html_report: mac-chrome-visual
+            concurrent_thread: 1
+            testrail_configuration_name: 'Chrome, MacOS'
+            testrail_run_name: 'MAC Desktop Chrome'
+
     name: ${{ matrix.name }} - Regression
     runs-on: ubuntu-latest
     steps:
