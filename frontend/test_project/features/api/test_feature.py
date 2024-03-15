@@ -39,10 +39,10 @@ def test_send_post_request(request, api_response_container):
     )
 
 
+# A sample test to verify the open API call
 @pytest.mark.nondestructive
 @pytest.mark.automated
-@pytest.mark.api
-@pytest.mark.apitest1
+@pytest.mark.openapi
 @pytest.mark.test_name("Verify open api call")
 def test_search_text():
     prompt = "get a header from chatgpt"
