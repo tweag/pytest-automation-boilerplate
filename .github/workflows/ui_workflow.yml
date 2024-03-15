@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
-        uses: actions/setup-python@v2.2.1
+        uses: actions/setup-python@v5
         with:
           python-version: "3.9"
 
@@ -235,7 +235,7 @@ jobs:
       - name: Setup Python
         id: setup_python
         if: steps.validate_input.outcome == 'success'
-        uses: actions/setup-python@v2.2.1
+        uses: actions/setup-python@v5
         with:
           python-version: "3.9"
 
