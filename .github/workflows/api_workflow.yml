@@ -99,7 +99,7 @@ jobs:
                       --reruns 1 --reruns-delay 2 \
                       --gherkin-terminal-reporter \
                       --tags="$TAGS" \
-                      --html=report.html -n 4\
+                      --html=report.html \
 
             # Upload html results as GH artifact
             -   name: Upload pytest test results
