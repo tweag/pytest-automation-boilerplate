@@ -62,4 +62,3 @@ google-auth-oauthlib==1.1.0
 
 # openai
 openai == 1.14.0
-playwright == 1.42.0
