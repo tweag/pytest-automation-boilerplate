@@ -2,7 +2,7 @@ name: Bump Test Scripts Version
 on:
   push:
     branches:
-      - main1
+      - master
   pull_request:
     types:
       - labeled
@@ -11,5 +11,5 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: haya14busa/action-bumpr@v1
