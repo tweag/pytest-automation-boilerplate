@@ -308,7 +308,7 @@ jobs:
             --capability headless False \
             --reruns 1 --reruns-delay 5 \
             --tags="$TAGS" --base-url="$BASE_URL" --html=report.html \
-            --self-contained-html -n 1
+            --self-contained-html -n 2
 
       - name: BrowserStackLocal Stop
         uses: browserstack/github-actions/setup-local@master
