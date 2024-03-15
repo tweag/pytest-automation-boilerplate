@@ -192,6 +192,7 @@ jobs:
             ./*.html
             ./output/
             ./assets/
+            ./test_data/visualtesting/test/*.png
         if: ${{ always() }}
 
   web-manual-run:
