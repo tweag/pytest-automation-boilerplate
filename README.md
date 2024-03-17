@@ -395,19 +395,31 @@ The right approach is:
     When I click on 'login > sign-in'
     And The element 'login > email' is displayed
     And I set text 'username' to field 'login > email'
-  
-<p align="right">(<a href="#about-the-project">back to top</a>)</p>
+Always use these common points:
+
++ Write clear & concise features using Gherkin, to define behaviour of the system. 
+Scenario Structure
+
++ Organize scenarios into meaningful groups. 
++ Use scenarios to describe test cases / user stories, keeping them focused & atomic
+Reusable Steps
+
++ Identify common steps that can be reused across multiple scenarios & abstract them into reusable step definitions.
+Test Data Management
++ Manage test data effectively.
++ Ensure each scenario has necessary data inputs to execute successfully.
+
 
 Notifications
 ---------------------
 **Slack and MS Teams notifications support is available, we can set webhooks in pytest.ini file**
 
 # Slack Notification arguments
-    --slack-webhook-url=https://hooks.slack.com/services/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
+    --slack-webhook-url=https://hooks.slack.com/services/....
     --slack-channel=pytest-test-automation
     --slack-results-url=http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html
 # Teams Notification arguments
-    --teams-webhook-url=https://moduscreate.webhook.office.com/webhookb2/efb47054-dc3a-42c9-9546-0589ac5d1ce2@d3552869-ed01-465b-8f62-e394dea60dc9/IncomingWebhook/d86b6fd3e9e446c49d4549a25a981703/58f5c251-1381-455a-bdbf-54c859982512
+    --teams-webhook-url=https://moduscreate.webhook.office.com/...
     --teams-results-url=http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html
 
 
