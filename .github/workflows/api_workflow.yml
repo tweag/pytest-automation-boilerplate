@@ -48,7 +48,7 @@ jobs:
                     fi
 
                     source $HOME/.bp-venv/bin/activate
-                    sh api_run.sh "$TAGS"
+                    sh api_run.sh "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
 
             - name: Get Allure history
               uses: actions/checkout@v4
