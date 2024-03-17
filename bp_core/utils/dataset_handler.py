@@ -13,7 +13,7 @@ class DatasetHandler(metaclass=SingletonMeta):
         self.dataset = dataset
 
     def parse_and_get(self, string_to_format: str):
-        match = re.findall("\{(.*?)\}", str(string_to_format))
+        match = re.findall("{(.*?)}", str(string_to_format))
         if len(match) > 0:
             if self.dataset._dataset_prefix == '':
                 raise DatasetHandlerException(
@@ -21,7 +21,7 @@ class DatasetHandler(metaclass=SingletonMeta):
             file_name = string_to_format[1:string_to_format.index(":") + 1]
             string_to_format = string_to_format.replace(file_name, '')
             file_name = re.findall('[0-9a-zA-Z_-]+', file_name)
-            match = re.findall("\{(.*?)\}", str(string_to_format))
+            match = re.findall("{(.*?)}", str(string_to_format))
             keys = deque(match[0].split("~"))
             data = self.dataset[f"{self.dataset._dataset_prefix}{file_name[0]}"]
             value = data.get(keys.popleft().strip())

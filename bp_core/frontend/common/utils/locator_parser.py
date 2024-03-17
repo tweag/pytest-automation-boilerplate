@@ -23,7 +23,7 @@ def _parse_locator_string(
     locator_string: str, default_loc_type=ValidLocatorTypes.XP
 ) -> Locator:
     if (
-        match := re.match("^\[(XP|TN|ID|CS|CN|NM|LT|PL)\](.+)$", locator_string)
+        match := re.match("^[(XP|TN|ID|CS|CN|NM|LT|PL)](.+)$", locator_string)
     ) is not None:
         type_ = getattr(ValidLocatorTypes, match.groups()[0])
         identifier = match.groups()[1]
