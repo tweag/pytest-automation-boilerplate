@@ -131,7 +131,7 @@ class TeamsPlugin:
                 {
                     "name": "View detail test report",
                     "targets": [
-                        {"os": "default", "uri": "http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html"}
+                        {"os": "default", "uri": self.results_url}
                     ],
                     "@type": "OpenUri",
                 }
@@ -139,12 +139,6 @@ class TeamsPlugin:
             'activityImage': 'https://docs.pytest.org/en/latest/_static/favicon.png',
             'addImage': 'https://docs.pytest.org/en/latest/_static/favicon.png',
         }
-
-
-
-
-
-
 
         return message
 
