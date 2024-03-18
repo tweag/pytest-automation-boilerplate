@@ -158,10 +158,6 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: docker-practice/actions-setup-docker@master
         timeout-minutes: 12
-        run: |
-          set -x
-          docker version
-          docker run --rm hello-world
 
       - name: Set up Docker
         id: docker_env_setup
