@@ -161,7 +161,6 @@ jobs:
       - name: Build and start Docker Compose services
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
-        working-directory: ./pytest-automation-boilerplate
         run: |
           docker-compose docker-compose.yml up -d
 
