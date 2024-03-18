@@ -153,19 +153,24 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Setup Docker Practice
+        id: setup_docker_practice
+        if: steps.setup_python.outcome == 'success'
+        uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+        run: |
+          set -x
+          docker version
+          docker run --rm hello-world
+
       - name: Set up Docker
         id: docker_env_setup
-        if: steps.setup_python.outcome == 'success'
+        if: steps.setup_docker_practice.outcome == 'success'
         uses: docker/setup-buildx-action@v3
-
-      - name: Install docker
-        id: install_docker
-        if: steps.docker_env_setup.outcome == 'success'
-        uses: papodaca/install-docker-action@main
 
       - name: Build and start Docker Compose services
         id: docker_compose
-        if: steps.install_docker.outcome == 'success'
+        if: steps.docker_env_setup.outcome == 'success'
         run: |
           docker-compose -f docker-compose.yml up -d
 
@@ -200,7 +205,7 @@ jobs:
           if [[ "${{ github.event.inputs.browser }}" == "chrome" ]]; then
             BROWSER=./configs/docker_chrome.json
           fi
-        
+          
           if [[ "${{ github.event.inputs.browser }}" == "firefox" ]]; then
             BROWSER=./configs/docker_firefox.json
           fi
