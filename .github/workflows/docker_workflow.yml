@@ -115,6 +115,12 @@ jobs:
             --html=report.html \
             --self-contained-html \
 
+      - name: Docker Container Stop
+        uses: browserstack/github-actions/setup-local@master
+        run: |
+          docker compose --file docker-compose.yml down
+        if: ${{ always() }}
+
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
         with:
@@ -214,6 +220,11 @@ jobs:
             --tags="$TAGS" --base-url="$BASE_URL" --html=report.html \
             --self-contained-html
 
+      - name: Docker Container Stop
+        uses: browserstack/github-actions/setup-local@master
+        run: |
+          docker compose --file docker-compose.yml down
+        if: ${{ always() }}
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
