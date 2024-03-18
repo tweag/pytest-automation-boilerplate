@@ -163,7 +163,6 @@ jobs:
       - name: Build and start Docker Compose services
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
-        working-directory: ${{ github.workspace }}
         run: |
           echo "path: '${{ github.workspace }}' "
           docker-compose -f "$PROJECT_LOCATION"/docker-compose.yml up -d
