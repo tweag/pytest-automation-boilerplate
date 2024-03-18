@@ -1,0 +1,224 @@
+name: Docker Web UI Tests
+
+env:
+  TAGS: web_tests
+  BASE_URL: https://opensource-demo.orangehrmlive.com
+  HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
+  HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+  USING_DOCKER: True
+
+on:
+  schedule:
+    - cron: '30 22 * * *'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: Gherkin Tags
+        required: true
+        default: web_tests
+
+      baseurl:
+        description: Base URL
+        required: true
+        type: choice
+        default: https://opensource-demo.orangehrmlive.com
+        options:
+          - https://opensource-demo.orangehrmlive.com
+          - other
+
+      inputurl:
+        description: Other than default Base URL (e.g portal url)
+        required: true
+        default: https://opensource-demo.orangehrmlive.com
+
+      browser:
+        description: Browser Name
+        required: true
+        type: choice
+        default: chrome
+        options:
+          - chrome
+          - firefox
+          - edge
+
+jobs:
+  web-scheduled-regression:
+    if: github.event_name == 'schedule'
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/docker_chrome.json
+            html_report: linux-chrome
+            concurrent_thread: 1
+
+          - name: Linux Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/docker_firefox.json
+            html_report: linux-firefox
+            concurrent_thread: 1
+
+          - name: Linux Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./configs/docker_edge.json
+            html_report: linux-edge
+            concurrent_thread: 1
+
+    name: ${{ matrix.name }} - Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Set up Docker
+        id: docker_env_setup
+        if: steps.validate_input.outcome == 'success'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and start Docker Compose services
+        id: docker_compose
+        if: steps.docker_env_setup.outcome == 'success'
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
+      - name: Wait for services to start
+        run: sleep 30
+
+      - name: Check out code
+        id: co_code
+        if: steps.docker_compose.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        run: |
+          sh install.sh
+
+      - name: Run All Tests
+        run: |
+          env
+           source $HOME/.bp-venv/bin/activate
+
+           python -m pytest -v --driver Remote --selenium-host 'localhost' --selenium-port '4444' \
+            --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
+            --base-url="${{ matrix.baseurl }}" \
+            --reruns 1 --reruns-delay 5 \
+            --html=report.html \
+            --self-contained-html \
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.html_report }}
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}
+
+  docker-web-manual-run:
+    if: github.event_name != 'schedule'
+    name: Manual - ${{ inputs.browser }} - ${{ inputs.tags }} - ${{ inputs.baseurl }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.baseurl }}" ]]; then
+            echo "Invalid input: 'baseurl' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.browser }}" ]]; then
+            echo "Invalid input: 'browser' is required but not provided."
+            exit 1
+          fi
+
+      - name: Setup Python
+        id: setup_python
+        if: steps.validate_input.outcome == 'success'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Set up Docker
+        id: docker_env_setup
+        if: steps.validate_input.outcome == 'success'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and start Docker Compose services
+        id: docker_compose
+        if: steps.docker_env_setup.outcome == 'success'
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
+      - name: Wait for services to start
+        run: sleep 30
+
+      - name: Check out code
+        id: co_code
+        if: steps.docker_compose.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.docker_compose.outcome == 'success'
+        run: |
+          sh install.sh
+
+      - name: Run Manual Job Tests
+        id: run_manual_job
+        if: steps.setup_dependencies.outcome == 'success'
+        run: |
+          TAGS="${{ github.event.inputs.tags }}"
+
+          if [[ "${{ github.event.inputs.baseurl }}" == "other" ]]; then
+            BASE_URL="${{ github.event.inputs.inputurl }}"
+          else
+            BASE_URL="${{ github.event.inputs.baseurl }}"
+          fi
+
+          number_of_threads=1
+
+          if [[ "${{ github.event.inputs.browser }}" == "chrome" ]]; then
+            BROWSER=./configs/docker_chrome.json
+          fi
+        
+          if [[ "${{ github.event.inputs.browser }}" == "firefox" ]]; then
+            BROWSER=./configs/docker_firefox.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "edge" ]]; then
+            BROWSER=./configs/docker_edge.json
+          fi
+
+          env
+          source $HOME/.bp-venv/bin/activate
+          python -m pytest -v --driver Remote \
+            --selenium-host 'localhost' --selenium-port '4444' \
+            --variables "$BROWSER" \
+            --reruns 1 --reruns-delay 5 \
+            --tags="$TAGS" --base-url="$BASE_URL" --html=report.html \
+            --self-contained-html
+
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}

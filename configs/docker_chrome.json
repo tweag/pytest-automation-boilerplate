@@ -1,0 +1,10 @@
+{
+  "capabilities": {
+    "browserName": "chrome",
+    "timeouts": {
+      "implicit": 30000,
+      "pageLoad": 30000,
+      "script": 30000
+    }
+  }
+}

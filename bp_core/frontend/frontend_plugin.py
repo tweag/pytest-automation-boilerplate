@@ -125,7 +125,7 @@ def chrome_options(chrome_options, variables, proxy_url, env_variables, request)
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1367,768")
-    if os.environ.get("USING_DOCKER", False) and os.environ.get("SERVER", "") == "Docker":
+    if os.environ.get("USING_DOCKER", False) == 'True':
         chrome_options.add_argument("--ignore-certificate-errors")
     if proxy_url:
         chrome_options.add_argument("--ignore-certificate-errors")
@@ -272,6 +272,26 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
 
         appium.driver_kwargs = driver_kwargs
 
+    elif os.environ.get("USING_DOCKER", "False") == 'True':
+        value, options = driver_options_factory
+        for k, v in session_capabilities.items():
+            options.set_capability(k, v)
+
+        def driver_kwargs(capabilities, host, port, **kwargs):  # noqa
+            _ = capabilities
+            if value in ("chrome", "edge", "firefox"):
+                browser_options = kwargs.get(f"{value}_options", None)
+                browser_options_arguments = getattr(browser_options, "arguments", [])
+                browser_options_capabilities = getattr(browser_options, "capabilities", {})
+                options.capabilities.update(browser_options_capabilities)
+                options.arguments.extend([x for x in browser_options_arguments if x not in options.arguments])
+
+            executor = f"http://{host}:{port}/wd/hub"
+            kwargs = {"command_executor": executor, "options": options}
+
+            return kwargs
+
+        remote.driver_kwargs = driver_kwargs
 
 # Define selenium generics as a fixture
 # This is UI specific implementation
