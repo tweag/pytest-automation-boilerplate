@@ -164,9 +164,9 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          echo "path: '${{ github.workspace }}' "
-          ls
-          docker-compose compose.yml up -d
+          echo "path: '$(pwd)' "
+          find . -name "compose.yml" 
+          docker-compose --file compose.yml up -d
 
       - name: Wait for services to start
         run: sleep 30
