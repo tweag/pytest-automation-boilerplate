@@ -153,15 +153,9 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Setup Docker Practice
-        id: setup_docker_practice
-        if: steps.setup_python.outcome == 'success'
-        uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-
       - name: Set up Docker
         id: docker_env_setup
-        if: steps.setup_docker_practice.outcome == 'success'
+        if: steps.setup_python.outcome == 'success'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and start Docker Compose services
