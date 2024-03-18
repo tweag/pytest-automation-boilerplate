@@ -153,9 +153,14 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Install docker
+        id: install_docker
+        if: steps.docker_env_setup.outcome == 'success'
+        uses: papodaca/install-docker-action@main
+
       - name: Set up Docker
         id: docker_env_setup
-        if: steps.validate_input.outcome == 'success'
+        if: steps.install_docker.outcome == 'success'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and start Docker Compose services
