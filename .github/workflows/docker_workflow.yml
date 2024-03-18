@@ -166,13 +166,17 @@ jobs:
         if: steps.validate_input.outcome == 'success'
         uses: docker/setup-buildx-action@v3
 
+      - name: Wait for services to start 1
+        run: sleep 30
+
       - name: Build and start Docker Compose services
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
+          chmod 777 docker-compose.yml
           find * | awk '{print length "\t" $0}' docker-compose.yml
 
-      - name: Wait for services to start
+      - name: Wait for services to start 2
         run: sleep 30
 
       - name: Check out code
