@@ -153,12 +153,6 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Setup Docker Practice
-        id: setup_docker_practice
-        if: steps.setup_python.outcome == 'success'
-        uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-
       - name: Set up Docker
         id: docker_env_setup
         if: steps.setup_docker_practice.outcome == 'success'
@@ -168,7 +162,7 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker-compose up -d
 
       - name: Wait for services to start
         run: sleep 30
