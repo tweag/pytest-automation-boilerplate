@@ -5,7 +5,9 @@ env:
   BASE_URL: https://opensource-demo.orangehrmlive.com
   HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
   HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+  PROJECT_LOCATION: ${{ github.workspace }}
   USING_DOCKER: True
+
 
 on:
   schedule:
@@ -87,7 +89,7 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          docker-compose -f configs/docker-compose.yml up -d
+          docker-compose -f docker-compose.yml up -d
 
       - name: Wait for services to start
         run: sleep 30
@@ -164,7 +166,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           echo "path: '${{ github.workspace }}' "
-          docker-compose -f configs/docker-compose.yml up -d
+          docker-compose -f "$PROJECT_LOCATION"/docker-compose.yml up -d
 
       - name: Wait for services to start
         run: sleep 30
