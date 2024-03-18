@@ -92,7 +92,7 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          docker-compose -f '/home/runner/work/docker-compose.yaml' up -d
+          find * | awk '{print length "\t" $0}' docker-compose.yml
 
       - name: Wait for services to start
         run: sleep 30
