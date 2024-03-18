@@ -164,7 +164,7 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          docker compose --file compose.yml up -d
+          docker-compose docker-compose.yaml up -d
 
       - name: Wait for services to start
         run: sleep 30
