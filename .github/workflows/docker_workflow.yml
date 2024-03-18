@@ -92,8 +92,8 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          chmod 777 docker-compose.yaml
-          docker-compose -f docker-compose.yaml up -d
+          cat docker-compose.yml
+          docker-compose -f docker-compose.yml up -d
 
       - name: Wait for services to start
         run: sleep 30
