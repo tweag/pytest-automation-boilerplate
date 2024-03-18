@@ -158,16 +158,19 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker
         id: docker_env_setup
-        if: steps.setup_python.outcome == 'success'
+        if: steps.validate_input.outcome == 'success'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and start Docker Compose services
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-           sudo docker compose --file docker-compose.yaml up -d
+          find * | awk '{print length "\t" $0}' docker-compose.yml
 
       - name: Wait for services to start
         run: sleep 30
