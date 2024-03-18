@@ -155,7 +155,7 @@ jobs:
 
       - name: Set up Docker
         id: docker_env_setup
-        if: steps.setup_docker_practice.outcome == 'success'
+        if: steps.setup_python.outcome == 'success'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and start Docker Compose services
