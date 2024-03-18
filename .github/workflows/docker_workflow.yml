@@ -80,6 +80,9 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker
         id: docker_env_setup
         if: steps.validate_input.outcome == 'success'
@@ -89,7 +92,7 @@ jobs:
         id: docker_compose
         if: steps.docker_env_setup.outcome == 'success'
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker-compose -f '/home/runner/work/pytest-automation-boilerplate/docker-compose.yaml' up -d
 
       - name: Wait for services to start
         run: sleep 30
