@@ -116,7 +116,6 @@ jobs:
             --self-contained-html \
 
       - name: Docker Container Stop
-        uses: browserstack/github-actions/setup-local@master
         run: |
           docker compose --file docker-compose.yml down
         if: ${{ always() }}
@@ -221,7 +220,6 @@ jobs:
             --self-contained-html
 
       - name: Docker Container Stop
-        uses: browserstack/github-actions/setup-local@master
         run: |
           docker compose --file docker-compose.yml down
         if: ${{ always() }}
