@@ -67,7 +67,7 @@ jobs:
   docker-manual-android-run:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Validate Input Parameter
         id: validate_input
@@ -117,7 +117,7 @@ jobs:
 #        if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 25
+          api-level: 29
           force-avd-creation: false
           emulator-options: -no-window -gpu -grpc-use-jwt swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
@@ -127,7 +127,7 @@ jobs:
         id: start_emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 25
+          api-level: 29
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
