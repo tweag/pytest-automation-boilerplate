@@ -89,41 +89,42 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Setup dependencies
-        id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
-        run: |
-          sh install.sh
-
-      - name: Setup Java
+      - name: Set up JDK 11
         id: setup_java
-        if: steps.setup_dependencies.outcome == 'success'
-        uses: actions/setup-java@v4
+        if: steps.co_code.outcome == 'success'
+        uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          java-version: 11
+          distribution: 'adopt'
+          cache: 'gradle'
 
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.co_code.outcome == 'success'
+        if: steps.setup_java.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
           sleep 5
           appium -v      
 
-      - name: Run connected tests
+      - name: Run Emulator
+        id: run_emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
           target: google_apis
           arch: x86_64
-#          script: ./android_local_run.sh
+          script: ./gradlew connectedCheck
 
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          sh install.sh
 
       - name: Run Env Job Tests
         id: run_manual_job
-        if: steps.start_emulator.outcome == 'success'
+        if: steps.setup_dependencies.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
