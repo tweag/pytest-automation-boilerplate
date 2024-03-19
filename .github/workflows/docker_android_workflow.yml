@@ -89,6 +89,20 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh install.sh
+
+      - name: Setup Java
+        id: setup_java
+        if: steps.setup_dependencies.outcome == 'success'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install and Run Appium Server
         id: setup_appium
         if: steps.co_code.outcome == 'success'
@@ -101,23 +115,11 @@ jobs:
       - name: Run connected tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 30
           target: google_apis
           arch: x86_64
+#          script: ./android_local_run.sh
 
-      - name: Setup dependencies
-        id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
-        run: |
-          sh install.sh
-
-      - name: Setup Java
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
 
       - name: Run Env Job Tests
         id: run_manual_job
