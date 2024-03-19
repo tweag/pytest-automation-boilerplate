@@ -89,6 +89,12 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh install.sh
+
       - name: Setup Java
         id: setup_java
         if: steps.co_code.outcome == 'success'
@@ -104,32 +110,27 @@ jobs:
           npm install -g appium
           appium --log-level info &
           sleep 5
-          appium -v
-          appium &>dev/null &
+          appium -v      
 
-      - name: Setup dependencies
-        id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
-        run: |
-          sh install.sh
+      - name: Run emulator
+        id: run_emulator
+        if: steps.setup_appium.outcome == 'success'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
 
       - name: Run Env Job Tests
         id: run_manual_job
-        if: steps.setup_dependencies.outcome == 'success'
+        if: steps.run_emulator.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
           source $HOME/.bp-venv/bin/activate
-
-      - name: run android tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                      --variables './configs/android_mobile_docker.json'
-                      --tags="$TAGS" \
-                      --html=report.html \
-                      --self-contained-html \
+          python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
+                                --variables './configs/android_mobile_docker.json'
+                                --tags="$TAGS" \
+                                --html=report.html \
+                                --self-contained-html \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
