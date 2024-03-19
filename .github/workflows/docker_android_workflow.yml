@@ -68,10 +68,6 @@ jobs:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
     runs-on: macos-latest
-    strategy:
-      matrix:
-        api-level: [ 25 ]
-        target: [ default ]
     steps:
       - name: Validate Input Parameter
         id: validate_input
@@ -93,23 +89,23 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Setup Java
+        id: setup_java
+        if: steps.co_code.outcome == 'success'
+        uses: actions/setup-java@v4
         with:
-          java-version: 1.8
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Install and Run Appium Server
+        id: setup_appium
+        if: steps.setup_java.outcome == 'success'
         run: |
-          chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
-          ./scripts/RunAppiumServer.sh
-
-      - name: Run Appium Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86_64
-          profile: Nexus 6
+          npm install -g appium
+          appium --log-level info &
+          sleep 5
+          appium -v
+          appium &>dev/null &
 
       - name: Setup dependencies
         id: setup_dependencies
@@ -117,19 +113,23 @@ jobs:
         run: |
           sh install.sh
 
-      - name: Run Manual Job Tests
+      - name: Run Env Job Tests
         id: run_manual_job
         if: steps.setup_dependencies.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
-          
           env
           source $HOME/.bp-venv/bin/activate
-          python -m pytest -v --driver Appium \
-            --selenium-host 'localhost'  --selenium-host '4723'\
-            --variables './configs/android_mobile_docker.json' \
-            --tags="$TAGS" --html=report.html \
-            --self-contained-html
+
+      - name: run android tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
+                      --variables './configs/android_mobile_docker.json'
+                      --tags="$TAGS" \
+                      --html=report.html \
+                      --self-contained-html \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
