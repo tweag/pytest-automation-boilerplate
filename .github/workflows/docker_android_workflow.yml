@@ -96,7 +96,6 @@ jobs:
         with:
           java-version: 11
           distribution: 'adopt'
-          cache: 'gradle'
 
       - name: Install and Run Appium Server
         id: setup_appium
