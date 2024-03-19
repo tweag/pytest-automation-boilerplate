@@ -58,7 +58,7 @@ Feature:  OrangeHRM Login and Modus QA blog
         Then The element 'OrangeHRM > User > success_message' is displayed
 
     @blog_search @automated
-    Scenario: Check QA modus blog
+    Scenario: Check QA modus blog Search
         Given I set web base url 'https://moduscreate.com'
         And The browser resolution is '1024' per '768'
         And The title is 'Modus Create | Consulting and Product Development Partner'
