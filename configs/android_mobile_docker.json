@@ -1,0 +1,12 @@
+{
+    "capabilities": {
+        "browserstack": "False",
+        "automationName": "UiAutomator1",
+        "deviceName": "Android Emulator",
+        "platformName": "Android",
+        "platformVersion": "7.1.1",
+        "app": "app files/builds/Android-MyDemoAppRN.1.3.0.build-244.apk",
+        "noReset": false,
+        "newCommandTimeout": 3600
+        }
+    }
