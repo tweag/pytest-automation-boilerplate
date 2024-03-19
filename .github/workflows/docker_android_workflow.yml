@@ -67,7 +67,7 @@ jobs:
   docker-manual-android-run:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Validate Input Parameter
         id: validate_input
@@ -89,8 +89,23 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        id: setup_java
+        if: steps.co_code.outcome == 'success'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install and Run Appium Server
-        uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
+        id: setup_appium
+        if: steps.setup_java.outcome == 'success'
+        run: |
+          npm install -g appium
+          appium --log-level info &
+          sleep 5
+          appium -v
+          appium &>dev/null &
 
       - name: Setup dependencies
         id: setup_dependencies
@@ -98,19 +113,23 @@ jobs:
         run: |
           sh install.sh
 
-      - name: Run Manual Job Tests
+      - name: Run Env Job Tests
         id: run_manual_job
         if: steps.setup_dependencies.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
-          
           env
           source $HOME/.bp-venv/bin/activate
-          python -m pytest -v --driver Appium \
-            --selenium-host 'localhost'  --selenium-host '4723'\
-            --variables './configs/android_mobile_docker.json' \
-            --tags="$TAGS" --html=report.html \
-            --self-contained-html
+
+      - name: run android tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
+                      --variables './configs/android_mobile_docker.json'
+                      --tags="$TAGS" \
+                      --html=report.html \
+                      --self-contained-html \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4

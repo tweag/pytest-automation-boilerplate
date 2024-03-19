@@ -27,9 +27,9 @@ blank_logger.propagate = False
 
 
 def pytest_bdd_before_scenario(
-    request: FixtureRequest,
-    feature: pytest_bdd_parser.Feature,
-    scenario: pytest_bdd_parser.Scenario,
+        request: FixtureRequest,
+        feature: pytest_bdd_parser.Feature,
+        scenario: pytest_bdd_parser.Scenario,
 ):
     """Called before every scenario execution"""
     request.node.scenarioDict = defaultdict()
@@ -43,7 +43,7 @@ def pytest_bdd_before_scenario(
 
 # Add logging after each scenario
 def pytest_bdd_after_scenario(
-    feature: pytest_bdd_parser.Feature, scenario: pytest_bdd_parser.Scenario
+        feature: pytest_bdd_parser.Feature, scenario: pytest_bdd_parser.Scenario
 ):
     """Called after every scenario is executed"""
     logger.info(
@@ -55,10 +55,10 @@ def pytest_bdd_after_scenario(
 
 # Add logging for each step
 def pytest_bdd_after_step(
-    request: FixtureRequest,
-    feature: pytest_bdd_parser.Feature,
-    scenario: pytest_bdd_parser.Scenario,
-    step: pytest_bdd_parser.Step
+        request: FixtureRequest,
+        feature: pytest_bdd_parser.Feature,
+        scenario: pytest_bdd_parser.Scenario,
+        step: pytest_bdd_parser.Step
 ):
     """Called after every step execution"""
     logger.info(
@@ -94,7 +94,6 @@ def pytest_bdd_step_error(request: FixtureRequest,
                           feature: pytest_bdd_parser.Feature,
                           scenario: pytest_bdd_parser.Scenario,
                           step: pytest_bdd_parser.Step, exception):
-
     """Called on step error. Logs the error and takes a screenshot."""
     _step_error(exception, feature, scenario, step)
 
@@ -111,9 +110,9 @@ def chrome_options(chrome_options, variables, proxy_url, env_variables, request)
     caps = copy.deepcopy(request.getfixturevalue("session_capabilities"))
 
     if (caps.get("headless", "") == "True") or (
-        "capabilities" in variables
-        and "headless" in variables["capabilities"]
-        and variables["capabilities"]["headless"] == "True"
+            "capabilities" in variables
+            and "headless" in variables["capabilities"]
+            and variables["capabilities"]["headless"] == "True"
     ):
         chrome_options.add_argument("--headless")
     caps.pop("headless", None)
@@ -293,6 +292,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
 
         remote.driver_kwargs = driver_kwargs
 
+
 # Define selenium generics as a fixture
 # This is UI specific implementation
 @pytest.fixture
@@ -325,15 +325,15 @@ def capabilities(capabilities):
 # This is a temporary solution until the pytest-selenium fix the support for the Selenium 4.10+
 @pytest.fixture
 def driver_kwargs(
-    request,
-    chrome_options,
-    driver_args,
-    driver_class,
-    driver_log,
-    driver_path,
-    firefox_options,
-    edge_options,
-    pytestconfig,
+        request,
+        chrome_options,
+        driver_args,
+        driver_class,
+        driver_log,
+        driver_path,
+        firefox_options,
+        edge_options,
+        pytestconfig,
 ):
     kwargs = {}
     driver = getattr(drivers, pytestconfig.getoption("driver").lower())
