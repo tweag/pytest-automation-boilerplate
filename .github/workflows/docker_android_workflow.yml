@@ -124,7 +124,7 @@ jobs:
         run: |
           sh install.sh
 
-      - name: Run Env Job Tests
+      - name: Run Tests
         id: run_manual_job
         if: steps.setup_dependencies.outcome == 'success'
         run: |
