@@ -1,7 +1,7 @@
 name: Docker Android Tests Workflow
 
 env:
-  TAGS: "ios_mobile_test"
+  TAGS: "android_mobile_tests"
   USING_DOCKER: 'True'
 
 on:
@@ -12,62 +12,13 @@ on:
       tags:
         description: Gherkin Tags
         required: true
-        default: android_mobile_test
+        default: android_mobile_tests
 
 jobs:
   scheduled-regression:
     if: github.event_name == 'schedule'
-    strategy:
-      max-parallel: 1
-      fail-fast: false
-      matrix:
-        include:
-          - name: Android Mobile
-            tags: 'android_mobile_tests'
-            config_file: ./configs/android_mobile_BS.json
-            html_report: android-mobile
-            testrail_configuration_name: 'Samsung Galaxy S23 Ultra'
-
     name: ${{ matrix.name }} - Regression
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.9"
-
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Setup dependencies
-        run: |
-          sh install.sh
-
-      - name: Run All Tests
-        run: |
-          env
-           source $HOME/.bp-venv/bin/activate
-          
-           python -m pytest -v --driver Appium --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
-            --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
-            --html=report.html \
-            --self-contained-html \
-
-
-      - name: Upload HTML run report in the Artifacts Folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.html_report }}
-          path: |
-            ./*.html
-            ./output/
-            ./assets/
-        if: ${{ always() }}
-
-  docker-manual-android-run:
-    if: github.event_name != 'schedule'
-    name: Manual - ${{ inputs.tags }}
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Validate Input Parameter
         id: validate_input
@@ -89,66 +40,127 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
+      - name: Set up JDK 21
+        id: setup_java
+        if: steps.co_code.outcome == 'success'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.co_code.outcome == 'success'
+        if: steps.setup_java.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
           sleep 5
           appium -v      
 
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: AVD cache
-        uses: actions/cache@v4
-        id: avd-cache
+      - name: Run Emulator
+        id: run_emulator
+        uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-29
-
-      - name: create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
+          api-level: 30
           force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
-
-      - name: start emulator
-        id: start_emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
+          target: default
+          arch: x86_64
+          script: echo "Generated AVD"
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
+        if: steps.run_emulator.outcome == 'success'
         run: |
           sh install.sh
 
-      - name: Setup Java
+      - name: Run Tests
+        id: run_manual_job
+        if: steps.setup_dependencies.outcome == 'success'
+        run: |
+          TAGS="${{ github.event.inputs.tags }}"
+          env
+          source $HOME/.bp-venv/bin/activate
+          python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
+                                --variables './configs/android_mobile_docker.json'
+                                --tags="$TAGS" \
+                                --html=report.html \
+                                --self-contained-html \
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}
+
+  docker-manual-android-run:
+    if: github.event_name != 'schedule'
+    name: Manual - ${{ inputs.tags }}
+    runs-on: macos-latest
+    steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
+      - name: Setup Python
+        id: setup_python
+        if: steps.validate_input.outcome == 'success'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Check out code
+        id: co_code
+        if: steps.setup_python.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
         id: setup_java
         if: steps.co_code.outcome == 'success'
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: 21
 
-      - name: Run Env Job Tests
+      - name: Install and Run Appium Server
+        id: setup_appium
+        if: steps.setup_java.outcome == 'success'
+        run: |
+          npm install -g appium
+          appium --log-level info &
+          sleep 5
+          appium -v      
+
+      - name: Run Emulator
+        id: run_emulator
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          target: default
+          arch: x86_64
+          script:  echo "Generated AVD"
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          sh install.sh
+
+      - name: Run Tests
         id: run_manual_job
-        if: steps.start_emulator.outcome == 'success'
+        if: steps.setup_dependencies.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
