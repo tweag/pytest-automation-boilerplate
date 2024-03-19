@@ -67,7 +67,7 @@ jobs:
   docker-manual-android-run:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Validate Input Parameter
         id: validate_input
@@ -89,6 +89,48 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
+      - name: Install and Run Appium Server
+        id: setup_appium
+        if: steps.setup_java.outcome == 'success'
+        run: |
+          npm install -g appium
+          appium --log-level info &
+          sleep 5
+          appium -v      
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-29
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: start emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+
       - name: Setup dependencies
         id: setup_dependencies
         if: steps.co_code.outcome == 'success'
@@ -102,22 +144,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Install and Run Appium Server
-        id: setup_appium
-        if: steps.setup_java.outcome == 'success'
-        run: |
-          npm install -g appium
-          appium --log-level info &
-          sleep 5
-          appium -v      
-
-      - name: Run emulator
-        id: run_emulator
-        if: steps.setup_appium.outcome == 'success'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
 
       - name: Run Env Job Tests
         id: run_manual_job
