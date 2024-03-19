@@ -91,7 +91,7 @@ jobs:
 
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
@@ -124,6 +124,7 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: start emulator
+        id: start_emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
@@ -147,7 +148,7 @@ jobs:
 
       - name: Run Env Job Tests
         id: run_manual_job
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.start_emulator.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
