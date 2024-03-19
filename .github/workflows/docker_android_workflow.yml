@@ -95,7 +95,6 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: 'adopt'
 
       - name: Install and Run Appium Server
         id: setup_appium
