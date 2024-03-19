@@ -99,17 +99,7 @@ jobs:
           java-version: 1.8
 
       - name: Install and Run Appium Server
-        run: |
-          chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
-          ./scripts/RunAppiumServer.sh
-
-      - name: Run Appium Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86_64
-          profile: Nexus 6
+        uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
 
       - name: Setup dependencies
         id: setup_dependencies
