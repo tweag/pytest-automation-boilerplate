@@ -115,7 +115,7 @@ jobs:
 
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
@@ -127,6 +127,15 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
+
+      - name: Open IOS simulator
+        id: setup_xcode
+        if: steps.setup_xcode.outcome == 'success'
+        run: |
+          xcrun simctl list
+          sleep 5
+          xcrun simctl boot "iPhone 15 Plus"
+          sleep 10
 
       - name: Setup dependencies
         id: setup_dependencies

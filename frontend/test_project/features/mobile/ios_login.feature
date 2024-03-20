@@ -1,4 +1,4 @@
-@nondestructive @automated @ios_mobile_test
+@nondestructive @automated @ios_mobile_tests
 Feature: Basic IOS App functionality
 
     @mobile_test @ios
