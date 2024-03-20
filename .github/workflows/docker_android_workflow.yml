@@ -111,11 +111,6 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Check out code
-        id: co_code
-        if: steps.setup_python.outcome == 'success'
-        uses: actions/checkout@v4
-
       - name: Set up JDK 21
         id: setup_java
         if: steps.co_code.outcome == 'success'
@@ -143,7 +138,12 @@ jobs:
           disable-animations: true
           target: default
           arch: x86_64
-          script:  echo "Generated AVD"
+          script: echo "Generated AVD"
+
+      - name: Check out code
+        id: co_code
+        if: steps.setup_python.outcome == 'success'
+        uses: actions/checkout@v4
 
       - name: Setup dependencies
         id: setup_dependencies
