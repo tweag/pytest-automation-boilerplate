@@ -279,7 +279,7 @@ jobs:
             BASE_URL="${{ github.event.inputs.baseurl }}"
           fi
 
-          number_of_threads=1
+          concurrent_thread=2
 
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
             BROWSER=./configs/win_chrome.json
@@ -308,7 +308,7 @@ jobs:
             --capability headless False \
             --reruns 1 --reruns-delay 5 \
             --tags="$TAGS" --base-url="$BASE_URL" --html=report.html \
-            --self-contained-html -n 2
+            --self-contained-html -n ${{ concurrent_thread }}
 
       - name: BrowserStackLocal Stop
         uses: browserstack/github-actions/setup-local@master
