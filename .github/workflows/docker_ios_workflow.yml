@@ -37,9 +37,10 @@ jobs:
         if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v
+          curl 'http://127.0.0.1:4723/wd/hub/sessions'
 
       - name: Set up X Code
         id: setup_xcode
@@ -115,9 +116,10 @@ jobs:
         if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v 
+          curl 'http://127.0.0.1:4723/wd/hub/sessions'
 
       - name: Set up X Code
         id: setup_xcode

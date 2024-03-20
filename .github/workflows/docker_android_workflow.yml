@@ -56,7 +56,8 @@ jobs:
           npm install -g appium
           appium --log-level debug &
           sleep 10
-          appium -v      
+          appium -v   
+          curl 'http://127.0.0.1:4723/wd/hub/sessions'
 
       - name: Run Emulator
         id: run_emulator
@@ -126,7 +127,8 @@ jobs:
           npm install -g appium
           appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v  
+          curl 'http://127.0.0.1:4723/wd/hub/sessions'
 
       - name: Run Android Emulator
         id: run_emulator
