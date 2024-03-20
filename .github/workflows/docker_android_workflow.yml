@@ -54,7 +54,7 @@ jobs:
         if: steps.setup_java.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 10
           appium -v      
 
@@ -124,7 +124,7 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
           appium -v      
 
