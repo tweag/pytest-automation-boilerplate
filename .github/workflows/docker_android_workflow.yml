@@ -152,7 +152,7 @@ jobs:
           sleep 5
           ./emulator -list-avds
           sleep 5
-          ./emulator -avd default -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none &
+          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none &
 
 
       - name: Check out code
