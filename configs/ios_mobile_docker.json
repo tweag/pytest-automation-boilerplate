@@ -1,0 +1,11 @@
+{
+    "capabilities": {
+        "browserstack": "False",
+        "platformVersion": "17.0",
+        "deviceName": "iPhone 8",
+        "platformName": "ios",
+        "app": "app files/builds/MyRNDemoApp.app",
+        "noReset": false,
+        "newCommandTimeout": 3600
+        }
+    }
