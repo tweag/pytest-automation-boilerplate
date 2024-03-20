@@ -32,36 +32,33 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
           sleep 5
           appium -v      
 
-      - name: Run IOS Emulator
-        id: run_ios_emulator
-        uses: futureware-tech/simulator-action@v3
+      - name: Set up X Code
+        id: setup_xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-           model: 'iPhone 8'
+          xcode-version: latest
 
-      - name: Run Flutter Drive
-        id: run_flutter_drive
-        run: flutter drive
+      - name: Open IOS simulator
+        id: open_ios_simulator
+        if: steps.setup_xcode.outcome == 'success'
+        run: |
+          xcrun simctl list
+          sleep 5
+          xcrun simctl boot "iPhone 15 Plus"
+          sleep 10
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_flutter_drive.outcome == 'success'
+        if: steps.open_ios_simulator.outcome == 'success'
         run: |
           sh install.sh
 
@@ -129,7 +126,7 @@ jobs:
           xcode-version: latest
 
       - name: Open IOS simulator
-        id: setup_xcode
+        id: open_ios_simulator
         if: steps.setup_xcode.outcome == 'success'
         run: |
           xcrun simctl list
@@ -139,7 +136,7 @@ jobs:
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.setup_xcode.outcome == 'success'
+        if: steps.open_ios_simulator.outcome == 'success'
         run: |
           sh install.sh
 
