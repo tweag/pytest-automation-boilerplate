@@ -2,6 +2,7 @@ name: Docker Android Tests Workflow
 
 env:
   TAGS: "android_mobile_tests"
+  PROJECT_LOCATION: ${{ github.workspace }}
   USING_DOCKER: 'True'
 
 on:
