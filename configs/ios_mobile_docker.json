@@ -2,7 +2,7 @@
     "capabilities": {
         "browserstack": "False",
         "platformVersion": "17.0",
-        "deviceName": "iPhone 8",
+        "deviceName": "iPhone 15 Pro Max",
         "platformName": "ios",
         "app": "app files/builds/MyRNDemoApp.app",
         "noReset": false,

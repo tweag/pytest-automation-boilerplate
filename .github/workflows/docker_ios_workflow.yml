@@ -53,7 +53,7 @@ jobs:
         run: |
           xcrun simctl list
           sleep 5
-          xcrun simctl boot "iPhone 15 Plus"
+          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
           sleep 10
 
       - name: Setup dependencies
@@ -130,8 +130,7 @@ jobs:
         if: steps.setup_xcode.outcome == 'success'
         run: |
           xcrun simctl list
-          sleep 5
-          xcrun simctl boot "iPhone 15 Plus"
+          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
           sleep 10
 
       - name: Setup dependencies
