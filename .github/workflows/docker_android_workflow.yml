@@ -141,6 +141,18 @@ jobs:
           arch: x86_64
           script: echo "Generated AVD"
 
+      - name: Run Android Emulator Again
+        id: run_emulator_again
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          echo "Running Emulator Again"
+          cd ~/Library/Android/sdk/emulator
+          sleep 5
+          ./emulator -list-avds
+          sleep 5
+          ./emulator -avd default -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none &
+
+
       - name: Check out code
         id: co_code
         if: steps.run_emulator.outcome == 'success'
