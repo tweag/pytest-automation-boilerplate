@@ -1,11 +1,11 @@
 {
-  "platformName": "iOS",
-  "browserstack": "False",
-  "appium:options": {
-    "platformVersion": "17.0",
-    "app": "/home/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
-    "deviceName": "iPhone 15 Pro Max",
-    "noReset": true,
-    "newCommandTimeout": 3600
-  }
-}
+    "capabilities": {
+        "browserstack": "False",
+        "platformVersion": "17.0",
+        "deviceName": "iPhone 15 Pro Max",
+        "platformName": "ios",
+        "app": "app files/builds/MyRNDemoApp.app",
+        "noReset": false,
+        "newCommandTimeout": 3600
+        }
+    }
