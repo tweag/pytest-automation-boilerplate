@@ -70,7 +70,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
