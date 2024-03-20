@@ -88,7 +88,7 @@ jobs:
             ./assets/
         if: ${{ always() }}
 
-  docker-manual-android-run:
+  docker-manual-ios-run:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
     runs-on: macos-latest
@@ -130,17 +130,15 @@ jobs:
           sleep 5
           appium -v      
 
-      - name: Run Emulator
-        id: run_emulator
-        uses: ReactiveCircus/android-emulator-runner@v2
+      - name: Run IOS Emulator
+        id: run_ios_emulator
+        uses: futureware-tech/simulator-action@v3
         with:
-          api-level: 30
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          target: default
-          arch: x86_64
-          script:  echo "Generated AVD"
+           model: 'iPhone 8'
+
+      - name: Run Flutter Drive
+        id: run_flutter_drive
+        run: flutter drive
 
       - name: Setup dependencies
         id: setup_dependencies
