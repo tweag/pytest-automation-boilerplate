@@ -130,42 +130,11 @@ jobs:
           sleep 5
           appium -v      
 
-      - name: Set up Node JS
-        uses: actions/setup-node@v4
+      - name: Set up X Code
+        id: setup_xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-           node-version: 20
-           cache: 'npm'
-
-      - name: Clean Packages
-        run: |
-          rm -rf node_modules
-          npm cache clean --force
-          rm -rf package-lock.json
-
-      - name: Install React Native CLI
-        run: |
-          npm install react-native-cli
-
-      - name: List iOS Devices & Platforms
-        run: |          
-          xcrun simctl list
-
-      - name: Install iOS 11.4 Runtime
-        run: |  
-          gem install xcode-install
-          xcversion simulators --install='iOS 11.4'
-
-      - name: Create and Run iOS Emulator - iPhoneX on iOS 11.4, Update default appium config for iOS
-        run: |
-           xcrun simctl create TestiPhoneX com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-11-4 > deviceid.txt 
-           DEVICEUUID=`cat deviceid.txt`          
-           echo $DEVICEUUID          
-           sed -i -e "s/{IPHONE_UUID}/$DEVICEUUID/g" __tests__/e2e/template_appium_configs_ios.js          
-           xcrun simctl boot $DEVICEUUID &
-
-      - name: Use HTTPS repos
-        run: |
-          git config --global url."https://github".insteadOf ssh://git@github
+          xcode-version: latest
 
       - name: Setup dependencies
         id: setup_dependencies

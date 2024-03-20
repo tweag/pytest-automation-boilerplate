@@ -21,6 +21,14 @@ jobs:
     name: Schedule Android - Regression
     runs-on: macos-latest
     steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
       - name: Setup Python
         id: setup_python
         if: steps.validate_input.outcome == 'success'
