@@ -18,7 +18,7 @@ on:
 jobs:
   scheduled-regression:
     if: github.event_name == 'schedule'
-    name: ${{ matrix.name }} - Regression
+    name: Schedule Android - Regression
     runs-on: macos-latest
     steps:
       - name: Setup Python
@@ -113,7 +113,7 @@ jobs:
 
       - name: Set up JDK 21
         id: setup_java
-        if: steps.co_code.outcome == 'success'
+        if: steps.setup_python.outcome == 'success'
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -128,8 +128,9 @@ jobs:
           sleep 5
           appium -v      
 
-      - name: Run Emulator
+      - name: Run Android Emulator
         id: run_emulator
+        if: steps.setup_appium.outcome == 'success'
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -142,12 +143,12 @@ jobs:
 
       - name: Check out code
         id: co_code
-        if: steps.setup_python.outcome == 'success'
+        if: steps.run_emulator.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           sh install.sh
 
