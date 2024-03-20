@@ -113,14 +113,6 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
         if: steps.setup_java.outcome == 'success'
@@ -138,7 +130,7 @@ jobs:
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.setup_xcode.outcome == 'success'
         run: |
           sh install.sh
 
@@ -150,7 +142,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \

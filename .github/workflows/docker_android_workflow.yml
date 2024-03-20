@@ -84,7 +84,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
+                                --variables './configs/android_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -119,17 +119,9 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.setup_python.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.setup_python.outcome == 'success'
         run: |
           npm install -g appium
           appium --log-level info &
@@ -168,7 +160,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
+                                --variables './configs/android_mobile_docker.json' \
                                 --tags="android_mobile_tests"  \
                                 --html=report.html  \
                                 --self-contained-html  \
