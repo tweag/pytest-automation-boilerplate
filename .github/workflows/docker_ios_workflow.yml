@@ -1,23 +1,23 @@
-name: Docker Android Tests Workflow
+name: Docker IOS Tests Workflow
 
 env:
-  TAGS: "android_mobile_tests"
+  TAGS: "ios_mobile_tests"
   USING_DOCKER: 'True'
 
 on:
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 22 * * *'
   workflow_dispatch:
     inputs:
       tags:
         description: Gherkin Tags
         required: true
-        default: android_mobile_tests
+        default: ios_mobile_tests
 
 jobs:
   scheduled-regression:
     if: github.event_name == 'schedule'
-    name: ${{ matrix.name }} - Regression
+    name: IOS - Schedule Regression
     runs-on: macos-latest
     steps:
       - name: Setup Python
@@ -49,21 +49,19 @@ jobs:
           sleep 5
           appium -v      
 
-      - name: Run Emulator
-        id: run_emulator
-        uses: ReactiveCircus/android-emulator-runner@v2
+      - name: Run IOS Emulator
+        id: run_ios_emulator
+        uses: futureware-tech/simulator-action@v3
         with:
-          api-level: 30
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          target: default
-          arch: x86_64
-          script: echo "Generated AVD"
+           model: 'iPhone 8'
+
+      - name: Run Flutter Drive
+        id: run_flutter_drive
+        run: flutter drive
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.run_flutter_drive.outcome == 'success'
         run: |
           sh install.sh
 
@@ -75,7 +73,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json'
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -158,7 +156,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json'
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
