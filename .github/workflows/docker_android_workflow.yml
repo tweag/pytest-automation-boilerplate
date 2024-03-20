@@ -47,7 +47,7 @@ jobs:
         run: |
           npm install -g appium
           appium --log-level info &
-          sleep 5
+          sleep 10
           appium -v      
 
       - name: Run Emulator
@@ -160,9 +160,9 @@ jobs:
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
                                 --variables './configs/android_mobile_docker.json'
-                                --tags="$TAGS" \
-                                --html=report.html \
-                                --self-contained-html \
+                                --tags="android_mobile_tests"  \
+                                --html=report.html  \
+                                --self-contained-html  \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
