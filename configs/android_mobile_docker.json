@@ -6,6 +6,7 @@
     "noReset": false,
     "newCommandTimeout": 300,
     "adbExecTimeout": 1200000,
-    "appWaitDuration": 60000
+    "appWaitDuration": 60000,
+    "uiautomator2ServerInstallTimeout": 1200000
   }
 }
