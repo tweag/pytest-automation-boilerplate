@@ -129,15 +129,15 @@ For Windows machine setup, there is a well-written article hosted on Sharepoint 
     # alternatively, you could use ssh link if you have setup ssh in your work machine.
     ```
 
-2. <u><strong>source install.sh</strong></u>
+2. <u><strong>source setup_install.sh</strong></u>
    After successful cloning, execute below commands to install BoilerPlate.
 
     ```shell
     cd pytest-automation-boilerplate/
-    source install.sh
+    source setup_install.sh
 
 3. <u><strong>Activate your Virtual Environment</strong></u>
-   In the above step using source install.sh automatically activates the virtual environment.
+   In the above step using source setup_install.sh automatically activates the virtual environment.
    For eg: After installation you will see the following.Yet another Important Note: Please activate virtual environment
    using command ". /Users/username/.bp-venv/bin/activate" while running test cases from new shell. Need not activate
    now, since it is already activated.
@@ -156,7 +156,7 @@ For Windows machine setup, there is a well-written article hosted on Sharepoint 
 
 
 4. <u><strong>Setup Environment Variables in `.local.env` & `pytest.ini` files</strong></u>
-   After successful installation, check and update `configs/.local.env` and `pytest.ini` files with relevant details.
+   After successful installation, check and update `env_configs/.local.env` and `pytest.ini` files with relevant details.
 
 
 5. <u><strong>Appium setup for Mobile apps</strong></u>
@@ -209,17 +209,17 @@ More info: [here](https://www.selenium.dev/blog/2022/introducing-selenium-manage
 
 ```bash
 .
-├── /                                         # root directory with project-wide configs and folders
+├── /                                         # root directory with project-wide env_configs and folders
 ├── /app files                                # directory with all android and ios app files/builds
-├── /binaries                                 # directory contains all the driver binaries / Browserstack local binary
+├── /webdriver                                # directory contains all the driver binaries / Browserstack local binary
 ├── /bp_code                                  # directory contains all the base code (utils, plugins, common steps...) for the framework
-├── /configs/                                 # Configurations related to framework & browser specific
+├── /env_configs/                                 # Configurations related to framework & browser specific
 ├── /frontend/                                # Project specific files (locators, page objects, step definitions, feature files... etc)
 ├── /frontend/features/*                      # Test cases written in Gherkin language
 ├── /output/                                  # Reports, downloads.... etc)
 ├── /test_data/                               # All project test data for API, WEB, Mobile tests)
 │   ├── /conftest.py                          # Step up and tear down for the tests
-│   ├── /install.sh                           # Local Setup script
+│   ├── /setup_install.sh                           # Local Setup script
 │   ├── /pytest.ini                           # Project init file
 │   ├── /README.md                            # Instructions for the project
 │   ├── /requirements.txt                     # Dependencies
@@ -229,11 +229,11 @@ More info: [here](https://www.selenium.dev/blog/2022/introducing-selenium-manage
 
 ### Testrail Interaction
 
-Ensure to set/update following details in `configs/.local.env` file before interacting with testrail.
+Ensure to set/update following details in `env_configs/.local.env` file before interacting with testrail.
 
 > **_IMPORTANT_NOTE:_** If you are updating to project v3.10 or newer make sure to store your TestRail related
-> configs in '.local.env' file.
-> The reason for that is BoilerPlate releases up to v3.8, all TestRail related configs were stored in 'pytest.ini' file.
+> env_configs in '.local.env' file.
+> The reason for that is BoilerPlate releases up to v3.8, all TestRail related env_configs were stored in 'pytest.ini' file.
 > With current release all TestRail data are stored in the file mentioned below:
 >
 >.local.env
@@ -313,8 +313,8 @@ Reference Link - https://pypi.org/project/pytest-xdist/
 -F "file=@/path/to/app/file/Application-debug.apk"
 ```
 
-* We will receive below sample response which we need to add it in the configs/googlePixel6_browserstack.json and
-  configs/iPhone13Pro_browserstack.json file
+* We will receive below sample response which we need to add it in the env_configs/ios_mobile_BS.json and
+  env_configs/android_mobile_BS.json file
 
 ```shell
 {
@@ -324,7 +324,7 @@ Reference Link - https://pypi.org/project/pytest-xdist/
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
-Command for local run on chrome
+Command for local run on chrome (also ./web_local_run.sh)
 ```shell
 -v -s  --gherkin-terminal-reporter --driver=Chrome  --html="./output/reports/" --self-contained-html --capability headless True --tags="web_tests" --reruns 1 --reruns-delay 2 -n=2
 ```
@@ -334,15 +334,15 @@ Command for local run on firefox
 ```
 Command for local run on BS with Chrome:
 ```shell
--v -s  --gherkin-terminal-reporter --driver=Remote --selenium-host '[BS_USERNAME]:[BS_KEY]@hub-cloud.browserstack.com' --variables="configs/mac_chrome.json" --html="./output/reports/" --tags="web_tests" -n=3 --reruns 1 --reruns-delay 2 --self-contained-html
+-v -s  --gherkin-terminal-reporter --driver=Remote --selenium-host '[BS_USERNAME]:[BS_KEY]@hub-cloud.browserstack.com' --variables="env_configs/mac_chrome.json" --html="./output/reports/" --tags="web_tests" --reruns 1 --reruns-delay 2 --self-contained-html
 ```
 Command for local run on local appium server:
 ```shell
--v -s  --gherkin-terminal-reporter --driver=Appium --html="./output/reports/" --tags="mobile_test and android" --variables="configs/android_mobile_local.json" --self-contained-html --reruns 1 --reruns-delay 2
+-v -s  --gherkin-terminal-reporter --driver=Appium --html="./output/reports/" --tags="mobile_test and android" --variables="env_configs/android_mobile_local.json" --self-contained-html --reruns 1 --reruns-delay 2
 ```
 Command for local run on BS with IOS:
 ```shell
--v -s --gherkin-terminal-reporter --disable-warnings --driver=Appium --html="./output/reports/" --selenium-host '[BS_USERNAME]:[BS_KEY]@hub-cloud.browserstack.com' --variables="configs/ios_mobile_BS.json" --self-contained-html --tags="mobile_test and ios" --reruns 1 --reruns-delay 2
+-v -s --gherkin-terminal-reporter --disable-warnings --driver=Appium --html="./output/reports/" --selenium-host '[BS_USERNAME]:[BS_KEY]@hub-cloud.browserstack.com' --variables="env_configs/ios_mobile_BS.json" --self-contained-html --tags="mobile_test and ios" --reruns 1 --reruns-delay 2
 ```
 
 ### Html Test Reports
@@ -358,7 +358,7 @@ For example:
 
 Example of full command to generate html reports:
 ```shell
-python -m pytest -v --tags="sample-ui-tests" -n=3 --variables=./configs/web_local.json --driver=chrome --html=./output/reports/ --self-contained-html
+python -m pytest -v --tags="sample-ui-tests" -n=3 --variables=./env_configs/web_local.json --driver=chrome --html=./output/reports/ --self-contained-html
 ```
 Please avoid adding `-s` in the CLI since it will not include any logs in the html report.
 </br>

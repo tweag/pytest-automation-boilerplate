@@ -17,7 +17,7 @@ def load_env_from_local_dotenv_file(
         None
     """
     if dotenv_file_path is None:
-        dotenv_file = Path(__file__ + "/../../../configs/.local.env").resolve()
+        dotenv_file = Path(__file__ + "/../../../env_configs/.local.env").resolve()
     else:
         dotenv_file = Path(dotenv_file_path).resolve()
 

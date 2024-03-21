@@ -1,0 +1,10 @@
+{
+  "capabilities": {
+    "browserName": "firefox",
+    "timeouts": {
+      "implicit": 120000,
+      "pageLoad": 120000,
+      "script": 120000
+    }
+  }
+}

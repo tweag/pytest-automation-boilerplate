@@ -1,0 +1,18 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "platformVersion": "17.0",
+        "deviceName": "iPhone 15 Plus",
+        "platformName": "ios",
+        "app": "bs://4f950c489fb8c6212081d3f8f7511c1d7bf7dd2f",
+        "noReset": false,
+        "newCommandTimeout": 3600,
+        "bstack:options": {
+            "projectName": "Pytest-Automation-Boilerplate",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate"
+        }
+    }
+}

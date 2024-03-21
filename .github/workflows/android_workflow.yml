@@ -25,7 +25,7 @@ jobs:
                 include:
                     -   name: Android Mobile
                         tags: 'android_mobile_tests'
-                        config_file: ./configs/android_mobile_BS.json
+                        config_file: ./env_configs/android_mobile_BS.json
                         html_report: android-mobile
                         testrail_configuration_name: 'Samsung Galaxy S23 Ultra'
 
@@ -54,7 +54,7 @@ jobs:
 
             -   name: Setup dependencies
                 run: |
-                    sh install.sh
+                    sh setup_install.sh
 
             -   name: Run All Tests
                 run: |
@@ -127,7 +127,7 @@ jobs:
                 id: setup_dependencies
                 if: steps.co_code.outcome == 'success'
                 run: |
-                    sh install.sh
+                    sh setup_install.sh
 
             -   name: Run Manual Job Tests
                 id: run_manual_job
@@ -139,7 +139,7 @@ jobs:
                     source $HOME/.bp-venv/bin/activate
                     python -m pytest -v --driver Appium \
                       --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
-                      --variables './configs/android_mobile_BS.json' \
+                      --variables './env_configs/android_mobile_BS.json' \
                       --tags="$TAGS" --html=report.html \
                       --self-contained-html
 

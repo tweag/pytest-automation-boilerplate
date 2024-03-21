@@ -67,7 +67,7 @@ jobs:
         id: setup_dependencies
         if: steps.open_ios_simulator.outcome == 'success'
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run Tests
         id: run_manual_job
@@ -77,7 +77,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json' \
+                                --variables './env_configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -153,7 +153,7 @@ jobs:
         id: setup_dependencies
         if: steps.open_ios_simulator.outcome == 'success'
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run Tests
         id: run_manual_job
@@ -163,7 +163,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json' \
+                                --variables './env_configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \

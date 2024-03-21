@@ -69,7 +69,7 @@ def write_html_report_os_environ_value(selenium_generics: SeleniumGenerics, env_
 @given(parsers.re("I store '(?P<key>.*)' environment variable in .local.env config file"))
 @when(parsers.re("I store '(?P<key>.*)' environment variable in .local.env config file"))
 def store_env_variable_in_local_env(key: str):
-    local_config_file = Path.cwd() / "configs" / ".local.env"
+    local_config_file = Path.cwd() / "env_configs" / ".local.env"
     if local_config_file.is_file():
         from dotenv import set_key
         if os.environ.get(key, None):

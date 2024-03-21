@@ -138,7 +138,7 @@ def pytest_sessionstart(session):
         tr_configs = functools.reduce(
             operator.iconcat,
             [
-                tr_cg["configs"]
+                tr_cg["env_configs"]
                 for tr_cg in tr.configurations.get_configs(project_data["project_id"])
             ],
         )
@@ -707,82 +707,6 @@ def export_tests_results(session, tr: TestRailAPI, project_data: dict, scenarios
     and also not really working appropriately in both cases (type1 and type3)
     We can delete it later if no regression. I have tested few scenarios and it worked fine
     """
-
-    # plan_entry_names = [plan_entry.name for plan_entry in tr_plan.entries]
-    # feature_names = scenarios_run.keys()
-    #
-    # for feature_name in feature_names:
-    #     if feature_name not in plan_entry_names:
-    #         config_ids = [
-    #             config["id"]
-    #             for config in functools.reduce(
-    #                 operator.iconcat,
-    #                 [
-    #                     config_groups["configs"]
-    #                     for config_groups in tr.configurations.get_configs(
-    #                         project_data["project_id"]
-    #                     )
-    #                 ],
-    #             )
-    #         ]
-    #     else:
-    #         config_ids = [
-    #             config["id"]
-    #             for config in functools.reduce(
-    #                 operator.iconcat,
-    #                 [
-    #                     config_groups["configs"]
-    #                     for config_groups in tr.configurations.get_configs(
-    #                         project_data["project_id"]
-    #                     )
-    #                 ],
-    #             )
-    #             if config["name"] == project_data["configuration_name"]
-    #         ]
-    #     if feature_name not in plan_entry_names or (
-    #         feature_name in plan_entry_names
-    #         and project_data["configuration_name"]
-    #         not in [
-    #             run.config
-    #             for run in functools.reduce(
-    #                 operator.iconcat,
-    #                 [
-    #                     plan_entry.runs
-    #                     for plan_entry in tr_plan.entries
-    #                     if plan_entry.name == feature_name
-    #                 ],
-    #             )
-    #         ]
-    #     ):
-    #         print(f"Adding suite {feature_name} to test plan {tr_plan.name}")
-    #         suite_id = next(
-    #             (
-    #                 tr_suite.id
-    #                 for tr_suite in tr.suites.get_suites(project_data["project_id"])
-    #                 # we have only Master suite for TestRail project type #1
-    #                 if tr_suite.name == 'Master'
-    #             ),
-    #             None,
-    #         )
-    #         runs = [
-    #             Run(
-    #                 {
-    #                     "include_all": True,
-    #                     "config_ids": [config_id],
-    #                 }
-    #             ).raw_data()
-    #             for config_id in config_ids
-    #         ]
-    #         tr_plan_entry = Entry(
-    #             {
-    #                 "suite_id": suite_id,
-    #                 "name": feature_name,
-    #                 "include_all": True,
-    #                 "config_ids": config_ids,
-    #                 "runs": runs,
-    #             }
-    #         )
-    #         tr.plans.add_plan_entry(tr_plan.id, tr_plan_entry)
 
     tr_plan = tr.plans.get_plan(project_data["plan_id"])
     for tr_plan_entry in tr_plan.entries:
