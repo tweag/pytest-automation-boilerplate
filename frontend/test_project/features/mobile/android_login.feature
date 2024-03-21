@@ -69,7 +69,7 @@ Feature: Basic App functionality
         When I set text 'Tauqir Sarwar' to field 'Android > _mob > an-Shipping_Info > Full_name'
         And I set text 'Main Cantt' to field 'Android > _mob > an-Shipping_Info > Address_line_1'
         And I set text 'Lahore' to field 'Android > _mob > an-Shipping_Info > City'
-        And I swipe down '50' % each time for '4' times
+        And I swipe down '50' % each time for '2' times
         And I set text '102040' to field 'Android > _mob > an-Shipping_Info > Zip_code'
         And I set text 'Pakistan' to field 'Android > _mob > an-Shipping_Info > Country'
         And I click on element 'Android > _mob > an-Payment_Detail > Payment'
