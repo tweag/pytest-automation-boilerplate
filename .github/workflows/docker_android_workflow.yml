@@ -134,6 +134,7 @@ jobs:
           appium driver install xcuitest
           appium driver install uiautomator2
           sleep 5
+          appium driver list --installed
 
       - name: Run Android Emulator
         id: run_emulator
