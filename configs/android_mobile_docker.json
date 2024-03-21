@@ -4,6 +4,8 @@
     "platformName": "Android",
     "app": "/Users/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/Android-MyDemoAppRN.1.3.0.build-244.apk",
     "noReset": false,
-    "newCommandTimeout": 3600
+    "newCommandTimeout": 300,
+    "adbExecTimeout": 1200000,
+    "appWaitDuration": 60000
   }
 }
