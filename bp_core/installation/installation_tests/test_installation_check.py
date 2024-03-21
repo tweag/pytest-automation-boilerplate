@@ -10,8 +10,8 @@ def test_check_root_folder():
     assert_that(os.path.isfile("./.editorconfig")).is_true()
     assert_that(os.path.isfile("./.gitignore")).is_true()
     assert_that(os.path.isfile("./conftest.py")).is_true()
-    assert_that(os.path.isfile("./install.sh")).is_true()
-    assert_that(os.path.isfile("./install.py")).is_true()
+    assert_that(os.path.isfile("./setup_install.sh")).is_true()
+    assert_that(os.path.isfile("./setup_install.py")).is_true()
     assert_that(os.path.isfile("./pytest.ini")).is_true()
     assert_that(os.path.isfile("./README.md")).is_true()
     assert_that(os.path.isfile("./requirements.txt")).is_true()
@@ -106,8 +106,8 @@ def test_check_utils_folder():
 @pytest.mark.automated
 @pytest.mark.installation_check
 def test_check_configs_folder():
-    assert_that(os.path.isdir("./configs")).is_true()
-    assert_that(os.path.isfile("./configs/.local.env")).is_true()
+    assert_that(os.path.isdir("./env_configs")).is_true()
+    assert_that(os.path.isfile("./env_configs/.local.env")).is_true()
 
 
 @pytest.mark.nondestructive
@@ -134,5 +134,4 @@ def test_check_installation_folder():
 @pytest.mark.automated
 @pytest.mark.installation_check
 def test_check_binaries_folder():
-    assert_that(os.path.isdir("./binaries")).is_true()
-    assert_that(os.path.isdir("./binaries/webdriver")).is_true()
+    assert_that(os.path.isdir("./webdriver")).is_true()

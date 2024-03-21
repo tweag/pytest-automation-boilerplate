@@ -2,16 +2,12 @@
 
 * A brief description of the changes made - 
 
-* Do we have clean latest run report attached with this PR?
+* Do we have clean latest run report (Docker or Browserstack) attached with this PR?
   * [ ] Yes
   * [ ] No (Please explain why)
 
-* Does the PR contain changes to any BP core file?
-  * [ ] Yes (Needs approval from at least 2 people)
-  * [ ] No
-
-* Does the PR contain changes to modules shared with other teams?
-  * [ ] Yes (Needs approval from at least one of the other teams that use the module)
+* Does the PR contain changes to any core file?
+  * [ ] Yes (Needs approval from at least 1 people)
   * [ ] No
 
 * Is it
@@ -21,7 +17,7 @@
 
 ### To be filled by the PR reviewer:
 
-* [ ] Verify the attached run report passed in GitHub Actions (Justify if local run)
+* [ ] Verify the attached run report passed in GitHub Actions (Docker or Browserstack run)
 
 * General
     * [ ] Use the best strategy to locate the elements

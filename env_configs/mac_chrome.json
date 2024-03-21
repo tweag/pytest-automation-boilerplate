@@ -1,0 +1,16 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "browserName": "Chrome",
+        "bstack:options": {
+            "os": "OS X",
+            "osVersion": "Sonoma",
+            "browserVersion": "latest",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "local": true,
+            "debug": true,
+            "timezone": "UTC",
+            "localIdentifier": "Python-Automation-Boilerplate"
+        }
+    }
+}

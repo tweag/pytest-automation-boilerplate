@@ -72,7 +72,7 @@ jobs:
         id: setup_dependencies
         if: steps.run_emulator.outcome == 'success'
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run Tests
         id: run_manual_job
@@ -82,7 +82,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json' \
+                                --variables './env_configs/android_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -167,7 +167,7 @@ jobs:
         id: setup_dependencies
         if: steps.co_code.outcome == 'success'
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run Tests
         id: run_manual_job
@@ -177,7 +177,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json' \
+                                --variables './env_configs/android_mobile_docker.json' \
                                 --tags="android_mobile_tests"  \
                                 --html=report.html  \
                                 --self-contained-html  \

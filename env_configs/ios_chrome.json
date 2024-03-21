@@ -1,0 +1,16 @@
+{
+    "capabilities": {
+        "browserstack": "True",
+        "platformVersion": "16",
+        "deviceName": "iPhone 14 Pro Max",
+        "browserName": "chrome",
+        "bstack:options": {
+            "os": "iOS",
+            "projectName": "Pytest-Automation-Boilerplate",
+            "acceptInsecureCerts": "true",
+            "autoAcceptAlerts": "true",
+            "localIdentifier": "Python-Automation-Boilerplate",
+            "disableCorsRestrictions": true
+        }
+    }
+}

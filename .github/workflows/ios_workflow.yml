@@ -25,7 +25,7 @@ jobs:
                 include:
                     -   name: IOS Mobile
                         tags: 'ios_mobile_test'
-                        config_file: ./configs/ios_mobile_BS.json
+                        config_file: ./env_configs/ios_mobile_BS.json
                         html_report: ios-mobile
                         testrail_configuration_name: 'iPhone 15 Plus'
 
@@ -54,7 +54,7 @@ jobs:
 
             -   name: Setup dependencies
                 run: |
-                    sh install.sh
+                    sh setup_install.sh
 
             -   name: Run All Tests
                 run: |
@@ -128,7 +128,7 @@ jobs:
                 id: setup_dependencies
                 if: steps.co_code.outcome == 'success'
                 run: |
-                    sh install.sh
+                    sh setup_install.sh
 
             -   name: Run Manual Job Tests
                 id: run_manual_job
@@ -141,7 +141,7 @@ jobs:
                     source $HOME/.bp-venv/bin/activate
                     python -m pytest -v --driver Appium \
                       --selenium-host '${{secrets.BROWSERSTACK_API_USERNAME}}:${{secrets.BROWSERSTACK_ACCESS_KEY}}@hub-cloud.browserstack.com' \
-                      --variables './configs/ios_mobile_BS.json' \
+                      --variables './env_configs/ios_mobile_BS.json' \
                       --tags="$TAGS" --html=report.html \
                       --self-contained-html
 

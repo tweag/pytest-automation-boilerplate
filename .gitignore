@@ -138,10 +138,10 @@ Pipfile
 Pipfile.lock
 
 # Sensitive data
-/binaries/webdriver/BrowserStackLocal*
-/binaries/webdriver/chromedriver*
-/binaries/webdriver/geckodriver*
-/binaries/webdriver/msedgedriver*
+#/webdriver/BrowserStackLocal*
+#/webdriver/chromedriver*
+#/webdriver/geckodriver*
+#/webdriver/msedgedriver*
 
 # output contents
 /output/visualtesting/diff/*

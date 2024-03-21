@@ -6,5 +6,5 @@ LICENSE             export-ignore
 screenshots         export-ignore
 scripts             export-ignore
 selenium_drivers    export-ignore
-install.sh          export-ignore
+env_install.sh          export-ignore
 install_scripts     export-ignore

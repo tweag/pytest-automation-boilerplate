@@ -63,7 +63,7 @@ jobs:
           - name: Win Chrome
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/win_chrome.json
+            config_file: ./env_configs/win_chrome.json
             html_report: win-chrome
             concurrent_thread: 2
             testrail_configuration_name: 'Chrome, Windows'
@@ -72,7 +72,7 @@ jobs:
           - name: Win Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/win_firefox.json
+            config_file: ./env_configs/win_firefox.json
             html_report: win-firefox
             concurrent_thread: 2
             testrail_configuration_name: 'Firefox, Windows'
@@ -81,7 +81,7 @@ jobs:
           - name: Win Edge
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/win_edge.json
+            config_file: ./env_configs/win_edge.json
             html_report: win-edge
             concurrent_thread: 2
             testrail_configuration_name: 'Edge, Windows'
@@ -90,7 +90,7 @@ jobs:
           - name: Mac Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/mac_firefox.json
+            config_file: ./env_configs/mac_firefox.json
             html_report: mac-firefox
             concurrent_thread: 2
             testrail_configuration_name: 'Firefox, MacOS'
@@ -99,7 +99,7 @@ jobs:
           - name: Mac Chrome
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/mac_chrome.json
+            config_file: ./env_configs/mac_chrome.json
             html_report: mac-chrome
             concurrent_thread: 2
             testrail_configuration_name: 'Chrome, MacOS'
@@ -108,7 +108,7 @@ jobs:
           - name: Mac Edge
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/mac_edge.json
+            config_file: ./env_configs/mac_edge.json
             html_report: mac-edge
             concurrent_thread: 2
             testrail_configuration_name: 'Edge, MacOS'
@@ -117,7 +117,7 @@ jobs:
           - name: Mac Safari
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
-            config_file: ./configs/mac_safari.json
+            config_file: ./env_configs/mac_safari.json
             html_report: mac-safari
             concurrent_thread: 2
             testrail_configuration_name: 'Safari, MacOS'
@@ -126,7 +126,7 @@ jobs:
           - name: Mac Chrome Visual
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: visual
-            config_file: ./configs/mac_chrome.json
+            config_file: ./env_configs/mac_chrome.json
             html_report: mac-chrome-visual
             concurrent_thread: 2
             testrail_configuration_name: 'Chrome, MacOS'
@@ -157,7 +157,7 @@ jobs:
 
       - name: Setup dependencies
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run All Tests
         run: |
@@ -265,7 +265,7 @@ jobs:
         id: setup_dependencies
         if: steps.co_code.outcome == 'success'
         run: |
-          sh install.sh
+          sh setup_install.sh
 
       - name: Run Manual Job Tests
         id: run_manual_job
@@ -282,22 +282,22 @@ jobs:
           concurrent_thread=2
 
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./configs/win_chrome.json
+            BROWSER=./env_configs/win_chrome.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./configs/win_firefox.json
+            BROWSER=./env_configs/win_firefox.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./configs/win_edge.json
+            BROWSER=./env_configs/win_edge.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./configs/mac_chrome.json
+            BROWSER=./env_configs/mac_chrome.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./configs/mac_firefox.json
+            BROWSER=./env_configs/mac_firefox.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "safari" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./configs/mac_safari.json
+            BROWSER=./env_configs/mac_safari.json
           fi
 
           env
