@@ -88,6 +88,7 @@ Feature: Basic IOS App functionality
         And I set text 'Tauqir Sarwar' to field '_mob > Shipping_Info > Full_name'
         And I set text 'Main Cantt' to field '_mob > Shipping_Info > Address_line_1'
         And I set text 'Lahore' to field '_mob > Shipping_Info > City'
+        And I scroll to element '_mob > Shipping_Info > Zip_code' for '2' iterations
         And I set text '102040' to field '_mob > Shipping_Info > Zip_code'
         And I set text 'Pakistan' to field '_mob > Shipping_Info > Country'
         And I click on element '_mob > MyDemoApp > back_button'
