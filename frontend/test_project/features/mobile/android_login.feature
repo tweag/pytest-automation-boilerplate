@@ -77,6 +77,7 @@ Feature: Basic App functionality
         When I set text 'Tauqir Sarwar' to field 'Android > _mob > an-Payment_Detail > Full_name'
         And I swipe down '50' % each time for '1' times
         And I set text '325885556585999' to field 'Android > _mob > an-Payment_Detail > Card_Number'
+        And I swipe down '50' % each time for '1' times
         And I set text '0325' to field 'Android > _mob > an-Payment_Detail > expired_card'
         And I set text '123' to field 'Android > _mob > an-Payment_Detail > CVV'
         Then The element 'Android > _mob > an-Review_Order > Review' is displayed
