@@ -37,9 +37,6 @@ jobs:
         if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level debug &
-          sleep 5
-          appium -v
 
       - name: Install drivers
         id: install_drivers
@@ -47,7 +44,9 @@ jobs:
         run: |
           appium driver install xcuitest
           appium driver install uiautomator2
-          sleep 5
+          appium --log-level debug &
+          sleep 10
+          appium -v   
 
       - name: Set up X Code
         id: setup_xcode
@@ -123,9 +122,6 @@ jobs:
         if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level debug &
-          sleep 5
-          appium -v 
 
       - name: Install drivers
         id: install_drivers
@@ -133,7 +129,9 @@ jobs:
         run: |
           appium driver install xcuitest
           appium driver install uiautomator2
-          sleep 5
+          appium --log-level debug &
+          sleep 10
+          appium -v   
           
 
       - name: Set up X Code
