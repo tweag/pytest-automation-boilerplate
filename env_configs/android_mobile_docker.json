@@ -5,8 +5,8 @@
     "app": "/Users/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/Android-MyDemoAppRN.1.3.0.build-244.apk",
     "noReset": false,
     "newCommandTimeout": 300,
-    "adbExecTimeout": 1200000,
-    "appWaitDuration": 60000,
+    "adbExecTimeout": 2400000,
+    "appWaitDuration": 120000,
     "uiautomator2ServerInstallTimeout": 1200000
   }
 }
