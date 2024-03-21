@@ -52,7 +52,7 @@ jobs:
         run: |
           appium driver install xcuitest
           appium driver install uiautomator2
-          appium --log-level debug &
+          appium --allow-cors --log-level debug &
           sleep 10
           appium -v   
 
@@ -129,7 +129,7 @@ jobs:
         run: |
           appium driver install xcuitest
           appium driver install uiautomator2
-          appium --log-level debug &
+          appium --allow-cors --log-level debug &
           sleep 10
           appium -v   
 
@@ -155,7 +155,7 @@ jobs:
           sleep 5
           ./emulator -list-avds
           sleep 5
-          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none &
+          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
 
       - name: Check out code

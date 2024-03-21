@@ -1,9 +1,12 @@
 {
-    "capabilities": {
-        "deviceName": "emulator-5554",
-        "platformName": "Android",
-        "app": "/Users/tauqirsarwar/Documents/Automation/Bench/Boilerplate/pytest-automation-boilerplate/app files/builds/Android-MyDemoAppRN.1.3.0.build-244.apk",
-        "noReset": false,
-        "newCommandTimeout": 3600
-        }
-    }
+  "capabilities": {
+    "deviceName": "emulator-5554",
+    "platformName": "Android",
+    "app": "/Users/tauqirsarwar/Documents/Automation/Bench/Boilerplate/pytest-automation-boilerplate/app files/builds/Android-MyDemoAppRN.1.3.0.build-244.apk",
+    "noReset": false,
+    "newCommandTimeout": 300,
+    "adbExecTimeout": 2400000,
+    "appWaitDuration": 2400000,
+    "uiautomator2ServerInstallTimeout": 2400000
+  }
+}
