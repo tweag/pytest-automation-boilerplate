@@ -32,36 +32,41 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v
 
-      - name: Run IOS Emulator
-        id: run_ios_emulator
-        uses: futureware-tech/simulator-action@v3
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
+
+      - name: Set up X Code
+        id: setup_xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-           model: 'iPhone 8'
+          xcode-version: latest
 
-      - name: Run Flutter Drive
-        id: run_flutter_drive
-        run: flutter drive
+      - name: Open IOS simulator
+        id: open_ios_simulator
+        if: steps.setup_xcode.outcome == 'success'
+        run: |
+          xcrun simctl list
+          sleep 5
+          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
+          sleep 10
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_flutter_drive.outcome == 'success'
+        if: steps.open_ios_simulator.outcome == 'success'
         run: |
           sh install.sh
 
@@ -73,7 +78,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -113,36 +118,42 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v 
 
-      - name: Run IOS Emulator
-        id: run_ios_emulator
-        uses: futureware-tech/simulator-action@v3
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
+          
+
+      - name: Set up X Code
+        id: setup_xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-           model: 'iPhone 8'
+          xcode-version: latest
 
-      - name: Run Flutter Drive
-        id: run_flutter_drive
-        run: flutter drive
+      - name: Open IOS simulator
+        id: open_ios_simulator
+        if: steps.setup_xcode.outcome == 'success'
+        run: |
+          xcrun simctl list
+          sleep 5
+          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
+          sleep 10
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.open_ios_simulator.outcome == 'success'
         run: |
           sh install.sh
 
@@ -154,7 +165,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/ios_mobile_docker.json'
+                                --variables './configs/ios_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \

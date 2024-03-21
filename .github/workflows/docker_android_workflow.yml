@@ -3,7 +3,6 @@ name: Docker Android Tests Workflow
 env:
   TAGS: "android_mobile_tests"
   PROJECT_LOCATION: ${{ github.workspace }}
-  USING_DOCKER: 'True'
 
 on:
   schedule:
@@ -18,9 +17,17 @@ on:
 jobs:
   scheduled-regression:
     if: github.event_name == 'schedule'
-    name: ${{ matrix.name }} - Regression
+    name: Schedule Android - Regression
     runs-on: macos-latest
     steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
       - name: Setup Python
         id: setup_python
         if: steps.validate_input.outcome == 'success'
@@ -33,22 +40,22 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
         if: steps.setup_java.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
+          sleep 10
+          appium -v   
+
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
           sleep 5
-          appium -v      
 
       - name: Run Emulator
         id: run_emulator
@@ -76,7 +83,7 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
+                                --variables './configs/android_mobile_docker.json' \
                                 --tags="$TAGS" \
                                 --html=report.html \
                                 --self-contained-html \
@@ -111,30 +118,26 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Check out code
-        id: co_code
-        if: steps.setup_python.outcome == 'success'
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
-        if: steps.setup_java.outcome == 'success'
+        if: steps.setup_python.outcome == 'success'
         run: |
           npm install -g appium
-          appium --log-level info &
+          appium --log-level debug &
           sleep 5
-          appium -v      
+          appium -v  
 
-      - name: Run Emulator
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
+
+      - name: Run Android Emulator
         id: run_emulator
+        if: steps.setup_appium.outcome == 'success'
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -143,11 +146,28 @@ jobs:
           disable-animations: true
           target: default
           arch: x86_64
-          script:  echo "Generated AVD"
+          script: echo "Generated AVD"
+
+      - name: Run Android Emulator Again
+        id: run_emulator_again
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          echo "Running Emulator Again"
+          cd ~/Library/Android/sdk/emulator
+          sleep 5
+          ./emulator -list-avds
+          sleep 5
+          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none &
+
+
+      - name: Check out code
+        id: co_code
+        if: steps.run_emulator.outcome == 'success'
+        uses: actions/checkout@v4
 
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.co_code.outcome == 'success'
         run: |
           sh install.sh
 
@@ -159,10 +179,10 @@ jobs:
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-                                --variables './configs/android_mobile_docker.json'
-                                --tags="$TAGS" \
-                                --html=report.html \
-                                --self-contained-html \
+                                --variables './configs/android_mobile_docker.json' \
+                                --tags="android_mobile_tests"  \
+                                --html=report.html  \
+                                --self-contained-html  \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
