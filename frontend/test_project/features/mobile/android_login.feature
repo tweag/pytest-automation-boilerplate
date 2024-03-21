@@ -82,6 +82,7 @@ Feature: Basic App functionality
         And I set text '123' to field 'Android > _mob > an-Payment_Detail > CVV'
         Then The element 'Android > _mob > an-Review_Order > Review' is displayed
         When I click on element 'Android > _mob > an-Review_Order > Review'
+        And I swipe down '50' % each time for '2' times
         Then The element 'Android > _mob > an-Review_Order > Total' is displayed
         When I click on element 'Android > _mob > an-Review_Order > Place_Order'
         Then The element 'Android > _mob > an-Review_Order > Order_Complete' is displayed
