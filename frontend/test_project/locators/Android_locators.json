@@ -39,7 +39,7 @@
             },
             "an-Review_Order": {
                 "Review": "//android.view.ViewGroup[@content-desc='Review Order button']",
-                "Total": "//android.widget.TextView[@content-desc='total price']",
+                "Total": "//*[@content-desc='total price']",
                 "Place_Order": "//android.view.ViewGroup[@content-desc='Place Order button']",
                 "Order_Complete": "//android.widget.TextView[@text='Checkout Complete']"
             }
