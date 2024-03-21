@@ -3,7 +3,6 @@ name: Docker Android Tests Workflow
 env:
   TAGS: "android_mobile_tests"
   PROJECT_LOCATION: ${{ github.workspace }}
-#  USING_DOCKER: 'True'
 
 on:
   schedule:
@@ -41,14 +40,6 @@ jobs:
         if: steps.setup_python.outcome == 'success'
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        id: setup_java
-        if: steps.co_code.outcome == 'success'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
       - name: Install and Run Appium Server
         id: setup_appium
         if: steps.setup_java.outcome == 'success'
@@ -57,7 +48,14 @@ jobs:
           appium --log-level debug &
           sleep 10
           appium -v   
-          curl 'http://127.0.0.1:4723/wd/hub/sessions'
+
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
 
       - name: Run Emulator
         id: run_emulator
@@ -128,7 +126,14 @@ jobs:
           appium --log-level debug &
           sleep 5
           appium -v  
-          curl 'http://127.0.0.1:4723/wd/hub/sessions'
+
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
 
       - name: Run Android Emulator
         id: run_emulator

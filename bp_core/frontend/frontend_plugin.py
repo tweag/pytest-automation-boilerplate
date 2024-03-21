@@ -264,7 +264,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
             _ = capabilities, kwargs
             protocol = "http"
             host = host if host.startswith(protocol) else f"{protocol}://{host}"
-            executor = f"{host}:{port}/wd/hub"
+            executor = f"{host}:{port}"
             kwargs = {"command_executor": executor, "options": options}
 
             return kwargs

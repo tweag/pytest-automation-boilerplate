@@ -40,7 +40,14 @@ jobs:
           appium --log-level debug &
           sleep 5
           appium -v
-          curl 'http://127.0.0.1:4723/wd/hub/sessions'
+
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
 
       - name: Set up X Code
         id: setup_xcode
@@ -119,7 +126,15 @@ jobs:
           appium --log-level debug &
           sleep 5
           appium -v 
-          curl 'http://127.0.0.1:4723/wd/hub/sessions'
+
+      - name: Install drivers
+        id: install_drivers
+        if: steps.setup_appium.outcome == 'success'
+        run: |
+          appium driver install xcuitest
+          appium driver install uiautomator2
+          sleep 5
+          
 
       - name: Set up X Code
         id: setup_xcode

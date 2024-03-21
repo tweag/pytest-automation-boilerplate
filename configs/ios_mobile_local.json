@@ -1,6 +1,5 @@
 {
     "capabilities": {
-        "browserstack": "False",
         "platformVersion": "17.0",
         "deviceName": "iPhone 15 Plus",
         "platformName": "ios",
