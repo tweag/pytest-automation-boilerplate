@@ -31,6 +31,7 @@ Feature: Basic App functionality
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
+        And I swipe down '50' % each time for '1' times
         And The element 'Android > _mob > MyDemoApp > add_to_cart' is displayed
         And I click on element 'Android > _mob > MyDemoApp > add_to_cart'
         When I click on element 'Android > _mob > MyDemoApp > add_to_cart'
@@ -56,6 +57,7 @@ Feature: Basic App functionality
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
+        And I swipe down '50' % each time for '1' times
         Then The element 'Android > _mob > MyDemoApp > add_to_cart' is displayed
         When I click on element 'Android > _mob > MyDemoApp > add_to_cart'
         And I click on element 'Android > _mob > MyDemoApp > add_to_cart'
