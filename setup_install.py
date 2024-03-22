@@ -7,7 +7,7 @@ import sys
 import venv
 from collections import namedtuple
 from pathlib import Path
-from bp_core.setup.setup_scripts.text_formatting import BColors, print_red, print_green, print_cyan
+from main.setup.setup_scripts.text_formatting import BColors, print_red, print_green, print_cyan
 
 TERMINAL_WIDTH = 100
 try:
@@ -23,7 +23,7 @@ def install_selenium_drivers():
     print_green(_ := "Installing Selenium Drivers")
     print_green("-" * len(_))
 
-    from bp_core.setup.setup_scripts.download_assets import get_bs_local_by_platform
+    from main.setup.setup_scripts.download_assets import get_bs_local_by_platform
 
     PROJECT_DIR = Path.cwd()
     TEMP_DIR = PROJECT_DIR / "temp"

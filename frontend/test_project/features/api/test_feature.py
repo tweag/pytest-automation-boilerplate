@@ -1,7 +1,7 @@
 from os import environ
 
 import pytest
-from bp_core.backend.common.step_definitions.steps_common import *
+from main.backend.common.step_definitions.steps_common import *
 from assertpy import assert_that
 from openai import OpenAI
 

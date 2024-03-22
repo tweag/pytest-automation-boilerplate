@@ -1,6 +1,6 @@
 from pytest_bdd import when, parsers
 
-from bp_core.backend.api_utils.utils import (
+from main.backend.api_utils.utils import (
     post_request,
     get_request,
     put_request,

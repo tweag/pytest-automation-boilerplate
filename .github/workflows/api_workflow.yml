@@ -1,140 +1,140 @@
 name: API Workflow
 
 env:
-    TAGS: "api"
-    BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
-    BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+  TAGS: "api"
+  BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
+  BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
 
 on:
-    schedule:
-        -   cron: '0 21 * * *'
-    workflow_dispatch:
-        inputs:
-            tags:
-                description: 'Tags'
-                required: true
-                default: 'api'
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Tags'
+        required: true
+        default: 'api'
 
 jobs:
-    run-api-test-schedule:
-        if: github.event_name == 'schedule'
-        name: API Regression
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Setup Python
-                uses: actions/setup-python@v5
-                with:
-                    python-version: '3.9'
+  run-api-test-schedule:
+    if: github.event_name == 'schedule'
+    name: API Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
-            -   name: Check out code
-                uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
 
-            -   name: Setup dependencies
-                run: |
-                    sh setup_install.sh
+      - name: Setup dependencies
+        run: |
+          sh setup_install.sh
 
-            -   name: Run tests
-                run: |
-                    if [ "${{ github.event.inputs.tags }}" != "" ]
-                    then
-                      TAGS="${{ github.event.inputs.tags }}"
-                    fi
+      - name: Run tests
+        run: |
+          if [ "${{ github.event.inputs.tags }}" != "" ]
+          then
+            TAGS="${{ github.event.inputs.tags }}"
+          fi
+          
+          source $HOME/.bp-venv/bin/activate
+          sh ci_run_api.sh "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
 
-                    source $HOME/.bp-venv/bin/activate
-                    sh local_run_api.sh "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
-            - name: Get Allure history
-              uses: actions/checkout@v4
-              if: always()
-              continue-on-error: true
-              with:
-                  ref: gh-pages
-                  path: gh-pages
+      - name: Allure Report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_results: allure-results
+          allure_history: allure-history
 
-            - name: Allure Report
-              uses: simple-elf/allure-report-action@v1.7
-              if: always()
-              with:
-                  gh_pages: gh-pages
-                  allure_results: allure-results
-                  allure_history: allure-history
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
 
-            - name: Deploy report to Github Pages
-              if: always()
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
-                  PUBLISH_BRANCH: gh-pages
-                  PUBLISH_DIR: allure-history
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}
 
-            -   name: Upload pytest test results
-                uses: actions/upload-artifact@v4
-                with:
-                    name: pytest-results
-                    path: |
-                        ./*.html
-                        ./output/
-                        ./assets/
-                if: ${{ always() }}
+  run-api-test-on-local:
+    if: github.event_name != 'schedule'
+    name: API Regression
+    runs-on: ubuntu-latest
+    steps:
 
-    run-api-test-on-local:
-        if: github.event_name != 'schedule'
-        name: API Regression
-        runs-on: ubuntu-latest
-        steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
-            -   name: Setup Python
-                uses: actions/setup-python@v5
-                with:
-                    python-version: '3.9'
+      - name: Check out code
+        uses: actions/checkout@v4
 
-            -   name: Check out code
-                uses: actions/checkout@v4
+      - name: Setup dependencies
+        run: |
+          sh setup_install.sh
 
-            -   name: Setup dependencies
-                run: |
-                    sh setup_install.sh
+      - name: Run tests
+        run: |
+          if [ "${{ github.event.inputs.tags }}" != "" ]
+          then
+            TAGS="${{ github.event.inputs.tags }}"
+          fi
+          
+          source $HOME/.bp-venv/bin/activate
+          sh ci_run_api.sh "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
 
-            -   name: Run tests
-                run: |
-                    if [ "${{ github.event.inputs.tags }}" != "" ]
-                    then
-                      TAGS="${{ github.event.inputs.tags }}"
-                    fi
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
-                    source $HOME/.bp-venv/bin/activate
-                    sh local_run_api.sh "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+      - name: Allure Report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_results: allure-results
+          allure_history: allure-history
 
-            - name: Get Allure history
-              uses: actions/checkout@v4
-              if: always()
-              continue-on-error: true
-              with:
-                  ref: gh-pages
-                  path: gh-pages
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
 
-            - name: Allure Report
-              uses: simple-elf/allure-report-action@v1.7
-              if: always()
-              with:
-                  gh_pages: gh-pages
-                  allure_results: allure-results
-                  allure_history: allure-history
-
-            - name: Deploy report to Github Pages
-              if: always()
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
-                  PUBLISH_BRANCH: gh-pages
-                  PUBLISH_DIR: allure-history
-
-            -   name: Upload pytest test results
-                uses: actions/upload-artifact@v4
-                with:
-                    name: pytest-results
-                    path: |
-                        ./*.html
-                        ./output/
-                        ./assets/
-                if: ${{ always() }}
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+        if: ${{ always() }}
