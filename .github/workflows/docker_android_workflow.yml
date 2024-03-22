@@ -136,17 +136,6 @@ jobs:
 #      - name: Android Emulator Runner Without SDK Setup
 #        uses: RandyLutcavich/android-emulator-runner-without-sdk-setup@v1.0.3
 
-#      - name: Run Android Emulator Again
-#        id: run_emulator_again
-#        if: steps.run_emulator.outcome == 'success'
-#        run: |
-#          echo "Running Emulator Again"
-#          cd ~/Library/Android/sdk/emulator
-#          sleep 5
-#          ./emulator -list-avds
-#          sleep 5
-#          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-
       - name: Check out code
         id: co_code
         if: steps.install_driver.outcome == 'success'
@@ -171,9 +160,20 @@ jobs:
           arch: x86_64
           script: echo "Generated AVD Started"
 
+      - name: Run Android Emulator Again
+        id: run_emulator_again
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          echo "Running Emulator Again"
+          cd ~/Library/Android/sdk/emulator
+          sleep 5
+          ./emulator -list-avds
+          sleep 5
+          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+
       - name: Run Tests
         id: run_manual_job
-        if: steps.setup_dependencies.outcome == 'success'
+        if: steps.run_emulator_again.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
