@@ -185,10 +185,6 @@ jobs:
       #        run: |
       #          $ANDROID_SDK_ROOT/emulator/emulator -avd testAVD
 
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Create Android emulator
         run: |
           brew install intel-haxm
@@ -234,7 +230,7 @@ jobs:
 
       - name: Check out code
         id: co_code
-        if: steps.run_emulator_again.outcome == 'success'
+#        if: steps.run_emulator_again.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
