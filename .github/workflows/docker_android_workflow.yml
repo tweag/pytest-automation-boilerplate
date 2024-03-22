@@ -136,36 +136,54 @@ jobs:
 #      - name: Android Emulator Runner Without SDK Setup
 #        uses: RandyLutcavich/android-emulator-runner-without-sdk-setup@v1.0.3
 
-      - name: AVD cache
-        uses: actions/cache@v4
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-test
+#      - name: AVD cache
+#        uses: actions/cache@v4
+#        id: avd-cache
+#        with:
+#          path: |
+#            ~/.android/avd/*
+#            ~/.android/adb*
+#          key: avd-test
+#
+#      - name: Run Android Emulator
+#        id: run_emulator
+#        if: steps.setup_dependencies.outcome == 'success'
+#        uses: ReactiveCircus/android-emulator-runner@v2
+#        with:
+#          api-level: 30
+#          force-avd-creation: false
+#          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+#          disable-animations: true
+#          target: default
+#          arch: x86_64
+#          script: echo "Generated AVD Started"
+#
+#      - name: Run Android Emulator Again
+#        id: run_emulator_again
+#        if: steps.run_emulator.outcome == 'success'
+#        run: |
+#          echo "Running Emulator Again"
+#          cd ~/Library/Android/sdk/emulator
+#          ./emulator -list-avds
+#          ./emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
-      - name: Run Android Emulator
-        id: run_emulator
-        if: steps.setup_dependencies.outcome == 'success'
-        uses: ReactiveCircus/android-emulator-runner@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          api-level: 30
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          target: default
-          arch: x86_64
-          script: echo "Generated AVD Started"
+          java-version: '17'
+          distribution: 'temurin'
 
-      - name: Run Android Emulator Again
-        id: run_emulator_again
-        if: steps.run_emulator.outcome == 'success'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Create Android emulator
         run: |
-          echo "Running Emulator Again"
-          cd ~/Library/Android/sdk/emulator
-          ./emulator -list-avds
-          ./emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          sdkmanager --install "system-images;android-31;google_apis;x86_64"
+          echo "no" | avdmanager --verbose create avd --force --name testAVD --abi google_apis/x86_64 --package 'system-images;android-31;google_apis;x86_64'
+
+      - name: Launch Emulator
+        run: |
+          $ANDROID_SDK_ROOT/emulator/emulator -avd testAVD
 
       - name: Check out code
         id: co_code
