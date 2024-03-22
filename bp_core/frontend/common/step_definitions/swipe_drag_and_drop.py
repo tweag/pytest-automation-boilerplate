@@ -12,7 +12,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB context Predefined Step
-# ID 301
 @given(parsers.re("I drag and drop element '(?P<source>.*)' to element '(?P<target>.*)'"))
 @when(parsers.re("I drag and drop element '(?P<source>.*)' to element '(?P<target>.*)'"))
 def drag_and_drop_element(selenium_generics: SeleniumGenerics, locators: Locators, source: str, target: str):
@@ -21,7 +20,6 @@ def drag_and_drop_element(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB context Predefined Step
-# ID 302
 @given(parsers.re("I drag and drop element '(?P<source>.*)' by offset '(?P<x>.*)' and '(?P<y>.*)'"),
        converters=dict(x=data_manager.text_formatted, y=data_manager.text_formatted), )
 @when(parsers.re("I drag and drop element '(?P<source>.*)' by offset '(?P<x>.*)' and '(?P<y>.*)'"),
@@ -32,7 +30,6 @@ def drag_and_drop_element_by_offset(selenium_generics: SeleniumGenerics, locator
 
 
 # WEB context Predefined Step
-# ID 303
 @given(parsers.re("I scroll to element '(?P<locator_path>.*)'"))
 @when(parsers.re("I scroll to element '(?P<locator_path>.*)'"))
 def scroll_to_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path: str):
@@ -44,7 +41,6 @@ def scroll_to_element(selenium_generics: SeleniumGenerics, locators: Locators, l
 
 
 # WEB context Predefined Step
-# ID 304
 @given(parsers.re("I scroll to view and click on '(?P<locator_path>.*)'"))
 @when(parsers.re("I scroll to view and click on '(?P<locator_path>.*)'"))
 def click_on_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path: str):
@@ -54,7 +50,6 @@ def click_on_element(selenium_generics: SeleniumGenerics, locators: Locators, lo
 
 
 # MOBILE context Predefined Step
-# ID 305
 @given(parsers.re("I scroll to element '(?P<locator>.*)' for '(?P<iterations>.*)' iterations"),
        converters=dict(iterations=data_manager.text_formatted), )
 @when(parsers.re("I scroll to element '(?P<locator>.*)' for '(?P<iterations>.*)' iterations"),
@@ -69,7 +64,6 @@ def scroll_to_native_element(selenium_generics: SeleniumGenerics, locators: Loca
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 306
 @given(parsers.re("I scroll on the '(?P<scroll_direction>top|bottom)' of the page"))
 @when(parsers.re("I scroll on the '(?P<scroll_direction>top|bottom)' of the page"))
 def scroll_to_edge(selenium_generics: SeleniumGenerics, scroll_direction):
@@ -84,7 +78,6 @@ def scroll_to_edge(selenium_generics: SeleniumGenerics, scroll_direction):
 
 
 # WEB context Predefined Step
-# ID 307
 @given(parsers.re("I hover over '(?P<locator_path>.*)'"))
 @given(parsers.re("I move to element '(?P<locator_path>.*)'"))
 @when(parsers.re("I hover over '(?P<locator_path>.*)'"))
@@ -96,7 +89,6 @@ def hover_over_element(selenium_generics: SeleniumGenerics, locators: Locators, 
 
 
 # WEB context Predefined Step
-# ID 308
 @given(parsers.re("I move to an element '(?P<locator_path>.*)' with offset '(?P<x>.*)' '(?P<y>.*)'"),
        converters=dict(x=data_manager.text_formatted, y=data_manager.text_formatted), )
 @when(parsers.re("I move to an element '(?P<locator_path>.*)' with offset '(?P<x>.*)' '(?P<y>.*)'"),
@@ -106,7 +98,6 @@ def move_to_element_by_offset(selenium_generics: SeleniumGenerics, locators: Loc
 
 
 # WEB context Predefined Step
-# ID 309
 @given(parsers.re("I hover over '(?P<locator_path1>.*)' and click element '(?P<locator_path2>.*)'"))
 @when(parsers.re("I hover over '(?P<locator_path1>.*)' and click element '(?P<locator_path2>.*)'"))
 def hover_over_and_click_sub_menu(
@@ -122,7 +113,6 @@ def hover_over_and_click_sub_menu(
 
 
 # MOBILE context Predefined Step
-# ID 310
 @given(parsers.re("I swipe down '(?P<percent>.*)' % each time for '(?P<number>.*)' times"),
        converters=dict(percent=data_manager.text_formatted, number=data_manager.text_formatted), )
 @when(parsers.re("I swipe down '(?P<percent>.*)' % each time for '(?P<number>.*)' times"),
@@ -133,7 +123,6 @@ def swipe_down_each_time_in_percentage(selenium_generics: SeleniumGenerics, perc
 
 
 # MOBILE contexts Predefined Step
-# ID 311
 @given(parsers.re(r"I swipe '(?P<direction>left|right)' on element '(?P<locator_path>.*)'( by '(?P<pixels>\d+)' px)?$"))
 @when(parsers.re(r"I swipe '(?P<direction>left|right)' on element '(?P<locator_path>.*)'( by '(?P<pixels>\d+)' px)?$"))
 def swipe_horizontally_on_element(selenium_generics: SeleniumGenerics, locators: Locators, direction: str, locator_path,
@@ -148,7 +137,6 @@ def swipe_horizontally_on_element(selenium_generics: SeleniumGenerics, locators:
 
 
 # MOBILE contexts Predefined Step
-# ID 312
 @given(parsers.re(
     r"I swipe '(?P<direction>left|right)' on the page( from x = '(?P<x>\d+)' px and y = '(?P<y>\d+)' px)?( by '(?P<pixels>\d+)' px)?$"))
 @when(parsers.re(

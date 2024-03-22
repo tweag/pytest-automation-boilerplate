@@ -8,14 +8,15 @@ from selenium.webdriver.common.by import By
 from bp_core.frontend.common.helpers.app import context_manager
 from pathlib import Path
 
-MOBILE_SUFFIX = "_mob"
 from bp_core.utils import data_manager
 
-from bp_core.frontend.common.step_definitions.element_existence_visibility_and_attribute_assertion import \
+from bp_core.frontend.common.step_definitions.attribute_assertion import \
     element_displayed, wait_for_displayed
 from bp_core.frontend.common.step_definitions.click_touch_and_keyboard_actions import click_on_locator
-from bp_core.frontend.common.step_definitions.text_assertion_editing_and_generation import set_element_value, \
+from bp_core.frontend.common.step_definitions.text_assertion_editing import set_element_value, \
     element_equals_text
+
+MOBILE_SUFFIX = "_mob"
 
 
 @given(parsers.re("I set selenium resolution to '(?P<width>.*)' per '(?P<height>.*)'"),

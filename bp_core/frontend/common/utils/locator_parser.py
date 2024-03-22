@@ -15,10 +15,6 @@ logger = structlog.get_logger(__name__)
 __all__ = ["parse_locator", "Locators"]
 
 
-# locator format: "[ID]ikkzvv" or "[TN]td" or "[XP]//div/span"
-# shadow locator format: "[ID]ikkzvv -> .className -> [TN]grv-input"
-
-
 def _parse_locator_string(
     locator_string: str, default_loc_type=ValidLocatorTypes.XP
 ) -> Locator:

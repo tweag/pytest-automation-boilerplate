@@ -3,6 +3,7 @@ import re
 
 from bp_core.utils.dataset_handler import DatasetHandler
 
+
 def text_formatted(string_to_format: str):
     """text_formatted
 

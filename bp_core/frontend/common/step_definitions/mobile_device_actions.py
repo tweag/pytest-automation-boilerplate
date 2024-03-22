@@ -12,25 +12,6 @@ logger = structlog.get_logger(__name__)
 
 
 # MOBILE Predefined Step
-# ID 1201
-@when(parsers.re("I turn '(?P<network_status>ON|OFF)' the network connectivity in Browserstack"))
-@then(parsers.re("I turn '(?P<network_status>ON|OFF)' the network connectivity in Browserstack"))
-def change_network_status(selenium, request: FixtureRequest, network_status: str):
-    NETWORK_STATUS = "CHANGE_NETWORK_STATUS_IN_BROWSERSTACK"
-    payload = {"networkProfile": "no-network"} if network_status.lower() == "off" else {"networkProfile": "reset"}
-    api_response = dict()
-    set_request_endpoint(request, base_url="https://api-cloud.browserstack.com/app-automate/sessions/",
-                         endpoint=f"{selenium.session_id}/update_network.json", request_name=NETWORK_STATUS)
-    selenium_host = request.session.config.option.selenium_host
-    BS_USERNAME = selenium_host[0: selenium_host.index(":")]
-    BS_PASSWORD = selenium_host[selenium_host.index(":") + 1: selenium_host.index("@")]
-    setup_basic_auth(request=request, username=BS_USERNAME, password=BS_PASSWORD)
-    add_json_payload(request, json_payload=payload, request_name=NETWORK_STATUS)
-    make_api_request(request, api_response, request_type="PUT", request_name=NETWORK_STATUS)
-    assert get_api_response(request, api_response, request_name=NETWORK_STATUS).status_code == 200
-
-
-# MOBILE Predefined Step
 # ID 1202
 @when("I reset the mobile app")
 @then("I reset the mobile app")

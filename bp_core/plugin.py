@@ -220,7 +220,6 @@ def pytest_sessionstart(session: pytest.Session) -> None:
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_sessionfinish(session, exitstatus) -> None:
-
     """Called after whole test run finished, right before returning the exit status to the system.
 
         :param pytest.Session session: The pytest session object.
@@ -272,7 +271,7 @@ def pytest_sessionfinish(session, exitstatus) -> None:
     # HTML Report: Show Tests Scripts Version and App Version in the HTML report
     if os.getenv("CI") == "true":
         if os.environ.get("TEST_SCRIPTS_VERSION", None) and not \
-            os.environ.get("TEST_SCRIPTS_VERSION", "").startswith("refs"):
+                os.environ.get("TEST_SCRIPTS_VERSION", "").startswith("refs"):
             metadata["Test Scripts Version"] = os.environ.get("TEST_SCRIPTS_VERSION", "")
         if os.environ.get("APP_VERSION", None):
             metadata["App Version"] = os.environ.get("APP_VERSION")
@@ -300,7 +299,7 @@ def pytest_sessionfinish(session, exitstatus) -> None:
 
 # Collect all tags / markers for the tests
 def pytest_collection_modifyitems(
-    config: pytest_config.Config, items: List[pytest.Item]
+        config: pytest_config.Config, items: List[pytest.Item]
 ) -> None:
     """Called after collection has been performed. May filter or re-order
     the items in-place.
@@ -316,8 +315,8 @@ def pytest_collection_modifyitems(
             for marker in item.cls.pytestmark:
                 item.add_marker(marker.name)
     if (
-        "pytest_testrail_export_test_cases" not in config.option
-        or config.option.pytest_testrail_export_test_cases is False
+            "pytest_testrail_export_test_cases" not in config.option
+            or config.option.pytest_testrail_export_test_cases is False
     ):
         raw_tags = config.option.tags
         if raw_tags is not None:
@@ -445,7 +444,7 @@ def pytest_runtest_makereport(item, call):
                 if driver.capabilities.get("browserVersion", False):
                     html_metadata["Driver"].update({"Browser version": str(driver.capabilities["browserVersion"])})
                 if driver.capabilities.get("browserstack", "") == "True" or \
-                    html_metadata.get('Capabilities', {}).get('browserstack', None) == "True":
+                        html_metadata.get('Capabilities', {}).get('browserstack', None) == "True":
                     html_metadata.update({"Server": "Browserstack"})
 
                 xfail = hasattr(rep, "wasxfail")
@@ -555,8 +554,9 @@ def pytest_html_results_table_row(report, cells):
                         if link[0] == "Browser Log":
                             setattr(link.attr, "download", f"{link[0]}")
                         elif link[0] in (
-                            "URL", "Driver Log", "HTML", "Syslog Log", "Crashlog Log", "Performance Log", "Logcat Log",
-                            "Bugreport Log"):
+                                "URL", "Driver Log", "HTML", "Syslog Log", "Crashlog Log", "Performance Log",
+                                "Logcat Log",
+                                "Bugreport Log"):
                             del link[0]
             cells[2], cells[3] = cells[3], cells[2]
         else:
@@ -616,11 +616,11 @@ def pytest_html_results_summary(prefix, summary, postfix):
                 if result:
                     failed_count = result.group()
     if (
-        isinstance(passed_count, str)
-        and isinstance(failed_count, str)
-        and passed_count.isnumeric()
-        and failed_count.isnumeric()
-        and int(passed_count) + int(failed_count) > 0
+            isinstance(passed_count, str)
+            and isinstance(failed_count, str)
+            and passed_count.isnumeric()
+            and failed_count.isnumeric()
+            and int(passed_count) + int(failed_count) > 0
     ):
         pass_rate = float((int(passed_count) / (int(passed_count) + int(failed_count))) * 100)
     if pass_rate is not None:

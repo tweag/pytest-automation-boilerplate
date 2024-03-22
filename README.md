@@ -324,7 +324,7 @@ Reference Link - https://pypi.org/project/pytest-xdist/
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
-Command for local run on chrome (also ./web_local_run.sh)
+Command for local run on chrome (also ./local_run_web.sh)
 ```shell
 -v -s  --gherkin-terminal-reporter --driver=Chrome  --html="./output/reports/" --self-contained-html --capability headless True --tags="web_tests" --reruns 1 --reruns-delay 2 -n=2
 ```

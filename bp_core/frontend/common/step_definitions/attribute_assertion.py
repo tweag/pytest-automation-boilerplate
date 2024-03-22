@@ -1,11 +1,3 @@
-"""
-----------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------
-
-
-----------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------
-"""
 import polling
 import structlog
 
@@ -23,7 +15,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB context Predefined Step
-# ID 501
 @given(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
@@ -47,7 +38,6 @@ def check_property_is(selenium_generics: SeleniumGenerics, locators: Locators, s
 
 
 # WEB context Predefined Step
-# ID 502
 @given(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is not the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is not the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
@@ -71,7 +61,6 @@ def check_property_is_not(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB context Predefined Step
-# ID 503
 @given(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The css attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The css attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
@@ -94,7 +83,6 @@ def check_css_property_is(attribute, selenium_generics: SeleniumGenerics, locato
 
 
 # WEB context Predefined Step
-# ID 504
 @given(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The css attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is not the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re(r"(With soft assertion '(?P<soft_assert>.*)' )?The css attribute '(?P<attribute>.*)' of element '(?P<locator_path>.*)' is not the value '(?P<value>.*)'(\s+)?((?:within)\s+(?:')(?P<wait_for>\w+)(?:') seconds)?$"),
@@ -117,7 +105,6 @@ def check_css_property_is_not(attribute, selenium_generics: SeleniumGenerics, lo
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 505 & 506 & 507
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?There is an element '(?P<locator_path>.*)' on the page"))
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is displayed"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?There is an element '(?P<locator_path>.*)' on the page"))
@@ -144,7 +131,6 @@ def element_displayed(selenium_generics: SeleniumGenerics, locators: Locators, s
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 508 & 509 & 510
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?There is no element '(?P<locator_path>.*)' on the page"))
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not displayed"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?There is no element '(?P<locator_path>.*)' on the page"))
@@ -171,7 +157,6 @@ def element_not_displayed(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 511
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' appears exactly '(?P<occurrence_count>.*)' times"),
     converters=dict(occurrence_count=data_manager.text_formatted), )
 def check_element_exists(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path, occurrence_count: int, ):
@@ -193,7 +178,6 @@ def check_element_exists(selenium_generics: SeleniumGenerics, locators: Locators
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 512
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' does not appear exactly '(?P<occurrence_count>.*)' times"),
     converters=dict(occurrence_count=data_manager.text_formatted), )
 def check_element_not_exists(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path, occurrence_count: int, ):
@@ -215,7 +199,6 @@ def check_element_not_exists(selenium_generics: SeleniumGenerics, locators: Loca
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 513
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' becomes visible within '(?P<wait_for>.*)' seconds"),
     converters=dict(wait_for=data_manager.text_formatted), )
 def wait_for_displayed(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path: str, wait_for: int, ):
@@ -234,8 +217,6 @@ def wait_for_displayed(selenium_generics: SeleniumGenerics, locators: Locators, 
             assert selenium_generics.is_element_visible(locators.parse_and_get(locator_path, selenium_generics), int(wait_for))
 
 
-# WEB & MOBILE contexts Predefined Step
-# ID 514
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' becomes invisible within '(?P<wait_for>.*)' seconds"),
     converters=dict(wait_for=data_manager.text_formatted), )
 def wait_for_not_displayed(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path: str, wait_for: int):
@@ -257,7 +238,7 @@ def wait_for_not_displayed(selenium_generics: SeleniumGenerics, locators: Locato
 
 
 # WEB context Predefined Step
-# ID 515
+
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' is within the viewport"))
 def check_within_viewport(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert:str, locator_path: str):
     if soft_assert is not None and soft_assert.lower() == 'true':
@@ -268,7 +249,6 @@ def check_within_viewport(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB context Predefined Step
-# ID 516
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that element '(?P<locator_path>.*)' is not within the viewport"))
 def check_within_viewport(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path):
     if soft_assert is not None and soft_assert.lower() == 'true':
@@ -278,8 +258,6 @@ def check_within_viewport(selenium_generics: SeleniumGenerics, locators: Locator
         assert not selenium_generics._is_in_viewport(locators.parse_and_get(locator_path, selenium_generics))
 
 
-# WEB & MOBILE contexts Predefined Step
-# ID 517
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is enabled"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is enabled"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is enabled"))
@@ -301,7 +279,6 @@ def element_enabled(selenium_generics: SeleniumGenerics, locators: Locators, sof
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 518
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not enabled"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not enabled"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not enabled"))
@@ -318,7 +295,6 @@ def element_not_enabled(selenium_generics: SeleniumGenerics, locators: Locators,
 
 
 # WEB context Predefined Step
-# ID 519
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is selected"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is selected"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is selected"))
@@ -332,7 +308,6 @@ def element_selected(selenium_generics: SeleniumGenerics, locators: Locators, so
 
 
 # WEB context Predefined Step
-# ID 520
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not selected"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not selected"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not selected"))

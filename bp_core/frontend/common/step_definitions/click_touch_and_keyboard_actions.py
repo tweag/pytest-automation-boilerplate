@@ -1,10 +1,4 @@
-"""
-----------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------
-"""
 import structlog
 from pytest_bdd import parsers, given, when, then
 from bp_core.frontend.common.helpers.app import context_manager
@@ -18,7 +12,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 201, 208
 @given(parsers.re("I click on (checkbox|button|dropdown|item|element) '(?P<locator_path>.*)'"))
 @given(parsers.re("I tap on '(?P<locator_path>.*)'"))
 @when(parsers.re("I click on (checkbox|button|dropdown|item|element) '(?P<locator_path>.*)'"))
@@ -32,7 +25,6 @@ def click_on_locator(selenium_generics: SeleniumGenerics, locators: Locators, lo
 
 
 # WEB context Predefined Step - Chrome Only
-# ID 202
 @given(parsers.re(
     "(I wait for maximum '(?P<wait_seconds>\\d+)' seconds, and )?I click on '(?P<locator_path>.+)'"))
 @when(parsers.re(
@@ -43,7 +35,6 @@ def click_element(selenium_generics: SeleniumGenerics, locators: Locators, locat
 
 
 # WEB context Predefined Step
-# ID 203
 @given(parsers.re("I (double click|doubleclick) on '(?P<locator_path>.*)'"))
 @when(parsers.re("I (double click|doubleclick) on '(?P<locator_path>.*)'"))
 def dbl_click_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path: str):
@@ -51,7 +42,6 @@ def dbl_click_element(selenium_generics: SeleniumGenerics, locators: Locators, l
 
 
 # WEB context Predefined Step
-# ID 204
 @given(parsers.re("I click on SVG element '(?P<locator_path>.*)'"))
 @when(parsers.re("I click on SVG element '(?P<locator_path>.*)'"))
 def click_svg_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path):
@@ -59,7 +49,6 @@ def click_svg_element(selenium_generics: SeleniumGenerics, locators: Locators, l
 
 
 # WEB context Predefined Step
-# ID 205
 @given(parsers.re("I click on type:'(?P<element_type>.*)' element with text equal to '(?P<value>.*)'"),
        converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re("I click on type:'(?P<element_type>.*)' element with text equal to '(?P<value>.*)'"),
@@ -69,7 +58,6 @@ def click_on_text(selenium_generics: SeleniumGenerics, element_type, value: str)
 
 
 # WEB context Predefined Step
-# ID 206
 @given(parsers.re("I click on type:'(?P<element_type>.*)' that contains the text:'(?P<value>.*)'"),
        converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re("I click on type:'(?P<element_type>.*)' that contains the text:'(?P<value>.*)'"),
@@ -79,7 +67,6 @@ def click_on_partial_text(selenium_generics: SeleniumGenerics, element_type, val
 
 
 # WEB contexts Predefined Step
-# ID 207
 @given(parsers.re(
     "I click on element with visible text '(?P<visibility_option>EQUALS|CONTAINS|STARTS_WITH|ENDS_WITH)' '(?P<value>.*)'"),
        converters=dict(value=data_manager.text_formatted), )
@@ -96,7 +83,6 @@ def click_on_element_by_visible_text(selenium_generics: SeleniumGenerics, locato
 
 
 # MOBILE context Predefined Step
-# ID 209
 @given(parsers.re("I long tap on element '(?P<locator>.*)'"))
 @when(parsers.re("I long tap on element '(?P<locator>.*)'"))
 def long_tap(selenium_generics: SeleniumGenerics, locators: Locators, locator: str):
@@ -105,7 +91,6 @@ def long_tap(selenium_generics: SeleniumGenerics, locators: Locators, locator: s
 
 
 # MOBILE contexts Predefined Step
-# ID 210
 @given(parsers.re(
     "I tap '(?P<corner>BOTTOM_LEFT|BOTTOM_RIGHT|TOP_LEFT|TOP_RIGHT)' corner of element '(?P<locator_path>.*)'"))  # noqa
 @when(parsers.re(
@@ -123,7 +108,6 @@ def click_element_corner(selenium_generics: SeleniumGenerics, locators: Locators
 
 
 # MOBILE context Predefined Step
-# ID 211
 @given(parsers.re(
     "On '(?P<platform>Android|iOS)' I tap on the x='(?P<x_value>.*)' % and y='(?P<y_value>.*)' % of element '(?P<locator_path>.*)'"))
 @when(parsers.re(
@@ -138,7 +122,6 @@ def tap_with_percentage(selenium_generics: SeleniumGenerics, locators, platform:
 
 
 # ANDROID MOBILE context Predefined Step
-# ID 212
 @given("On android, I tap on back navigation")
 @when("On android, I tap on back navigation")
 def tap_back_nav(selenium_generics: SeleniumGenerics):
@@ -148,7 +131,6 @@ def tap_back_nav(selenium_generics: SeleniumGenerics):
 
 
 # iOS MOBILE context Predefined Step
-# ID 213
 @given(parsers.re("On iOS, I navigate back to app after clicking on '(?P<locator>.*)'"))
 @when(parsers.re("On iOS, I navigate back to app after clicking on '(?P<locator>.*)'"))
 def navigate_back_to_app(selenium_generics: SeleniumGenerics, locators: Locators, locator: str):
@@ -158,7 +140,6 @@ def navigate_back_to_app(selenium_generics: SeleniumGenerics, locators: Locators
 
 
 # WEB context Predefined Step
-# ID 214
 @given(parsers.re("I press '(?P<key>.*)'"))
 @when(parsers.re("I press '(?P<key>.*)'"))
 def press_key_not_focused_on_element(selenium_generics: SeleniumGenerics, key: str):
@@ -167,7 +148,6 @@ def press_key_not_focused_on_element(selenium_generics: SeleniumGenerics, key: s
 
 
 # WEB context Predefined Step
-# ID 215
 @given(parsers.re("I focus over '(?P<locator_path>.*)' then I press '(?P<key>.*)'"))
 @when(parsers.re("I focus over '(?P<locator_path>.*)' then I press '(?P<key>.*)'"))
 def press_key_on_element(selenium_generics: SeleniumGenerics, locator_path: str, key: str, locators: Locators):
@@ -177,7 +157,6 @@ def press_key_on_element(selenium_generics: SeleniumGenerics, locator_path: str,
 
 
 # WEB context Predefined Step
-# ID 216
 @when(parsers.re("I click item '(?P<inner_text>.*)' for element '(?P<locator_path>.*)'"),
       converters=dict(inner_text=data_manager.text_formatted), )
 def add_item_for_element(selenium_generics: SeleniumGenerics, locators: Locators, inner_text: str, locator_path: str):
