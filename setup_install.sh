@@ -23,7 +23,7 @@ fi
 echo "Activated Virtual Environment .bp-venv..."
 echo "\n"
 
-# Activate Virtual Environment and then run remaining installation steps that's dependent on venv & dependencies.
+# Activate Virtual Environment and then run remaining setup steps that's dependent on venv & dependencies.
 python ./setup_install.py venv
 
 RETCODE=$?

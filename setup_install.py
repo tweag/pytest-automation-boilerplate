@@ -7,7 +7,7 @@ import sys
 import venv
 from collections import namedtuple
 from pathlib import Path
-from bp_core.installation.installation_scripts.text_formatting import BColors, print_red, print_green, print_cyan
+from bp_core.setup.setup_scripts.text_formatting import BColors, print_red, print_green, print_cyan
 
 TERMINAL_WIDTH = 100
 try:
@@ -23,7 +23,7 @@ def install_selenium_drivers():
     print_green(_ := "Installing Selenium Drivers")
     print_green("-" * len(_))
 
-    from bp_core.installation.installation_scripts.download_assets import get_bs_local_by_platform
+    from bp_core.setup.setup_scripts.download_assets import get_bs_local_by_platform
 
     PROJECT_DIR = Path.cwd()
     TEMP_DIR = PROJECT_DIR / "temp"
@@ -48,10 +48,10 @@ def run_install_tests():
     TESTS_ARGS = [
         "-v",
         "--gherkin-terminal-reporter",
-        "--tags=installation_check"
+        "--tags=setup_check"
     ]
 
-    print_green(_ := "Running default tests to validate installation")
+    print_green(_ := "Running default tests to validate setup")
     print_green("-" * len(_))
     os.environ['BOILERPLATE_INSTALLATION'] = 'True'
     test = pytest.main(TESTS_ARGS)
@@ -64,7 +64,7 @@ def run_install_tests():
         print_red("Installation Tests Returned Exit Code:", test)
         print_red("INSTALLATION FAILED !!!.")
         print_red(
-            "Please review the installation check results in terminal logs above, fix the script, and re-run. If the issue seems to be in boilerplate framework itself, then raise an issue in github."
+            "Please review the setup check results in terminal logs above, fix the script, and re-run. If the issue seems to be in boilerplate framework itself, then raise an issue in github."
         )
 
 
@@ -85,7 +85,7 @@ class PlatformDetails:
         if not self.py_ver.startswith("3.9"):
             sys.exit(
                 BColors.FAIL
-                + "Unsupported Python Version. Please install Python Version 3.9.X and proceed (Recommended = 3.9.6 and above). For installation instruction, please refer project README.md"
+                + "Unsupported Python Version. Please install Python Version 3.9.X and proceed (Recommended = 3.9.6 and above). For setup instruction, please refer project README.md"
                 + BColors.ENDC
             )
 

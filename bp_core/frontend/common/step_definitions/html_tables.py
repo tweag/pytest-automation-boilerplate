@@ -12,7 +12,6 @@ from bp_core.utils import data_manager
 logger = structlog.get_logger(__name__)
 
 
-# ID 1101, 1102
 @then(parsers.re("I expect table '(?P<locator_path>.*)' headers ('(?P<header_tag_path>.*)' )?to match:(?P<data_table>.*)",
                  flags=re.S, ), converters=dict(data_table=data_table_horizontal_converter),)
 def verify_table_headers_match_exactly(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, data_table, header_tag_path):
@@ -25,7 +24,6 @@ def verify_table_headers_match_exactly(selenium_generics: SeleniumGenerics, loca
     assert_that(columns_present).is_equal_to(expected_columns)
 
 
-# ID 1103, 1104
 @then(parsers.re("I expect table '(?P<locator_path>.*)' headers ('(?P<header_tag_path>.*)' )?to contain:(?P<data_table>.*)",
                  flags=re.S, ), converters=dict(data_table=data_table_horizontal_converter), )
 def verify_table_headers_contain_columns(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, data_table, header_tag_path):
@@ -38,7 +36,6 @@ def verify_table_headers_contain_columns(selenium_generics: SeleniumGenerics, lo
     assert_that(columns_present).contains(*expected_columns)
 
 
-# ID 1105
 @then(parsers.re("I expect the column in table '(?P<locator_path>.*)' has the values:(?P<data_table>.*)",
                  flags=re.S, ), converters=dict(data_table=data_table_horizontal_converter), )
 def verify_table_column_contain_values(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, data_table):
@@ -61,7 +58,6 @@ def verify_table_column_contain_values(selenium_generics: SeleniumGenerics, loca
             assert len(selenium_generics.get_elements(cell_locator)) > 0
 
 
-# ID 1106
 @then(parsers.re("I expect that '(?P<row>.*)' row has the value '(?P<expected_text>.*)' in column '(?P<column>.*)' of table '(?P<locator_path>.*)'"),
     converters=dict(expected_text=data_manager.text_formatted), )
 def verify_column_contain_value(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, row, column, expected_text: str):
@@ -82,7 +78,6 @@ def verify_column_contain_value(selenium_generics: SeleniumGenerics, locators: L
     assert len(selenium_generics.get_elements(cell_locator)) > 0
 
 
-# ID 1107
 @then(parsers.re("I expect that '(?P<row>.*)' row in table '(?P<locator_path>.*)' has the following values:(?P<data_table>.*)",
                  flags=re.S, ), converters=dict(data_table=data_table_horizontal_converter), )
 def verify_table_row_contain_values(selenium_generics: SeleniumGenerics, locators: Locators, row, locator_path, data_table):
@@ -109,7 +104,6 @@ def verify_table_row_contain_values(selenium_generics: SeleniumGenerics, locator
         assert len(selenium_generics.get_elements(cell_locator)) > 0
 
 
-# ID 1108
 @then(parsers.re("I expect that table '(?P<locator_path>.*)' has '(?P<value>.*)' rows"),
       converters=dict(value=data_manager.text_formatted), )
 def verify_column_contain_value(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, value: int):

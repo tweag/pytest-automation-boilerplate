@@ -403,8 +403,6 @@ def build_case(
         tg["name"].replace("@", "") for tg in (feature_refs + scenario_refs)
     )
 
-    # Setting Case tags - Reads the scenario and feature level tags except "automated', "manual", "nondestructive" and
-    # anything with "project_name-"
     raw_custom_tags = [
                           sc["name"]
                           for sc in scenario["tags"]
@@ -702,11 +700,6 @@ def export_tests_results(session, tr: TestRailAPI, project_data: dict, scenarios
 
     # tr_plan = tr.plans.get_plan(project_data["plan_id"])
     tr_statuses = tr.statuses.get_statuses()
-    """
-    Commenting out these lines for now as its more related to suites
-    and also not really working appropriately in both cases (type1 and type3)
-    We can delete it later if no regression. I have tested few scenarios and it worked fine
-    """
 
     tr_plan = tr.plans.get_plan(project_data["plan_id"])
     for tr_plan_entry in tr_plan.entries:

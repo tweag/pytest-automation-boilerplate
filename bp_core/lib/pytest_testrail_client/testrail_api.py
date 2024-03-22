@@ -14,14 +14,6 @@ def validate_setup(tr: TestRailAPI, project_id):
             f"Project ID must be set. Invalid value {project_id}"
         )
 
-    """ This can be un-commented after completely moving to Project Type1"""
-    # project_id = int(project_id)
-    # if tr.projects.get_project(project_id).suite_mode != 1:
-    #     TestRailConfigurationError(
-    #         f"Project suite_mode {tr.projects.get_project().suite_mode} not compatible with this plugin. "
-    #         f"Use Single repository to manage cases"
-    #     )
-
 
 class TestRailAPI(Session):
     """API reference: https://support.testrail.com/hc/en-us/sections/7077185274644-API-reference"""

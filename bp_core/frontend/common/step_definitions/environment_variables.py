@@ -26,7 +26,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 801
 @given(parsers.re("I get text from element '(?P<locator_path>.*)' and save as environment variable '(?P<env_var>.*)'"))
 @when(parsers.re("I get text from element '(?P<locator_path>.*)' and save as environment variable '(?P<env_var>.*)'"))
 def get_text_from_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path: str, env_var: str, ):
@@ -38,7 +37,6 @@ def get_text_from_element(selenium_generics: SeleniumGenerics, locators: Locator
     os.environ[env_var] = returned_text
 
 
-# ID 802
 @given(parsers.re("I get text from element '(?P<locator_path>.*)' between '(?P<initial_string>.*)' and '(?P<final_string>.*)' boundaries, and save as environment variable '(?P<env_var>.*)'"),
     converters=dict(initial_string=data_manager.text_formatted, final_string=data_manager.text_formatted), )
 @when(parsers.re("I get text from element '(?P<locator_path>.*)' between '(?P<initial_string>.*)' and '(?P<final_string>.*)' boundaries, and save as environment variable '(?P<env_var>.*)'"),
@@ -53,7 +51,6 @@ def get_text_from_element(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB context Predefined Step
-# ID 803
 @given(parsers.re("I write within the HTML report the environment variable '(?P<env_var>.*)' value"))
 @when(parsers.re("I write within the HTML report the environment variable '(?P<env_var>.*)' value"))
 @then(parsers.re("I write within the HTML report the environment variable '(?P<env_var>.*)' value"))
@@ -65,7 +62,6 @@ def write_html_report_os_environ_value(selenium_generics: SeleniumGenerics, env_
 
 
 # WEB context Predefined Step
-# ID 804
 @given(parsers.re("I store '(?P<key>.*)' environment variable in .local.env config file"))
 @when(parsers.re("I store '(?P<key>.*)' environment variable in .local.env config file"))
 def store_env_variable_in_local_env(key: str):
@@ -81,7 +77,6 @@ def store_env_variable_in_local_env(key: str):
         raise FileNotFoundError("File not found: .local.env")
 
 
-# ID 806, 909
 @given(parsers.re("I get text from '(?P<cell>.*)' on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' and save it as environment variable with name '(?P<env_var>.*)'"),
        converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted))
 @when(parsers.re("I get text from '(?P<cell>.*)' on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' and save it as environment variable with name '(?P<env_var>.*)'"),
@@ -92,7 +87,6 @@ def write_text_to_excel_file(cell: str, sheet_name: str, file_path: str, env_var
     os.environ[env_var] = text
 
 
-# ID 807, 910
 @given(parsers.re("I get text of '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' and save it as environment variables"),
        converters=dict(sheet_name=data_manager.text_formatted))
 @when(parsers.re("I get text of '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' and save it as environment variables"),
@@ -115,7 +109,6 @@ def store_excel_data_as_env_vars(sheet_name: str, file_path: str):
             os.environ[key] = str(value)
 
 
-# ID 808, 920
 @given(parsers.re("I get text from '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' and save it as env variable with name '(?P<env_var>.*)'"),
        converters=dict(cell=data_manager.text_formatted))
 @when(parsers.re("I get text from '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' and save it as env variable with name '(?P<env_var>.*)'"),
