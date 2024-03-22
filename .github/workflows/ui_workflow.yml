@@ -65,7 +65,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/win_chrome.json
             html_report: win-chrome
-            concurrent_thread: 2
             testrail_configuration_name: 'Chrome, Windows'
             testrail_run_name: 'Desktop Chrome'
 
@@ -74,7 +73,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/win_firefox.json
             html_report: win-firefox
-            concurrent_thread: 2
             testrail_configuration_name: 'Firefox, Windows'
             testrail_run_name: 'Desktop Firefox'
 
@@ -83,7 +81,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/win_edge.json
             html_report: win-edge
-            concurrent_thread: 2
             testrail_configuration_name: 'Edge, Windows'
             testrail_run_name: 'Desktop Edge'
 
@@ -92,7 +89,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/mac_firefox.json
             html_report: mac-firefox
-            concurrent_thread: 2
             testrail_configuration_name: 'Firefox, MacOS'
             testrail_run_name: 'MAC Desktop Chrome'
 
@@ -101,7 +97,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/mac_chrome.json
             html_report: mac-chrome
-            concurrent_thread: 2
             testrail_configuration_name: 'Chrome, MacOS'
             testrail_run_name: 'MAC Desktop Chrome'
 
@@ -110,7 +105,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/mac_edge.json
             html_report: mac-edge
-            concurrent_thread: 2
             testrail_configuration_name: 'Edge, MacOS'
             testrail_run_name: 'MAC Desktop Edge'
 
@@ -119,7 +113,6 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/mac_safari.json
             html_report: mac-safari
-            concurrent_thread: 2
             testrail_configuration_name: 'Safari, MacOS'
             testrail_run_name: 'MAC Desktop Safari'
 
@@ -128,7 +121,6 @@ jobs:
             tags: visual
             config_file: ./env_configs/mac_chrome.json
             html_report: mac-chrome-visual
-            concurrent_thread: 2
             testrail_configuration_name: 'Chrome, MacOS'
             testrail_run_name: 'MAC Desktop Chrome Visual'
 
@@ -163,7 +155,7 @@ jobs:
         run: |
           env
           source $HOME/.bp-venv/bin/activate
-          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "${{ matrix.config_file }}" "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}" "$BASE_URL" $concurrent_thread
+          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "${{ matrix.config_file }}" "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}" "$BASE_URL"
 #            --pytest-testrail-export-test-results \
 #            --testrail-project-id "${{ env.TESTRAIL_PROJECT_ID }}" \
 #            --pytest-testrail-test-plan-id "${{ env.TEST_PLAN_ID }}" \
@@ -295,7 +287,6 @@ jobs:
             BASE_URL="${{ github.event.inputs.baseurl }}"
           fi
 
-          concurrent_thread=2
 
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
             BROWSER=./env_configs/win_chrome.json
@@ -318,7 +309,7 @@ jobs:
 
           env
           source $HOME/.bp-venv/bin/activate
-          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "$BROWSER" "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}" "$BASE_URL" $concurrent_thread
+          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "$BROWSER" "$TAGS" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}" "$BASE_URL"
 
       - name: BrowserStackLocal Stop
         uses: browserstack/github-actions/setup-local@master
