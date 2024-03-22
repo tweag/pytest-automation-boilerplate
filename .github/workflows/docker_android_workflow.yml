@@ -136,17 +136,6 @@ jobs:
 #      - name: Android Emulator Runner Without SDK Setup
 #        uses: RandyLutcavich/android-emulator-runner-without-sdk-setup@v1.0.3
 
-      - name: Check out code
-        id: co_code
-        if: steps.install_driver.outcome == 'success'
-        uses: actions/checkout@v4
-
-      - name: Setup dependencies
-        id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
-        run: |
-          sh setup_install.sh
-
       - name: AVD cache
         uses: actions/cache@v4
         id: avd-cache
@@ -178,9 +167,20 @@ jobs:
           ./emulator -list-avds
           ./emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
+      - name: Check out code
+        id: co_code
+        if: steps.run_emulator_again.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh setup_install.sh
+
       - name: Run Tests
         id: run_manual_job
-        if: steps.run_emulator_again.outcome == 'success'
+        if: steps.setup_dependencies.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
