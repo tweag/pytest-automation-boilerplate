@@ -1,19 +1,19 @@
 import datetime
 from pytest_bdd import when, parsers, given, then
-from bp_core.frontend.common.utils.locator_parser import Locators
-from bp_core.frontend.common.helpers.selenium_generics import SeleniumGenerics
+from main.frontend.common.utils.locator_parser import Locators
+from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 import re
 from assertpy import assert_that
 from selenium.webdriver.common.by import By
-from bp_core.frontend.common.helpers.app import context_manager
+from main.frontend.common.helpers.app import context_manager
 from pathlib import Path
 
-from bp_core.utils import data_manager
+from main.utils import data_manager
 
-from bp_core.frontend.common.step_definitions.attribute_assertion import \
+from main.frontend.common.step_definitions.attribute_assertion import \
     element_displayed, wait_for_displayed
-from bp_core.frontend.common.step_definitions.click_touch_and_keyboard_actions import click_on_locator
-from bp_core.frontend.common.step_definitions.text_assertion_editing import set_element_value, \
+from main.frontend.common.step_definitions.click_touch_and_keyboard_actions import click_on_locator
+from main.frontend.common.step_definitions.text_assertion_editing import set_element_value, \
     element_equals_text
 
 MOBILE_SUFFIX = "_mob"
