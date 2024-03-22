@@ -31,6 +31,7 @@ Feature: Basic App functionality
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
+        And I swipe down '50' % each time for '1' times
         And The element 'Android > _mob > MyDemoApp > add_to_cart' is displayed
         And I click on element 'Android > _mob > MyDemoApp > add_to_cart'
         When I click on element 'Android > _mob > MyDemoApp > add_to_cart'
@@ -56,6 +57,7 @@ Feature: Basic App functionality
         When The element 'Android > _mob > MyDemoApp > item_sl_backpack' is displayed
         And I swipe down '50' % each time for '4' times
         And I click on element 'Android > _mob > an-items > Sauce_Labs_Onesie'
+        And I swipe down '50' % each time for '1' times
         Then The element 'Android > _mob > MyDemoApp > add_to_cart' is displayed
         When I click on element 'Android > _mob > MyDemoApp > add_to_cart'
         And I click on element 'Android > _mob > MyDemoApp > add_to_cart'
@@ -68,10 +70,12 @@ Feature: Basic App functionality
         Then The element 'Android > _mob > an-Shipping_Info > Full_name' is displayed
         When I set text 'Tauqir Sarwar' to field 'Android > _mob > an-Shipping_Info > Full_name'
         And I set text 'Main Cantt' to field 'Android > _mob > an-Shipping_Info > Address_line_1'
+        And I swipe down '50' % each time for '1' times
         And I set text 'Lahore' to field 'Android > _mob > an-Shipping_Info > City'
         And I swipe down '50' % each time for '2' times
         And I set text '102040' to field 'Android > _mob > an-Shipping_Info > Zip_code'
         And I set text 'Pakistan' to field 'Android > _mob > an-Shipping_Info > Country'
+        And I swipe down '50' % each time for '1' times
         And I click on element 'Android > _mob > an-Payment_Detail > Payment'
         Then The element 'Android > _mob > an-Payment_Detail > Full_name' is displayed
         When I set text 'Tauqir Sarwar' to field 'Android > _mob > an-Payment_Detail > Full_name'
@@ -80,6 +84,7 @@ Feature: Basic App functionality
         And I swipe down '50' % each time for '1' times
         And I set text '0325' to field 'Android > _mob > an-Payment_Detail > expired_card'
         And I set text '123' to field 'Android > _mob > an-Payment_Detail > CVV'
+        And I swipe down '50' % each time for '1' times
         Then The element 'Android > _mob > an-Review_Order > Review' is displayed
         When I click on element 'Android > _mob > an-Review_Order > Review'
         And I swipe down '50' % each time for '2' times
