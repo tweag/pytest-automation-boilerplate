@@ -173,14 +173,14 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          ref: gh-pages-1
-          path: gh-pages-1
+          ref: gh-pages
+          path: gh-pages
 
       - name: Allure Report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          gh_pages: gh-pages-1
+          gh_pages: gh-pages
           allure_results: allure-results
           allure_history: allure-history
 
@@ -189,7 +189,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
-          PUBLISH_BRANCH: gh-pages-1
+          PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
       - name: Upload HTML run report in the Artifacts Folder
@@ -322,14 +322,14 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          ref: gh-pages-1
-          path: gh-pages-1
+          ref: gh-pages
+          path: gh-pages
 
       - name: Allure Report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          gh_pages: gh-pages-1
+          gh_pages: gh-pages
           allure_results: allure-results
           allure_history: allure-history
 
@@ -338,7 +338,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           PERSONAL_TOKEN: ${{ secrets.PYTEST_TOKEN }}
-          PUBLISH_BRANCH: gh-pages-1
+          PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
       - name: Upload HTML run report in the Artifacts Folder
