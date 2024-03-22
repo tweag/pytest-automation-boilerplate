@@ -158,7 +158,7 @@ jobs:
         run: |
           sh setup_install.sh
 
-      - name: Run Android Emulator with tests
+      - name: Run Android Emulator
         id: run_emulator
         if: steps.setup_dependencies.outcome == 'success'
         uses: ReactiveCircus/android-emulator-runner@v2
@@ -169,25 +169,20 @@ jobs:
           disable-animations: true
           target: default
           arch: x86_64
-          script: python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
+          script: echo "Generated AVD Started"
+
+      - name: Run Tests
+        id: run_manual_job
+        if: steps.setup_dependencies.outcome == 'success'
+        run: |
+          TAGS="${{ github.event.inputs.tags }}"
+          env
+          source $HOME/.bp-venv/bin/activate
+          python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
                                 --variables './env_configs/android_mobile_docker.json' \
                                 --tags="$TAGS"  \
                                 --html=report.html  \
                                 --self-contained-html  \
-
-
-#      - name: Run Tests
-#        id: run_manual_job
-#        if: steps.setup_dependencies.outcome == 'success'
-#        run: |
-#          TAGS="${{ github.event.inputs.tags }}"
-#          env
-#          source $HOME/.bp-venv/bin/activate
-#          python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
-#                                --variables './env_configs/android_mobile_docker.json' \
-#                                --tags="$TAGS"  \
-#                                --html=report.html  \
-#                                --self-contained-html  \
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4
