@@ -133,9 +133,23 @@ jobs:
           sleep 10
           appium -v   
 
+#      - name: Android Emulator Runner Without SDK Setup
+#        uses: RandyLutcavich/android-emulator-runner-without-sdk-setup@v1.0.3
+
+      - name: Check out code
+        id: co_code
+        if: steps.install_driver.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh setup_install.sh
+
       - name: Run Android Emulator
         id: run_emulator
-        if: steps.setup_appium.outcome == 'success'
+        if: steps.setup_dependencies.outcome == 'success'
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -144,7 +158,7 @@ jobs:
           disable-animations: true
           target: default
           arch: x86_64
-          script: echo "Generated AVD"
+          script: echo "Generated AVD Started"
 
       - name: Run Android Emulator Again
         id: run_emulator_again
@@ -157,20 +171,9 @@ jobs:
           sleep 5
           ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
-      - name: Check out code
-        id: co_code
-        if: steps.run_emulator_again.outcome == 'success'
-        uses: actions/checkout@v4
-
-      - name: Setup dependencies
-        id: setup_dependencies
-        if: steps.co_code.outcome == 'success'
-        run: |
-          sh setup_install.sh
-
       - name: Run Tests
         id: run_manual_job
-        if: steps.setup_dependencies.outcome == 'success'
+        if: steps.run_emulator_again.outcome == 'success'
         run: |
           TAGS="${{ github.event.inputs.tags }}"
           env
