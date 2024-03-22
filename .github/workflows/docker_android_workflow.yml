@@ -149,7 +149,7 @@ jobs:
 
       - name: Check out code
         id: co_code
-        if: steps.run_emulator_again.outcome == 'success'
+        if: steps.install_driver.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
@@ -160,7 +160,7 @@ jobs:
 
       - name: Run Android Emulator with tests
         id: run_emulator
-        if: steps.setup_appium.outcome == 'success'
+        if: steps.setup_dependencies.outcome == 'success'
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
