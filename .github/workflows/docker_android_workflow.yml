@@ -147,6 +147,15 @@ jobs:
         run: |
           sh setup_install.sh
 
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-30
+
       - name: Run Android Emulator
         id: run_emulator
         if: steps.setup_dependencies.outcome == 'success'
@@ -154,7 +163,7 @@ jobs:
         with:
           api-level: 30
           force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           target: default
           arch: x86_64
@@ -166,10 +175,8 @@ jobs:
         run: |
           echo "Running Emulator Again"
           cd ~/Library/Android/sdk/emulator
-          sleep 5
           ./emulator -list-avds
-          sleep 5
-          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          ./emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
       - name: Run Tests
         id: run_manual_job
