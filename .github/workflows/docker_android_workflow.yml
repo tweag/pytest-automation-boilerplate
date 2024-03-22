@@ -93,11 +93,6 @@ jobs:
           screencapture screenshot.jpg
           $ANDROID_HOME/platform-tools/adb exec-out screencap -p > emulator.png
 
-      - name: Check out code
-        id: co_code
-        if: steps.start_emulator.outcome == 'success'
-        uses: actions/checkout@v4
-
       - name: Setup dependencies
         id: setup_dependencies
         if: steps.co_code.outcome == 'success'
