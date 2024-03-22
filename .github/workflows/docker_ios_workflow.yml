@@ -22,7 +22,6 @@ jobs:
     steps:
       - name: Setup Python
         id: setup_python
-        if: steps.validate_input.outcome == 'success'
         uses: actions/setup-python@v5
         with:
           python-version: "3.9"
