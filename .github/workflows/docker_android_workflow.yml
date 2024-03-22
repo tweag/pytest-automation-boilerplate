@@ -20,17 +20,8 @@ jobs:
     name: Schedule Android - Regression
     runs-on: macos-latest
     steps:
-      - name: Validate Input Parameter
-        id: validate_input
-        run: |
-          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
-            echo "Invalid input: 'tags' is required but not provided."
-            exit 1
-          fi
-
       - name: Setup Python
         id: setup_python
-        if: steps.validate_input.outcome == 'success'
         uses: actions/setup-python@v5
         with:
           python-version: "3.9"
@@ -46,17 +37,16 @@ jobs:
         run: |
           npm install -g appium
 
-      - name: Install drivers
-        id: install_drivers
+      - name: Install uiautomator2 driver
+        id: install_driver
         if: steps.setup_appium.outcome == 'success'
         run: |
-          appium driver install xcuitest
           appium driver install uiautomator2
-          appium --allow-cors --log-level debug &
+          appium --log-level debug &
           sleep 10
           appium -v   
 
-      - name: Run Emulator
+      - name: Run Android Emulator
         id: run_emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -68,9 +58,20 @@ jobs:
           arch: x86_64
           script: echo "Generated AVD"
 
+      - name: Run Android Emulator Again
+        id: run_emulator_again
+        if: steps.run_emulator.outcome == 'success'
+        run: |
+          echo "Running Emulator Again"
+          cd ~/Library/Android/sdk/emulator
+          sleep 5
+          ./emulator -list-avds
+          sleep 5
+          ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+
       - name: Setup dependencies
         id: setup_dependencies
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.run_emulator_again.outcome == 'success'
         run: |
           sh setup_install.sh
 
@@ -123,13 +124,12 @@ jobs:
         run: |
           npm install -g appium
 
-      - name: Install drivers
-        id: install_drivers
+      - name: Install uiautomator2 driver
+        id: install_driver
         if: steps.setup_appium.outcome == 'success'
         run: |
-          appium driver install xcuitest
           appium driver install uiautomator2
-          appium --allow-cors --log-level debug &
+          appium --log-level debug &
           sleep 10
           appium -v   
 
@@ -157,10 +157,9 @@ jobs:
           sleep 5
           ./emulator -avd test -no-snapshot-save -no-window -grpc-use-jwt -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
-
       - name: Check out code
         id: co_code
-        if: steps.run_emulator.outcome == 'success'
+        if: steps.run_emulator_again.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
@@ -178,7 +177,7 @@ jobs:
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
                                 --variables './env_configs/android_mobile_docker.json' \
-                                --tags="android_mobile_tests"  \
+                                --tags="$TAGS"  \
                                 --html=report.html  \
                                 --self-contained-html  \
 
