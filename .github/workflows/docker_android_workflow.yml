@@ -199,15 +199,15 @@ jobs:
           if false; then
           emulator_config=~/.android/avd/Pixel_API_29_AOSP.avd/config.ini
 
-          sed -i .bak 's/hw.lcd.density=.*/hw.lcd.density=420/' "$emulator_config"
-          sed -i .bak 's/hw.lcd.height=.*/hw.lcd.height=1920/' "$emulator_config"
+          sed -i .bak 's/hw.lcd.density=.*/hw.lcd.density=480/' "$emulator_config"
+          sed -i .bak 's/hw.lcd.height=.*/hw.lcd.height=2220/' "$emulator_config"
           sed -i .bak 's/hw.lcd.width=.*/hw.lcd.width=1080/' "$emulator_config"
           # Or, add new config
           if ! grep -q "hw.lcd.density" "$emulator_config"; then
-            echo "hw.lcd.density=420" >> "$emulator_config"
+            echo "hw.lcd.density=480" >> "$emulator_config"
           fi
           if ! grep -q "hw.lcd.height" "$emulator_config"; then
-            echo "hw.lcd.height=1920" >> "$emulator_config"
+            echo "hw.lcd.height=2220" >> "$emulator_config"
           fi
           if ! grep -q "hw.lcd.width" "$emulator_config"; then
             echo "hw.lcd.width=1080" >> "$emulator_config"
@@ -217,6 +217,7 @@ jobs:
           fi
 
       - name: Start Android emulator
+        id: start_emulator
         run: |
           echo "Starting emulator and waiting for boot to complete...."
           ls -la $ANDROID_HOME/emulator
@@ -230,7 +231,7 @@ jobs:
 
       - name: Check out code
         id: co_code
-#        if: steps.run_emulator_again.outcome == 'success'
+        if: steps.start_emulator.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
