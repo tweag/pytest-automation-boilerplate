@@ -103,7 +103,6 @@ jobs:
         id: run_manual_job
         if: steps.setup_dependencies.outcome == 'success'
         run: |
-          TAGS="${{ github.event.inputs.tags }}"
           env
           source $HOME/.bp-venv/bin/activate
           python -m pytest -v --driver Appium --selenium-host 'localhost'  --selenium-port '4723' \
