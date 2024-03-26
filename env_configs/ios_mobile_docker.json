@@ -6,6 +6,6 @@
         "app": "/Users/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
         "noReset": false,
         "newCommandTimeout": 3600,
-        "wdaLaunchTimeout": 240000
+        "wdaLaunchTimeout": 300000
         }
     }
