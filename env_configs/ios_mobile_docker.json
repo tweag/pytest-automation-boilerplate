@@ -5,6 +5,7 @@
         "platformName": "iOS",
         "app": "/Users/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
         "noReset": false,
-        "newCommandTimeout": 3600
+        "newCommandTimeout": 3600,
+        "wdaLaunchTimeout": 300000
         }
     }

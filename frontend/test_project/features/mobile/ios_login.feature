@@ -98,8 +98,9 @@ Feature: Basic IOS App functionality
         And I set text '325885556585999' to field '_mob > Payment_Detail > Card_Number'
         And I set text '0325' to field '_mob > Payment_Detail > expired_card'
         And I set text '123' to field '_mob > Payment_Detail > CVV'
-        And I scroll to element '_mob > Payment_Detail > Enter_Click' for '1' iterations
+        And I scroll to element '_mob > Payment_Detail > Enter_Click' for '2' iterations
         And I click on element '_mob > Payment_Detail > Enter_Click'
+        And I scroll to element '_mob > Review_Order > Review' for '2' iterations
         And I click on element '_mob > Review_Order > Review'
         And I click on element '_mob > Review_Order > Review'
         And The element '_mob > Review_Order > Total' is displayed
