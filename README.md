@@ -26,13 +26,6 @@ This document assumes that user has:
 * Access to `pytest-automation-boilerplate` repository, and/or additional test repositories.
 * Have installed your favourite IDEs (Pycharm or VSCode - it's recommended) and/or set up your terminal for development environment.
 
-#### Windows
-
-*Recommended terminal application is GitBash*
-
-For Windows machine setup, there is a well-written article hosted on Sharepoint describing the steps to be followed.
-<p align="right">(<a href="#about-the-project">back to top</a>)</p>
-
 #### MacOS
 
 1. <u><strong>Homebrew</strong></u>
@@ -161,7 +154,16 @@ For Windows machine setup, there is a well-written article hosted on Sharepoint 
 
 5. <u><strong>Appium setup for Mobile apps</strong></u>
     If you are planning to run mobile tests, you need to install Appium server and start it before running the tests.
-   Detailed instructions can be found [here](https://appium.io/docs/en/about-appium/getting-started/)
+   Detailed instructions can be found [here](https://appium.io/docs/en/latest/quickstart/)
+
+6. <u><strong>Local Setup for BrowserStack</strong></u>
+    If you are planning to run tests on BrowserStack, you need to install BrowserStack Local binary and start it before running the tests.
+    Detailed instructions can be found [here](https://www.browserstack.com/local-testing/automate#test-localhost-websites)
+
+7. <u><strong>Local Setup for Docker</strong></u>
+    you need to install Docker desktop before running the docker-compose.yml file.
+    Detailed instructions can be found [here](https://docs.docker.com/desktop/install/mac-install/)
+
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
 ### Executing Test Cases in Local Machine
@@ -171,7 +173,7 @@ command line arguments to be passed to `pytest` command:
 
 1. **`--driver=<test-browser-name>`**
    This should be passed **mandatorily** while running UI/selenium test cases. Test Browser name would be`chrome`,
-   `firefox` or `edge` as per the test needs for local testing. Use `Remote` for testing using BrowserStack and `Appium` for mobile tests.
+   `firefox` or `edge` or `safari` as per the test needs for local testing. Use `Remote` for testing using Docker/BrowserStack and `Appium` for mobile tests.
 2. **`--language=<en|fr|etc.>`**
    Application Language, used in context of UI testing (selenium)
 3. **`--capability <individual-capability-value>`**
@@ -197,10 +199,10 @@ command line arguments to be passed to `pytest` command:
 Sample `pytest` invocation to run all sample ui tests in Chrome browser with 3 threads in parallel:
 
 ```shell
-pytest -v --driver=Chrome --capability headless True --tags=web-tests -n=2
+pytest -v --driver=Chrome --capability headless True --tags=web-tests -n=1
 ```
 
-Starting from v3.28 Boilerplate framework is using built-in driver manager to handle the driver binaries for each browser.
+Boilerplate framework is using built-in driver manager to handle the driver binaries for each browser.
 There is no need to provide `--driver-path` argument anymore. Selenium lib. will automatically detect the browser version and download required binary driver.
 All the drivers will be stored in the `$HOME/.cache/selenium/` folder.
 More info: [here](https://www.selenium.dev/blog/2022/introducing-selenium-manager)
@@ -212,15 +214,18 @@ More info: [here](https://www.selenium.dev/blog/2022/introducing-selenium-manage
 ├── /                                         # root directory with project-wide env_configs and folders
 ├── /app files                                # directory with all android and ios app files/builds
 ├── /webdriver                                # directory contains all the driver binaries / Browserstack local binary
-├── /bp_code                                  # directory contains all the base code (utils, plugins, common steps...) for the framework
-├── /env_configs/                                 # Configurations related to framework & browser specific
+├── /main                                     # directory contains all the base code (utils, plugins, common steps...) for the framework
+├── /env_configs/                             # Configurations related to framework & browser specific
 ├── /frontend/                                # Project specific files (locators, page objects, step definitions, feature files... etc)
 ├── /frontend/features/*                      # Test cases written in Gherkin language
+├── /frontend/locators/*                      # Web locators for the project
 ├── /output/                                  # Reports, downloads.... etc)
 ├── /test_data/                               # All project test data for API, WEB, Mobile tests)
 │   ├── /conftest.py                          # Step up and tear down for the tests
-│   ├── /setup_install.sh                           # Local Setup script
+│   ├── /setup_install.sh                     # Local Setup script
+│   ├── /**.sh                                # Shell scripts for local/CI runs
 │   ├── /pytest.ini                           # Project init file
+│   ├── /docker-compose.yml                   # To build the docker image
 │   ├── /README.md                            # Instructions for the project
 │   ├── /requirements.txt                     # Dependencies
 
@@ -363,6 +368,7 @@ python -m pytest -v --tags="sample-ui-tests" -n=3 --variables=./env_configs/web_
 Please avoid adding `-s` in the CLI since it will not include any logs in the html report.
 </br>
 </br>
+
 For GitHub actions please update .yaml including .html file and ./assets folder as in this example.
 
 ```
@@ -376,6 +382,13 @@ For GitHub actions please update .yaml including .html file and ./assets folder 
       ./output/
   if: ${{ always() }}
 ```   
+### Allure Reports
+by default allure report generates at output/allure/reports at the end of test execution, results are inside /output/allure/results folder. 
+
+### Github Workflows
+A list of workflows are added in the .github/workflows folder. e.g
+Docker execution, Browserstack execution, Local execution, Mobile execution, Testrail execution, etc.
+** about billing of github actions, please check the github documentation. (https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions)
 
 Best Practices
 ---------------------
