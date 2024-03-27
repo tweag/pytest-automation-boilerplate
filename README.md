@@ -108,7 +108,8 @@ This document assumes that user has:
     username@hostname ~ % pyenv install 3.9.12
     username@hostname ~ % pyenv global 3.9.12
     ```
-
+   
+   *Manual Python 3.9.12 installer: [here](https://www.python.org/downloads/release/python-3912/)*
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
 ### Installation
@@ -191,6 +192,8 @@ command line arguments to be passed to `pytest` command:
     * `iOS-tests`
 8. **`--gherkin-terminal-reporter`**
    To be used to override the default pytest terminal report, and display in gherkin format (from `pytest-bdd` plugin).
+   (Please note, we can't use -n with this argument (* `--gherkin-terminal-reporter`) due to a restriction. so just remove this console printing
+   before parallel execution)
 9. **`--html=<path-to-html-output> --self-contained-html`**
     To generate html report (from `pytest-html` plugin). To see full log output in the html report avoid `-s` argument in the same time.
 10. **`-n <number-of-threads>`**
