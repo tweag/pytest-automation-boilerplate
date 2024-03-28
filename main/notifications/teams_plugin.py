@@ -30,9 +30,11 @@ class TeamsPlugin:
         self,
         webhook_url: str,
         results_url: Optional[str] = None,
+        failure_only: Optional[bool] = False,
     ):
         self.webhook_url = webhook_url
         self.results_url = results_url
+        self.failure_only = failure_only
 
         self.reports: Dict[Outcome, List] = defaultdict(list)
         self.session_start = 0
@@ -164,9 +166,12 @@ class TeamsPlugin:
 
     def pytest_sessionfinish(self, session, exitstatus) -> None:
         self.session_end = time.time()
-        if exitstatus == 0 or exitstatus == 1 or exitstatus == 6:
+        if self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
             self.send_teams_message()
-            print('Test results sent to Teams')
+            print('Test results with failures sent to Teams')
+        elif self.failure_only.lower() == 'false' or self.failure_only is None:
+            self.send_teams_message()
+            print('All Test results sent to Teams')
         else:
             print(f"No Teams alert sent")
 
@@ -183,6 +188,11 @@ def pytest_addoption(parser: Parser):
         help='URL to results page for link in Teams message',
         default=os.getenv('TEAMS-RESULTS-URL'),
     )
+    group.addoption(
+        '--teams-failure-only',
+        help='Alert only on test failures',
+        default=os.getenv('TEAMS_FAILURE_ONLY'),
+    )
 
 
 def pytest_configure(config: Config):
@@ -191,6 +201,8 @@ def pytest_configure(config: Config):
         plugin = TeamsPlugin(
             webhook_url=teams_webhook_url,
             results_url=config.option.teams_results_url,
+            failure_only=config.option.teams_failure_only,
+
         )
         config._teams = plugin
         config.pluginmanager.register(plugin)

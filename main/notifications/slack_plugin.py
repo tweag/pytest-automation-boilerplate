@@ -31,10 +31,12 @@ class SlackPlugin:
         webhook_url: str,
         channel: str,
         results_url: Optional[str] = None,
+        failure_only: Optional[bool] = False,
     ):
         self.webhook_url = webhook_url
         self.channel = channel
         self.results_url = results_url
+        self.failure_only = failure_only
 
         self.reports: Dict[Outcome, List] = defaultdict(list)
         self.session_start = 0
@@ -164,9 +166,12 @@ class SlackPlugin:
 
     def pytest_sessionfinish(self, session, exitstatus) -> None:
         self.session_end = time.time()
-        if exitstatus == 0 or exitstatus == 1 or exitstatus == 6:
+        if self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
             self.send_message()
-            print('Test results sent to Slack')
+            print('Test results with failures sent to Slack')
+        elif self.failure_only.lower() == 'false' or self.failure_only is None:
+            self.send_message()
+            print('All Test results sent to Slack')
         else:
             print(f"No Slack alert sent")
 
@@ -188,6 +193,11 @@ def pytest_addoption(parser: Parser):
         help='URL to results page for link in Slack message',
         default=os.getenv('SLACK_RESULTS_URL'),
     )
+    group.addoption(
+        '--slack-failure-only',
+        help='Alert only on test failures',
+        default=os.getenv('SLACK_FAILURE_ONLY'),
+    )
 
 
 def pytest_configure(config: Config):
@@ -197,6 +207,7 @@ def pytest_configure(config: Config):
             webhook_url=slack_webhook_url,
             channel=config.option.slack_channel,
             results_url=config.option.slack_results_url,
+            failure_only=config.option.slack_failure_only,
         )
         config._slack = plugin
         config.pluginmanager.register(plugin)
