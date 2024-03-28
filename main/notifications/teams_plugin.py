@@ -166,12 +166,12 @@ class TeamsPlugin:
 
     def pytest_sessionfinish(self, session, exitstatus) -> None:
         self.session_end = time.time()
-        if self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
-            self.send_teams_message()
-            print('Test results with failures sent to Teams')
-        elif self.failure_only.lower() == 'false' or self.failure_only is None:
+        if self.failure_only is None or self.failure_only.lower() == 'false':
             self.send_teams_message()
             print('All Test results sent to Teams')
+        elif self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
+            self.send_teams_message()
+            print('Test results with failures sent to Teams')
         else:
             print(f"No Teams alert sent")
 

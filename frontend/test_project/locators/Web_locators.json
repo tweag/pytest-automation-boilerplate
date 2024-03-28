@@ -51,7 +51,7 @@
             "last_name": "//input[@id='last-name']",
             "postal_code": "//input[@id='postal-code']",
             "continue": "//input[@id='continue']",
-            "total_amount": "//div[@class='summary_info_label summary_total_label']",
+            "total_amount": "//div[@class='summary_total_label']",
             "finish": "//button[@id='finish']",
             "thank_you_message": "//h2[normalize-space()='Thank you for your order!']"
         }
