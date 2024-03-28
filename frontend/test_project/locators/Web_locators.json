@@ -45,8 +45,14 @@
       "phone": "//input[@id='phone']",
       "location": "//a[@class='locate-me']",
       "job_search": "//h2[@class='job-title']/a",
-      "attach_link": "//button[contains(text(),'Attach')]",
-      "resume": "//span[@id='resume_filename']"
+      "resume_link": "//*[contains(text(),'or enter manually')]",
+      "resume_text": "//*[@id='resume_text']",
+      "country": "//div[@class='select2-container']",
+      "country_value": "//div/ul[@id='select2List0']/li/div[contains(text(),'{}')]",
+      "current_company": "//input[@id='job_application_answers_attributes_3_text_value']",
+      "current_title": "//input[@id='job_application_answers_attributes_4_text_value']",
+      "legal_right": "//div[@class='select2-result-label']"
+
     }
   },
   "SourceDemo_Site": {
