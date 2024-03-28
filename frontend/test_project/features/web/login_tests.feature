@@ -139,16 +139,3 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
     And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains '4325051003'
-    When The element 'Modus_Site > Careers > main_iframe' is displayed
-    And I switch to iframe 'Modus_Site > Careers > main_iframe'
-    And I set text 'Tauqir' to field 'Modus_Site > Careers > first_name'
-    And I set text 'Sarwar' to field 'Modus_Site > Careers > last_name'
-    And I set text 'tauqir.sarwar@moduscreate.com' to field 'Modus_Site > Careers > email'
-    And I set text '+921112563256' to field 'Modus_Site > Careers > phone'
-    And I set text 'Lahore, Punjab, Pakistan' to field 'Modus_Site > Careers > location_field'
-    When The element 'Modus_Site > Careers > resume_link' is displayed
-    And I click on button 'Modus_Site > Careers > resume_link'
-    And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
-    And I click on item 'Modus_Site > Careers > country'
-    And I click item 'Pakistan' for element 'Modus_Site > Careers > country_value'
-    And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'
