@@ -25,7 +25,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 701
 @given(parsers.re("I select the value '(?P<value>.*)' from dropdown '(?P<locator_path>.*)'"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re("I select the value '(?P<value>.*)' from dropdown '(?P<locator_path>.*)'"),
@@ -55,7 +54,6 @@ def select_dropdown_by_index(selenium_generics: SeleniumGenerics, index: int, lo
 
 
 # WEB context Predefined Step
-# ID 703
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect the selected dropdown '(?P<locator_path>.*)' text is '(?P<value>.*)'"),
     converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect the selected dropdown '(?P<locator_path>.*)' text is '(?P<value>.*)'"),
@@ -72,7 +70,6 @@ def get_selected_dropdown_text(selenium_generics: SeleniumGenerics, locators: Lo
         assert_that(actual_text).is_equal_to(value)
 
 
-# ID 704
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that drop-down list '(?P<locator_path>.*)' contains the values:(?P<table_values>.*)", flags=re.S),
     converters=dict(table_values=data_table_vertical_converter))
 def check_dropdown_contains_values(selenium_generics, locators, soft_assert, locator_path, table_values):
@@ -85,7 +82,6 @@ def check_dropdown_contains_values(selenium_generics, locators, soft_assert, loc
             locators.parse_and_get(locator_path, selenium_generics), table_values)
 
 
-# ID 705
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that drop-down list '(?P<locator_path>.*)' does not contains the values:(?P<table_values>.*)", flags=re.S),
     converters=dict(table_values=data_table_vertical_converter))
 def check_dropdown_not_contains_values(selenium_generics, locators, soft_assert, locator_path, table_values):
@@ -98,7 +94,6 @@ def check_dropdown_not_contains_values(selenium_generics, locators, soft_assert,
             locators.parse_and_get(locator_path, selenium_generics), table_values)
 
 
-# ID 706
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that drop-down list '(?P<locator_path>.*)' has in that specific order, only the values:(?P<table_values>.*)", flags=re.S),
     converters=dict(table_values=data_table_vertical_converter))
 def check_dropdown_equal_values(selenium_generics, locators, soft_assert, locator_path, table_values):
@@ -112,7 +107,6 @@ def check_dropdown_equal_values(selenium_generics, locators, soft_assert, locato
 
 
 # WEB context Predefined Step
-# ID 707
 @given(parsers.re(r"I select an item index '(?P<index>.*)' from a searchable dropdown with '(?P<type>label|placeholder|visible text)' '(?P<label>.*)' and search text '(?P<text>.*)'(\s+)?((?:with wait time)\s+(?:')(?P<timeout>.*)(?:') seconds)?$"),
       converters=dict(label=data_manager.text_formatted, text=data_manager.text_formatted))
 @when(parsers.re(r"I select an item index '(?P<index>.*)' from a searchable dropdown with '(?P<type>label|placeholder|visible text)' '(?P<label>.*)' and search text '(?P<text>.*)'(\s+)?((?:with wait time)\s+(?:')(?P<timeout>.*)(?:') seconds)?$"),
@@ -145,7 +139,6 @@ def select_item_from_searchable_dropdown(selenium_generics: SeleniumGenerics, lo
 
 
 # WEB context Predefined Step
-# ID 708
 @given(parsers.re(r"I select by visible text (?:')(?P<value>.*)(?:') from dropdown (whose placeholder is equal to (?:')(?P<placeholder>.*)(?:'))?(\s+)?((?:with the parent)\s+(?:')(?P<label>.*)(?:') label)?$"),
        converters=dict(value=data_manager.text_formatted,))
 @when(parsers.re(r"I select by visible text (?:')(?P<value>.*)(?:') from dropdown (whose placeholder is equal to (?:')(?P<placeholder>.*)(?:'))?(\s+)?((?:with the parent)\s+(?:')(?P<label>.*)(?:') label)?$"),
@@ -170,7 +163,6 @@ def select_by_visible_text_from_dropdown(selenium_generics: SeleniumGenerics, lo
 
 
 # WEB context Predefined Step
-# ID 709
 @given(parsers.re("I select the option at index '(?P<index>.*)' element '(?P<locator_path>.*)'"),
     converters=dict(index=data_manager.text_formatted), )
 @when(parsers.re("I select the option at index '(?P<index>.*)' element '(?P<locator_path>.*)'"),
@@ -180,7 +172,6 @@ def select_option_by_index(selenium_generics: SeleniumGenerics, index: int, loca
 
 
 # WEB context Predefined Step
-# ID 710
 @given(parsers.re("I select the option '(?P<option>.*)' by value for element '(?P<locator_path>.*)'"),
     converters=dict(option=data_manager.text_formatted), )
 @when(parsers.re("I select the option '(?P<option>.*)' by value for element '(?P<locator_path>.*)'"),
@@ -190,7 +181,6 @@ def select_option_by_value(selenium_generics: SeleniumGenerics, option: str, loc
 
 
 # WEB context Predefined Step
-# ID 711
 @given(parsers.re("I select the option '(?P<option>.*)' by visible text for element '(?P<locator_path>.*)'"),
     converters=dict(option=data_manager.text_formatted), )
 @when(parsers.re("I select the option '(?P<option>.*)' by visible text for element '(?P<locator_path>.*)'"),
@@ -200,7 +190,6 @@ def select_option_by_visible_text(selenium_generics: SeleniumGenerics, option: s
 
 
 # WEB context Predefined Step
-# ID 712
 @given(parsers.re("I deselect the option at index '(?P<index>.*)' element '(?P<locator_path>.*)'"),
     converters=dict(index=data_manager.text_formatted), )
 @when(parsers.re("I deselect the option at index '(?P<index>.*)' element '(?P<locator_path>.*)'"),
@@ -210,7 +199,6 @@ def deselect_option_index(selenium_generics: SeleniumGenerics, index: int, locat
 
 
 # WEB context Predefined Step
-# 713
 @given(parsers.re("I deselect the option '(?P<option>.*)' by value for element '(?P<locator_path>.*)'"),
     converters=dict(option=data_manager.text_formatted), )
 @when(parsers.re("I deselect the option '(?P<option>.*)' by value for element '(?P<locator_path>.*)'"),
@@ -220,7 +208,6 @@ def deselect_option_by_value(selenium_generics: SeleniumGenerics, option: str, l
 
 
 # WEB context Predefined Step
-# 714
 @given(parsers.re("I deselect the option '(?P<option>.*)' by visible text for element '(?P<locator_path>.*)'"),
     converters=dict(option=data_manager.text_formatted), )
 @when(parsers.re("I deselect the option '(?P<option>.*)' by visible text for element '(?P<locator_path>.*)'"),
@@ -231,7 +218,6 @@ def deselect_option_by_visible_text(selenium_generics: SeleniumGenerics, option:
 
 
 # WEB context Predefined Step
-# 715
 @given(parsers.re("I select the radio option whose attribute '(?P<option_attribute>.*)' is equal to '(?P<text>.*)' from the parent attribute '(?P<parent_attribute>.*)' and value '(?P<value>.*)'"),
        converters=dict(text=data_manager.text_formatted), )
 @when(parsers.re("I select the radio option whose attribute '(?P<option_attribute>.*)' is equal to '(?P<text>.*)' from the parent attribute '(?P<parent_attribute>.*)' and value '(?P<value>.*)'"),
