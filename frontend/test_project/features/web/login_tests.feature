@@ -110,7 +110,7 @@ Feature:  OrangeHRM Login and Modus QA blog
         And I set text 'Sarwar' to field 'SourceDemo_Site > Checkout_page > last_name'
         And I set text '54810' to field 'SourceDemo_Site > Checkout_page > postal_code'
         And I click on button 'SourceDemo_Site > Checkout_page > continue'
-        Then I expect that item '32.39' for element 'SourceDemo_Site > Checkout_page > total_amount' is displayed
+        Then I expect that item 'Total: $32.39' for element 'SourceDemo_Site > Checkout_page > total_amount' is displayed
         When I click on button 'SourceDemo_Site > Checkout_page > finish'
         And The element 'SourceDemo_Site > Checkout_page > thank_you_message' is displayed
 

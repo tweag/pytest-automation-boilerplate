@@ -27,11 +27,11 @@ class SlackPlugin:
     """
 
     def __init__(
-        self,
-        webhook_url: str,
-        channel: str,
-        results_url: Optional[str] = None,
-        failure_only: Optional[bool] = False,
+            self,
+            webhook_url: str,
+            channel: str,
+            results_url: Optional[str] = None,
+            failure_only: Optional[bool] = False,
     ):
         self.webhook_url = webhook_url
         self.channel = channel
@@ -153,7 +153,8 @@ class SlackPlugin:
 
     def pytest_runtest_logreport(self, report) -> None:
         # pytest will otherwise double-count tests if they fail in setup or teardown
-        if (report.when in {'setup', 'teardown'} and not report.passed) or report.when == 'call' and report.outcome != 'rerun':
+        if (report.when in {'setup',
+                            'teardown'} and not report.passed) or report.when == 'call' and report.outcome != 'rerun':
             self.reports[Outcome(report.outcome)].append(report)
 
     def pytest_terminal_summary(self, terminalreporter) -> None:
@@ -166,12 +167,12 @@ class SlackPlugin:
 
     def pytest_sessionfinish(self, session, exitstatus) -> None:
         self.session_end = time.time()
-        if self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
-            self.send_message()
-            print('Test results with failures sent to Slack')
-        elif self.failure_only.lower() == 'false' or self.failure_only is None:
+        if self.failure_only is None or self.failure_only.lower() == 'false':
             self.send_message()
             print('All Test results sent to Slack')
+        elif self.failure_only.lower() == 'true' and self.failed_tests_count > 0 and exitstatus == 1:
+            self.send_message()
+            print('Test results with failures sent to Slack')
         else:
             print(f"No Slack alert sent")
 
