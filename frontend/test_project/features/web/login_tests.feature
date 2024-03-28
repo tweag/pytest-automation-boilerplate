@@ -137,7 +137,6 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The title is 'Modus Create - Careers | Digital Transformation Consultants'
     And The element 'Modus_Site > Careers > dropdown_filter' is displayed
     And I move to element 'Modus_Site > Careers > dropdown_filter'
-    And I pause for '2' s
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
     And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains '4325051003'
@@ -147,7 +146,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I set text 'Sarwar' to field 'Modus_Site > Careers > last_name'
     And I set text 'tauqir.sarwar@moduscreate.com' to field 'Modus_Site > Careers > email'
     And I set text '+921112563256' to field 'Modus_Site > Careers > phone'
-    And I click on button 'Modus_Site > Careers > location'
+    And I set text 'Lahore, Punjab, Pakistan' to field 'Modus_Site > Careers > location_field'
     When The element 'Modus_Site > Careers > resume_link' is displayed
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
