@@ -1,59 +1,78 @@
 {
-    "OrangeHRM": {
-        "username": "//input[@name='username']",
-        "password": "//input[@name='password']",
-        "login_button": "//button[@type='submit']",
-        "dashboard": "//h6[normalize-space()='Dashboard']",
-        "login_area": "//div[@class='orangehrm-login-slot']",
-        "reset_password": "//p[normalize-space()='Forgot your password?']",
-        "left_menu": "//span[normalize-space()='{}']",
-        "profile_menu": "//header//span[@class='oxd-userdropdown-tab']",
-        "logout_button": "//a[normalize-space()='{}']",
-        "User": {
-            "add_button" :  "//button[normalize-space()='Add']",
-            "save_button" :  "//button[normalize-space()='Save']",
-            "search_button" :  "//button[normalize-space()='Search']",
-            "click_field": "//div[@class='oxd-input-group oxd-input-field-bottom-space']/div/label[normalize-space()='{}']//following::div",
-            "Input_field": "//div[@class='oxd-input-group oxd-input-field-bottom-space']/div/label[normalize-space()='{}']//following::div/input",
-            "search_value": "//div[normalize-space()='{}']",
-            "select_value_2": "//div[4]//div[1]//div[2]",
-            "search_field": "//div[@class='oxd-input-group__label-wrapper']/label[normalize-space()='{}']//parent::div/following::div/input",
-            "search_result": "//div[normalize-space()='{}']",
-            "delete_button": "//div[@class='orangehrm-container']//button[1]",
-            "delete_confirm": "//button[normalize-space()='Yes, Delete']",
-            "success_message": "//*[normalize-space()='Success']"
-        }
-    },
-    "Modus_Site": {
-        "header_link": "//ul[@id='menu-main-nav-1']//a[@class='nav-link'][normalize-space()='{}']",
-        "main_heading": "//span[normalize-space()='World-Class Product Partner']",
-        "dropdown": "//select[@class='facetwp-dropdown']",
-        "search_bar": "//input[@placeholder='Search']",
-        "search_icon": "//i[@class='facetwp-icon']",
-        "search_result": "//img[@alt='Avoid Flaky Tests']",
-        "blog_heading_1": "//h2[normalize-space()='Test Failure Pattern']",
-        "blog_heading_2": "//h2[normalize-space()='Documenting Flaky Tests']",
-        "sub_popup_close": "//button[@class='leadinModal-close']",
-        "modus_logo": "//a[@itemprop='url']//div[@class='modus-logo modus-logo-spin']"
-    },
-    "SourceDemo_Site": {
-        "username": "//input[@id='user-name']",
-        "password": "//input[@id='password']",
-        "login_button": "//input[@id='login-button']",
-        "login_error_message": "//button[@class='error-button']",
-        "menu_button": "//button[@id='react-burger-menu-btn']",
-        "add_product": "//button[@id='add-to-cart-sauce-{}']",
-        "remove_product": "//button[@id='remove-sauce-{}']",
-        "cart_icon": "//span[@class='shopping_cart_badge']",
-        "Checkout_page": {
-            "checkout": "//button[@id='checkout']",
-            "first_name": "//input[@id='first-name']",
-            "last_name": "//input[@id='last-name']",
-            "postal_code": "//input[@id='postal-code']",
-            "continue": "//input[@id='continue']",
-            "total_amount": "//div[@class='summary_total_label']",
-            "finish": "//button[@id='finish']",
-            "thank_you_message": "//h2[normalize-space()='Thank you for your order!']"
-        }
+  "OrangeHRM": {
+    "username": "//input[@name='username']",
+    "password": "//input[@name='password']",
+    "login_button": "//button[@type='submit']",
+    "dashboard": "//h6[normalize-space()='Dashboard']",
+    "login_area": "//div[@class='orangehrm-login-slot']",
+    "reset_password": "//p[normalize-space()='Forgot your password?']",
+    "left_menu": "//span[normalize-space()='{}']",
+    "profile_menu": "//header//span[@class='oxd-userdropdown-tab']",
+    "logout_button": "//a[normalize-space()='{}']",
+    "User": {
+      "add_button": "//button[normalize-space()='Add']",
+      "save_button": "//button[normalize-space()='Save']",
+      "search_button": "//button[normalize-space()='Search']",
+      "click_field": "//div[@class='oxd-input-group oxd-input-field-bottom-space']/div/label[normalize-space()='{}']//following::div",
+      "Input_field": "//div[@class='oxd-input-group oxd-input-field-bottom-space']/div/label[normalize-space()='{}']//following::div/input",
+      "search_value": "//div[normalize-space()='{}']",
+      "select_value_2": "//div[4]//div[1]//div[2]",
+      "search_field": "//div[@class='oxd-input-group__label-wrapper']/label[normalize-space()='{}']//parent::div/following::div/input",
+      "search_result": "//div[normalize-space()='{}']",
+      "delete_button": "//div[@class='orangehrm-container']//button[1]",
+      "delete_confirm": "//button[normalize-space()='Yes, Delete']",
+      "success_message": "//*[normalize-space()='Success']"
     }
+  },
+  "Modus_Site": {
+    "header_link": "//ul[@id='menu-main-nav-1']//a[@class='nav-link'][normalize-space()='{}']",
+    "main_heading": "//span[normalize-space()='World-Class Product Partner']",
+    "dropdown": "//select[@class='facetwp-dropdown']",
+    "search_bar": "//input[@placeholder='Search']",
+    "search_icon": "//i[@class='facetwp-icon']",
+    "search_result": "//img[@alt='Avoid Flaky Tests']",
+    "blog_heading_1": "//h2[normalize-space()='Test Failure Pattern']",
+    "blog_heading_2": "//h2[normalize-space()='Documenting Flaky Tests']",
+    "sub_popup_close": "//button[@class='leadinModal-close']",
+    "modus_logo": "//a[@itemprop='url']//div[@class='modus-logo modus-logo-spin']",
+    "Careers": {
+      "dropdown_filter": "//label[text()='Offices']/select",
+      "main_iframe": "//iframe[@id='grnhse_iframe']",
+      "job_title": "//h2[@class='job-title']/a[contains(text(),'{}')]",
+      "first_name": "//input[@id='first_name']",
+      "last_name": "//input[@id='last_name']",
+      "email": "//input[@id='email']",
+      "phone": "//input[@id='phone']",
+      "location": "//a[@class='locate-me']",
+      "job_search": "//h2[@class='job-title']/a",
+      "resume_link": "//*[contains(text(),'or enter manually')]",
+      "resume_text": "//*[@id='resume_text']",
+      "country": "//div[@class='select2-container']",
+      "country_value": "//div/ul[@id='select2List0']/li/div[contains(text(),'{}')]",
+      "current_company": "//input[@id='job_application_answers_attributes_3_text_value']",
+      "current_title": "//input[@id='job_application_answers_attributes_4_text_value']",
+      "legal_right": "//div[@class='select2-result-label']"
+
+    }
+  },
+  "SourceDemo_Site": {
+    "username": "//input[@id='user-name']",
+    "password": "//input[@id='password']",
+    "login_button": "//input[@id='login-button']",
+    "login_error_message": "//button[@class='error-button']",
+    "menu_button": "//button[@id='react-burger-menu-btn']",
+    "add_product": "//button[@id='add-to-cart-sauce-{}']",
+    "remove_product": "//button[@id='remove-sauce-{}']",
+    "cart_icon": "//span[@class='shopping_cart_badge']",
+    "Checkout_page": {
+      "checkout": "//button[@id='checkout']",
+      "first_name": "//input[@id='first-name']",
+      "last_name": "//input[@id='last-name']",
+      "postal_code": "//input[@id='postal-code']",
+      "continue": "//input[@id='continue']",
+      "total_amount": "//div[@class='summary_total_label']",
+      "finish": "//button[@id='finish']",
+      "thank_you_message": "//h2[normalize-space()='Thank you for your order!']"
+    }
+  }
 }

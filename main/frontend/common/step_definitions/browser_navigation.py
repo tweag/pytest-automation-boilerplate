@@ -300,7 +300,6 @@ def switch_specific_tab(selenium_generics: SeleniumGenerics, base_url: str, valu
 
 
 # WEB context Predefined Step
-# ID 125
 @given(parsers.re("I close the tab with (url|number) '(?P<value>.*)'"),
        converters=dict(value=data_manager.text_formatted), )
 @when(parsers.re("I close the tab with (url|number) '(?P<value>.*)'"),
@@ -313,7 +312,6 @@ def close_specific_tab(selenium_generics: SeleniumGenerics, base_url: str, value
 
 
 # WEB context Predefined Step
-# ID 126
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A new (tab|window) is opened"))
 def check_new_window(selenium_generics: SeleniumGenerics, soft_assert: str):
     # todo: refactor this method in future releases as appropriate
@@ -326,7 +324,6 @@ def check_new_window(selenium_generics: SeleniumGenerics, soft_assert: str):
 
 
 # WEB context Predefined Step
-# ID 127
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A new (tab|window) is not opened"))
 def check_no_new_window(selenium_generics: SeleniumGenerics, soft_assert: str):
     # todo: refactor this method in future releases as appropriate
@@ -339,7 +336,6 @@ def check_no_new_window(selenium_generics: SeleniumGenerics, soft_assert: str):
 
 
 # WEB context Predefined Step
-# ID 128
 @given(parsers.re("I switch to iframe '(?P<locator_path>.*)'"))
 @when(parsers.re("I switch to iframe '(?P<locator_path>.*)'"))
 def switch_to_iframe(selenium_generics: SeleniumGenerics, locators: Locators, locator_path: str):
