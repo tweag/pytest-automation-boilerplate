@@ -135,8 +135,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     When The element 'Modus_Site > main_heading' is displayed
     And I click item 'Careers' for element 'Modus_Site > header_link'
     And The title is 'Modus Create - Careers | Digital Transformation Consultants'
-    And The element 'Modus_Site > Careers > dropdown_filter' is displayed
-    And I move to element 'Modus_Site > Careers > dropdown_filter'
+    And The element 'Modus_Site > Careers > dropdown_area' is displayed
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
     And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains '4325051003'
