@@ -438,7 +438,14 @@ Notifications
     --teams-webhook-url=https://moduscreate.webhook.office.com/...
     --teams-results-url=http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html
 
-
+** Local web driver warnings (if any) resolution for Safari browser on mac**
+```shell
+/usr/bin/safaridriver --enable
+```
+For chrome webdriver warning (if any):
+```shell
+xattr -d com.apple.quarantine $(which chromedriver)
+```
 
 
 Boilerplate update

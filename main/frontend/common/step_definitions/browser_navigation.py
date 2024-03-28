@@ -343,7 +343,6 @@ def switch_to_iframe(selenium_generics: SeleniumGenerics, locators: Locators, lo
 
 
 # WEB context Predefined Step
-# ID 129
 @given(parsers.re("I switch back from iframe"))
 @when(parsers.re("I switch back from iframe"))
 def switch_back_from_iframe(selenium_generics: SeleniumGenerics):
@@ -351,7 +350,6 @@ def switch_back_from_iframe(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 130
 @given(parsers.re("I take a screenshot"))
 @when(parsers.re("I take a screenshot"))
 @then(parsers.re("I take a screenshot"))
@@ -361,7 +359,6 @@ def take_a_screenshot(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 131
 @given(parsers.re("I '(?P<cache_option>disable|enable)' the cache"))
 @when(parsers.re("I '(?P<cache_option>disable|enable)' the cache"))
 def disable_cache(driver, cache_option: str):

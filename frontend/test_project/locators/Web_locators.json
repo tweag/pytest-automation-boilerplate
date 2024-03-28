@@ -36,6 +36,7 @@
     "sub_popup_close": "//button[@class='leadinModal-close']",
     "modus_logo": "//a[@itemprop='url']//div[@class='modus-logo modus-logo-spin']",
     "Careers": {
+      "dropdown_area": "//div[@class='filterSeach']",
       "dropdown_filter": "//label[text()='Offices']/select",
       "main_iframe": "//iframe[@id='grnhse_iframe']",
       "job_title": "//h2[@class='job-title']/a[contains(text(),'{}')]",
