@@ -1,4 +1,4 @@
-name: Docker IOS Tests Workflow
+name: Docker - IOS App Tests
 
 env:
   TAGS: "ios_mobile_tests"

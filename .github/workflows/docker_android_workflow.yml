@@ -1,4 +1,4 @@
-name: Docker Android Tests Workflow
+name: Docker - Android App Tests
 
 env:
   TAGS: "android_mobile_tests"

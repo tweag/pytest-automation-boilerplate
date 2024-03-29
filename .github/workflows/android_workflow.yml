@@ -1,4 +1,4 @@
-name: Android App Workflow
+name: BS - Android App Tests
 
 env:
     TAGS: "android_mobile_tests"
