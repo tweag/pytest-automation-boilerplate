@@ -1,4 +1,4 @@
-name: Web UI Tests
+name: BS - Web UI Tests
 
 env:
   TAGS: web_tests
@@ -43,6 +43,7 @@ on:
           - chrome
           - firefox
           - edge
+          - safari
       os:
         description: 'Operating system (window or mac)'
         required: true

@@ -130,6 +130,27 @@ def element_displayed(selenium_generics: SeleniumGenerics, locators: Locators, s
                 locators.parse_and_get(locator_path, selenium_generics)), f"Element {locator_path} is not visible."
 
 
+@given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is clickable"))
+@when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is clickable"))
+@then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is clickable"))
+def element_displayed(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path):
+    if MOBILE_SUFFIX in locator_path:
+        with context_manager(selenium_generics):
+            if soft_assert is not None and soft_assert.lower() == 'true':
+                with check:
+                    assert selenium_generics.is_element_clickable(locators.parse_and_get(locator_path, selenium_generics)), f"Element {locator_path} is not clickable."
+            else:
+                assert selenium_generics.is_element_clickable(
+                    locators.parse_and_get(locator_path, selenium_generics)), f"Element {locator_path} is not clickable."
+    else:
+        if soft_assert is not None and soft_assert.lower() == 'true':
+            with check:
+                assert selenium_generics.is_element_clickable(locators.parse_and_get(locator_path, selenium_generics)), f"Element {locator_path} is not clickable."
+        else:
+            assert selenium_generics.is_element_clickable(
+                locators.parse_and_get(locator_path, selenium_generics)), f"Element {locator_path} is not clickable."
+
+
 # WEB & MOBILE contexts Predefined Step
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?There is no element '(?P<locator_path>.*)' on the page"))
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The element '(?P<locator_path>.*)' is not displayed"))

@@ -1,4 +1,4 @@
-name: Docker Web UI Tests
+name: Docker - Web UI Tests
 
 env:
   TAGS: web_tests
