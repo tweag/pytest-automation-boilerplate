@@ -36,9 +36,10 @@
     "sub_popup_close": "//button[@class='leadinModal-close']",
     "modus_logo": "//a[@itemprop='url']//div[@class='modus-logo modus-logo-spin']",
     "Careers": {
-      "dropdown_area": "//div[@class='filterSeach']",
+      "dropdown_area": "//p[contains(text(),'Top 25 Companies in the Greater D.C. Area for Diversity')]",
       "dropdown_filter": "//label[text()='Offices']/select",
       "main_iframe": "//iframe[@id='grnhse_iframe']",
+      "job_container": "//h2[@class='job-title']",
       "job_title": "//h2[@class='job-title']/a[contains(text(),'{}')]",
       "first_name": "//input[@id='first_name']",
       "last_name": "//input[@id='last_name']",
