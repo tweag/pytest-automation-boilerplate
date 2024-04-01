@@ -7,8 +7,8 @@ env:
   BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
   HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
   HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
-#  TESTRAIL_PROJECT_ID: "120"
-#  TEST_PLAN_ID: "15095"
+#  TESTRAIL_PROJECT_ID: "10"
+#  TEST_PLAN_ID: "195"
 
 on:
   schedule:
@@ -34,6 +34,15 @@ on:
         required: true
         default: https://opensource-demo.orangehrmlive.com
 
+      os:
+        description: 'Operating system (window or mac)'
+        required: true
+        type: choice
+        default: mac
+        options:
+          - mac
+          - window
+
       browser:
         description: Browser Name
         required: true
@@ -44,14 +53,6 @@ on:
           - firefox
           - edge
           - safari
-      os:
-        description: 'Operating system (window or mac)'
-        required: true
-        type: choice
-        default: mac
-        options:
-          - mac
-          - window
 
 jobs:
   web-scheduled-regression:
@@ -221,11 +222,6 @@ jobs:
             exit 1
           fi
 
-          if [[ "${{ inputs.os }}" == "mac" && "${{ inputs.browser }}" == "edge" ]]; then
-            echo "Invalid input: Edge is not supported on MAC OS."
-            exit 1
-          fi
-
       - name: Setup Python
         id: setup_python
         if: steps.validate_input.outcome == 'success'
@@ -291,7 +287,10 @@ jobs:
           if [[ "${{ github.event.inputs.browser }}" == "safari" && "${{ github.event.inputs.os }}" == "mac" ]]; then
             BROWSER=./env_configs/mac_safari.json
           fi
-
+          if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./env_configs/mac_edge.json
+          fi
+          
           env
           source $HOME/.bp-venv/bin/activate
           sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "$BROWSER" "$TAGS" "$BASE_URL" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
