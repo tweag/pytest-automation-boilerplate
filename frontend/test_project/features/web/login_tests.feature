@@ -17,7 +17,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Logout' for element 'OrangeHRM > logout_button'
     Then The element 'OrangeHRM > username' is displayed
 
-    # This test case fails on Edge browser, because success message is not displayed  after adding user (application issue)
+    # This test case fails on Edge browser (Linux), because success message is not displayed  after adding user (application issue)
   @hrm_add_user @automated
   Scenario: Login and add admin user in OrangeHRM system
     Given I set web base url '{%BASE_URL%}'
