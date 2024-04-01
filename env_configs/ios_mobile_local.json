@@ -1,10 +1,11 @@
 {
-    "capabilities": {
-        "platformVersion": "17.0",
-        "deviceName": "iPhone 15 Plus",
-        "platformName": "iOS",
-        "app": "/Users/tauqirsarwar/Documents/Automation/Bench/Boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
-        "noReset": false,
-        "newCommandTimeout": 3600
-        }
-    }
+  "capabilities": {
+    "platformVersion": "17.0",
+    "deviceName": "iPhone 15 Plus",
+    "platformName": "iOS",
+    "app": "/Users/tauqirsarwar/Documents/Automation/Bench/Boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
+    "noReset": false,
+    "newCommandTimeout": 3600,
+    "wdaLaunchTimeout": 300000
+  }
+}
