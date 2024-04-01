@@ -42,7 +42,6 @@ jobs:
         if: steps.setup_appium.outcome == 'success'
         run: |
           appium driver install xcuitest
-          appium driver install uiautomator2
           appium --log-level debug &
           sleep 10
           appium -v   
@@ -126,7 +125,6 @@ jobs:
         if: steps.setup_appium.outcome == 'success'
         run: |
           appium driver install xcuitest
-          appium driver install uiautomator2
           appium --log-level debug &
           sleep 10
           appium -v   
