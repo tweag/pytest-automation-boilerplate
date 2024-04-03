@@ -21,7 +21,7 @@ Feature: Test HTTP methods for a REST API
         Given I set the GET endpoint to '/posts' for fetching posts
         When I send a GET HTTP request
         # Failing the test on purpose to see the failure in the report
-        Then I expect the HTTP response code of 'GET' to be '200'
+        Then I expect the HTTP response code of 'GET' to be '2000'
         And I expect the response body of 'GET' to be non-empty
 
     @api_smoke
