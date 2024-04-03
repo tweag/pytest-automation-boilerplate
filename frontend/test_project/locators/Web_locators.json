@@ -54,8 +54,17 @@
       "country_value": "//div/ul[@id='select2List0']/li/div[contains(text(),'{}')]",
       "current_company": "//input[@id='job_application_answers_attributes_3_text_value']",
       "current_title": "//input[@id='job_application_answers_attributes_4_text_value']",
-      "legal_right": "//div[@class='select2-result-label']"
-
+      "form_dropdown": "//label[contains(text(),'{}')]/div",
+      "country_dropdown": "//ul[@id='select2List0']/li/div[contains(text(),'{}')]",
+      "legal_dropdown": "//ul[@id='select2List1']/li/div[contains(text(),'{}')]",
+      "consent_dropdown": "//ul[@id='select2List2']/li/div[contains(text(),'{}')]",
+      "restricted_dropdown": "//ul[@id='select2List3']/li/div[contains(text(),'{}')]",
+      "contract_dropdown": "//ul[@id='select2List4']/li/div[contains(text(),'{}')]",
+      "capacity_dropdown": "//ul[@id='select2List5']/li/div[contains(text(),'{}')]",
+      "salary_dropdown": "//ul[@id='select2List6']/li/div[contains(text(),'{}')]",
+      "notice_dropdown": "//ul[@id='select2List7']/li/div[contains(text(),'{}')]",
+      "position_dropdown": "//ul[@id='select2List8']/li/div[contains(text(),'{}')]",
+      "protection_dropdown": "//ul[@id='select2List9']/li/div[contains(text(),'{}')]"
     }
   },
   "SourceDemo_Site": {

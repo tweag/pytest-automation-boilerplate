@@ -126,7 +126,6 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on element 'SourceDemo_Site > login_button'
     Then The element 'SourceDemo_Site > login_error_message' is displayed
 
-
   @job_search @automated
   Scenario: Check QA modus job Search
     Given I set web base url 'https://moduscreate.com'
@@ -142,3 +141,35 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
     And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains '4325051003'
+    When The element 'Modus_Site > Careers > main_iframe' is displayed
+    And I switch to iframe 'Modus_Site > Careers > main_iframe'
+    And I set text 'Tauqir' to field 'Modus_Site > Careers > first_name'
+    And I set text 'Sarwar' to field 'Modus_Site > Careers > last_name'
+    And I set text 'tauqir.sarwar@moduscreate.com' to field 'Modus_Site > Careers > email'
+    And I set text '+921112563256' to field 'Modus_Site > Careers > phone'
+    And I click on button 'Modus_Site > Careers > location_link'
+    When The element 'Modus_Site > Careers > resume_link' is displayed
+    And I click on button 'Modus_Site > Careers > resume_link'
+    And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
+    And I click item 'Please select the country' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Pakistan' for element 'Modus_Site > Careers > country_dropdown'
+    And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'
+    And I set text 'QA Consultant' to field 'Modus_Site > Careers > current_title'
+    And I click item 'Do you have a legal' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > legal_dropdown'
+    And I click item 'your consent in order' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > consent_dropdown'
+    And I click item 'work restricted' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > restricted_dropdown'
+    And I click item 'working for Modus as a Contract' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > contract_dropdown'
+    And I click item 'Modus before in any capacity' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > capacity_dropdown'
+    And I click item 'Please provide your salary expectations' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item '$12,000 - $12,500' for element 'Modus_Site > Careers > salary_dropdown'
+    And I click item 'current notice period' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item '1-2 weeks' for element 'Modus_Site > Careers > notice_dropdown'
+    And I click item 'Contractor. Understanding' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > position_dropdown'
+    And I click item 'data protection apps upon hire' for element 'Modus_Site > Careers > form_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
