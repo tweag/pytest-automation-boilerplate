@@ -152,7 +152,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
     And I click item 'Please select the country' for element 'Modus_Site > Careers > form_dropdown'
-    And I click item 'Pakistan' for element 'Modus_Site > Careers > country_dropdown'
+    And I click item 'Afghanistan' for element 'Modus_Site > Careers > country_dropdown'
     And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'
     And I set text 'QA Consultant' to field 'Modus_Site > Careers > current_title'
     And I click item 'Do you have a legal' for element 'Modus_Site > Careers > form_dropdown'
