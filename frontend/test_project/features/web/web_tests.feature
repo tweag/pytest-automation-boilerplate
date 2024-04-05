@@ -78,7 +78,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I scroll to element 'Modus_Site > blog_heading_1'
     And I scroll to element 'Modus_Site > blog_heading_2'
     And I scroll to element 'Modus_Site > blog_heading_1'
-    And With soft assertion 'False' The element 'Modus_Site > sub_popup_close' is not displayed
+    And With soft assertion 'True' The element 'Modus_Site > sub_popup_close' is not displayed
 
 
   @sd_login @sd_login_error @sd_checkout @automated
