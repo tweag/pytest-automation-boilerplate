@@ -45,9 +45,9 @@ Feature:  OrangeHRM Visual Tests
         And I scroll to element 'Modus_Site > blog_heading_1'
         And I scroll to element 'Modus_Site > blog_heading_2'
         And I scroll to element 'Modus_Site > blog_heading_1'
-        And With soft assertion 'True' The element 'Modus_Site > sub_popup_close' is not displayed
-#        And The element 'Modus_Site > sub_popup_close' is displayed
-#        When I click on button 'Modus_Site > sub_popup_close'
+#        And With soft assertion 'True' The element 'Modus_Site > sub_popup_close' is not displayed
+        And The element 'Modus_Site > sub_popup_close' is displayed
+        When I click on button 'Modus_Site > sub_popup_close'
         Then I verify the page is not visually regressed:
             | base_image                    |
             | mac-chrome-blog-page-full.png |
