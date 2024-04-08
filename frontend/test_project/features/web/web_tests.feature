@@ -1,7 +1,7 @@
 @nondestructive @web_tests
 Feature:  OrangeHRM Login and Modus QA blog
 
-  @hrm_login @hrm_logout @automated
+  @hrm_login @hrm_logout @automated @firefox
   Scenario: Login into OrangeHRM system and logout
     Given I set web base url '{%BASE_URL%}'
     And Browser is maximized
@@ -18,7 +18,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     Then The element 'OrangeHRM > username' is displayed
 
     # This test case fails on Edge browser (Linux), because success message is not displayed  after adding user (application issue)
-  @hrm_add_user @automated
+  @hrm_add_user @automated @firefox
   Scenario: Login and add admin user in OrangeHRM system
     Given I set web base url '{%BASE_URL%}'
     And Browser is maximized
@@ -59,7 +59,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on button 'OrangeHRM > User > delete_confirm'
     Then The element 'OrangeHRM > User > success_message' is displayed
 
-  @blog_search @automated
+  @blog_search @automated @firefox
   Scenario: Check QA modus blog Search
     Given I set web base url 'https://moduscreate.com'
     And The browser resolution is '1024' per '768'
@@ -81,7 +81,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The element 'Modus_Site > sub_popup_close' is displayed
 
 
-  @sd_login @sd_login_error @sd_checkout @automated
+  @sd_login @sd_login_error @sd_checkout @automated @firefox
   Scenario: Login into saucedemo site with valid credentials
     Given I set web base url 'https://www.saucedemo.com'
     And Browser is maximized
@@ -116,7 +116,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The element 'SourceDemo_Site > Checkout_page > thank_you_message' is displayed
 
 
-  @sd_failure_message @automated
+  @sd_failure_message @automated @firefox
   Scenario: Try to login into saucedemo site with in-valid credentials
     Given I set web base url 'https://www.saucedemo.com'
     And Browser is maximized
