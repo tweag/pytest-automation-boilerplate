@@ -124,7 +124,8 @@ This document assumes that user has:
     ```
 
 2. <u><strong>source setup_install.sh</strong></u>
-   After successful cloning, execute below commands to install BoilerPlate.
+   After successful cloning, execute below commands to install BoilerPlate (for local, If would like to pypass this script then 
+    follow the manual installation through (**pip install -r requirements.txt**)
 
     ```shell
     cd pytest-automation-boilerplate/
