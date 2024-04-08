@@ -124,7 +124,8 @@ This document assumes that user has:
     ```
 
 2. <u><strong>source setup_install.sh</strong></u>
-   After successful cloning, execute below commands to install BoilerPlate.
+   After successful cloning, execute below commands to install BoilerPlate (for local, If would like to pypass this script then 
+    follow the manual installation through (**pip install -r requirements.txt**)
 
     ```shell
     cd pytest-automation-boilerplate/
@@ -433,9 +434,11 @@ Notifications
 # Slack Notification arguments
     --slack-webhook-url=https://hooks.slack.com/services/....
     --slack-channel=pytest-test-automation
+    --slack-failure-only=true
     --slack-results-url=http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html
 # Teams Notification arguments
     --teams-webhook-url=https://moduscreate.webhook.office.com/...
+    --teams-failure-only=true
     --teams-results-url=http://localhost:63342/pytest-automation-boilerplate/output/allure/reports/index.html
 
 ** Local web driver warnings (if any) resolution for Safari browser on mac**
