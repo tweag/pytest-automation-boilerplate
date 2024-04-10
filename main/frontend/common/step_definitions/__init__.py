@@ -10,3 +10,4 @@ from .mobile_device_actions import *
 from .swipe_drag_and_drop import *
 from .text_assertion_editing import *
 from .visual_comparison import *
+from .email import *
