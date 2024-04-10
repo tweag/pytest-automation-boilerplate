@@ -70,6 +70,7 @@ def test_check_step_definitions_folder():
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/click_touch_and_keyboard_actions.py")).is_true()
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/date_time.py")).is_true()
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/dropdowns.py")).is_true()
+    assert_that(os.path.isfile("./main/frontend/common/step_definitions/email.py")).is_true()
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/attribute_assertion.py")).is_true()
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/environment_variables.py")).is_true()
     assert_that(os.path.isfile("./main/frontend/common/step_definitions/excel_and_csv.py")).is_true()

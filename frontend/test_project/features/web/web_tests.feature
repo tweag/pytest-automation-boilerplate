@@ -174,3 +174,8 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Yes' for element 'Modus_Site > Careers > position_dropdown'
     And I click item 'data protection apps upon hire' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
+
+
+  @email @automated
+  Scenario: Email verification
+    When I get email for 'moduspytestboilerplate@gmail.com'
