@@ -1,12 +1,12 @@
 {
     "installed": {
-        "client_id": "44392rcontent.com",
+        "client_id": "443927617801-152i1i2juvvaqq7q3gniugrtoq4r89s9.apps.googleusercontent.com",
         "project_id": "modus-pytest",
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
-        "refresh_token": "1//0ewd1ANSvascVyJs2UBeQOY",
+        "refresh_token": "1//0ewd1V6v2W-BdCgYIARAAGA4SNwF-L9Ir0okYJ30QMNCV_ArrnK0aor-KhqbnrV4tu5qNmbk-pzFRAna9XANSvascVyJs2UBeQOY",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_secret": "MGS3sWe",
+        "client_secret": "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",
         "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost", "http://localhost:8080", "http://127.0.0.1"]
     }
 }
