@@ -2,11 +2,11 @@ import base64
 import json
 import os
 import re
-import time
 
-import pytest
 import structlog
 from bs4 import BeautifulSoup
+from pytest_bdd import parsers, when, then
+from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 
 from main.frontend.common.step_definitions import store_env_variable_in_local_env
 from main.utils.email_reader import create_json
@@ -15,9 +15,6 @@ logger = structlog.get_logger(__name__)
 
 PROJECT_DIR = os.getcwd()
 test_data_dir = os.path.join(PROJECT_DIR, "test_data/files/email_data.json")
-
-from pytest_bdd import parsers, when, then
-from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 
 
 @when(parsers.re("I get link from email '(?P<user_type>.*)'"),
@@ -61,7 +58,6 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
                     if 'Test Project Data' in j or 'Test Data' in j:
                         new_url = j
                 final_url = str(new_url).replace('amp;', '')
-                pytest.globalDict['final_url'] = final_url
             selenium_generics.navigate_to_url(final_url)
 
             break
