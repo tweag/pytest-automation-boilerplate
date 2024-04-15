@@ -160,5 +160,5 @@ allure-report/*
 reports/screenshots/*
 /test_data/visualtesting/test/*
 /output/
-/test_data/files/email_data.json
-/test_data/files/email_reader.txt
+/test_data/files/*.json
+/test_data/files/*.txt
