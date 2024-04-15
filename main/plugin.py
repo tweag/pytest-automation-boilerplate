@@ -10,7 +10,7 @@ import copy
 from _pytest.fixtures import FixtureLookupError
 
 from py.xml import html
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import List
