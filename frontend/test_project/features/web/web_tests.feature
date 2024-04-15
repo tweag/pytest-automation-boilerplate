@@ -187,5 +187,4 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on element 'OrangeHRM > login_button'
     Then The title is 'OrangeHRM'
     And The page url contains 'dashboard'
-    When I get about link from email 'moduspytestboilerplate@gmail.com'
-    Then I reopen the email link
+    When I get link from email 'moduspytestboilerplate@gmail.com'

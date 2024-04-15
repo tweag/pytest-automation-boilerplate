@@ -7,9 +7,11 @@ import time
 import pytest
 import structlog
 from bs4 import BeautifulSoup
-from collections import defaultdict
 
+from main.frontend.common.step_definitions import store_env_variable_in_local_env
 from main.utils.email_reader import create_json
+
+logger = structlog.get_logger(__name__)
 
 PROJECT_DIR = os.getcwd()
 test_data_dir = os.path.join(PROJECT_DIR, "test_data/files/email_data.json")
@@ -17,13 +19,10 @@ test_data_dir = os.path.join(PROJECT_DIR, "test_data/files/email_data.json")
 from pytest_bdd import parsers, when, then
 from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 
-logger = structlog.get_logger(__name__)
-pytest.globalDict = defaultdict()
 
-
-@when(parsers.re("I get about link from email '(?P<user_type>.*)'"),
+@when(parsers.re("I get link from email '(?P<user_type>.*)'"),
       converters=dict(user_type=str))
-@then(parsers.re("I get about link from email '(?P<user_type>.*)'"),
+@then(parsers.re("I get link from email '(?P<user_type>.*)'"),
       converters=dict(user_type=str))
 def check_email(user_type, selenium_generics: SeleniumGenerics):
     time.sleep(5)
@@ -68,9 +67,3 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
 
             break
     f.close()
-
-
-@then('I reopen the email link')
-def reopen_final_url(selenium_generics: SeleniumGenerics):
-        final_url = pytest.globalDict['final_url']
-        selenium_generics.navigate_to_url(final_url)
