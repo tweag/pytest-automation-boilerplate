@@ -72,7 +72,7 @@ jobs:
 
           - name: Win Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
-            tags: 'web_tests and firefox'
+            tags: "web_tests and firefox"
             config_file: ./env_configs/win_firefox.json
             html_report: win-firefox
             testrail_configuration_name: 'Firefox, Windows'
@@ -88,7 +88,7 @@ jobs:
 
           - name: Mac Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
-            tags: 'web_tests and firefox'
+            tags: "web_tests and firefox"
             config_file: ./env_configs/mac_firefox.json
             html_report: mac-firefox
             testrail_configuration_name: 'Firefox, MacOS'
@@ -157,7 +157,7 @@ jobs:
         run: |
           env
           source $HOME/.bp-venv/bin/activate
-          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "${{ matrix.config_file }}" ${{ matrix.tags }} "${{ matrix.baseurl }}" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "${{ matrix.config_file }}" "${{ matrix.tags }}" "${{ matrix.baseurl }}" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
 #            --pytest-testrail-export-test-results \
 #            --testrail-project-id "${{ env.TESTRAIL_PROJECT_ID }}" \
 #            --pytest-testrail-test-plan-id "${{ env.TEST_PLAN_ID }}" \
@@ -293,7 +293,7 @@ jobs:
           
           env
           source $HOME/.bp-venv/bin/activate
-          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "$BROWSER" $TAGS "$BASE_URL" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "$BROWSER" "$TAGS" "$BASE_URL" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
 
       - name: BrowserStackLocal Stop
         uses: browserstack/github-actions/setup-local@master
