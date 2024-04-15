@@ -25,15 +25,14 @@ from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 @then(parsers.re("I get link from email '(?P<user_type>.*)'"),
       converters=dict(user_type=str))
 def check_email(user_type, selenium_generics: SeleniumGenerics):
-    time.sleep(5)
     create_json()
     from datetime import date
     today = date.today()
     from datetime import timedelta
 
-    yesterday = today - timedelta(days=1)
+    thirty_days = today - timedelta(days=30)
     date_today = today.strftime("%d %b %Y")
-    date_yesterday = yesterday.strftime("%d %b %Y")
+    date_old = thirty_days.strftime("%d %b %Y")
     if '0' in date_today[0]:
         date_today = date_today[1:]
     f = open(test_data_dir)
@@ -42,7 +41,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
         value = i
         if "Test Project Data" in value["Subject"] or "Test Data" in value["Subject"] and \
                 "tauqirsarwar1@gmail.com" in value["From"] and date_today in value["Date"] or \
-                date_yesterday in value["Date"] and user_type in value["To"]:
+                date_old in value["Date"] and user_type in value["To"]:
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
             email_body = str(soup.body()[0])
