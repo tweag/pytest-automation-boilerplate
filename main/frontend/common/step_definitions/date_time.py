@@ -20,7 +20,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB context Predefined Step
-# ID 1001
 @given(parsers.re("I pause for '(?P<seconds>.*)' s"), converters=dict(seconds=int))
 @when(parsers.re("I pause for '(?P<seconds>.*)' s"), converters=dict(seconds=int))
 def pause_execution(seconds: int):
@@ -28,7 +27,6 @@ def pause_execution(seconds: int):
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 1002
 @given(parsers.re(r"I add current date to '(?P<locator_path>.*)' with '(?P<date_format>MM/dd/yyyy|MM/dd/yy|dd/MM/yyyy|dd/MM/yy|dd MMM yyyy)'"))
 @when(parsers.re(r"I add current date to '(?P<locator_path>.*)' with '(?P<date_format>MM/dd/yyyy|MM/dd/yy|dd/MM/yyyy|dd/MM/yy|dd MMM yyyy)'"))
 def add_current_date_for_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, date_format: str):
@@ -52,7 +50,6 @@ def add_current_date_for_element(selenium_generics: SeleniumGenerics, locators: 
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 1003
 @given(parsers.re(r"I add random '(?P<direction>future|past)' date to '(?P<locator_path>.*)' with '(?P<date_format>MM/dd/yyyy|MM/dd/yy|dd/MM/yyyy|dd/MM/yy|dd MMM yyyy)' format"))
 @when(parsers.re(r"I add random '(?P<direction>future|past)' date to '(?P<locator_path>.*)' with '(?P<date_format>MM/dd/yyyy|MM/dd/yy|dd/MM/yyyy|dd/MM/yy|dd MMM yyyy)' format"))
 def add_custom_date_for_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, date_format: str, direction: str):
@@ -85,7 +82,6 @@ def add_custom_date_for_element(selenium_generics: SeleniumGenerics, locators: L
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 1004
 @given(parsers.re(r"I add '(?P<direction>Past|Current|Future)' time to '(?P<locator_path>.*)' with '(?P<time_format>HH:MM:SS|HH:MM)' format(\s+)?((?:and clock format)\s+(?:')(?P<clock_format>\w+)(?:'))?(\s+)?((?:and delimiter)\s+(?:')(?P<delimiter>.*)(?:'))?$"))
 @when(parsers.re(r"I add '(?P<direction>Past|Current|Future)' time to '(?P<locator_path>.*)' with '(?P<time_format>HH:MM:SS|HH:MM)' format(\s+)?((?:and clock format)\s+(?:')(?P<clock_format>\w+)(?:'))?(\s+)?((?:and delimiter)\s+(?:')(?P<delimiter>.*)(?:'))?$"))
 def add_custom_time_for_element(selenium_generics: SeleniumGenerics, locators: Locators, locator_path, time_format: str, direction: str, delimiter: str, clock_format: str):

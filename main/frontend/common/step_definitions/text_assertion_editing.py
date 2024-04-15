@@ -324,7 +324,6 @@ def step_realistic_typing(selenium_generics: SeleniumGenerics, locators: Locator
 
 
 # WEB context Predefined Step
-# ID 417
 @given(parsers.re(
     "I add text '(?P<text>.*)' in input field whose attribute '(?P<attribute>.*)' is equal to '(?P<value>.*)'"),
        converters=dict(text=data_manager.text_formatted), )
@@ -342,7 +341,6 @@ def add_text_based_on_attribute(selenium_generics: SeleniumGenerics, locators, t
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 418, 805
 @given(parsers.re(
     r"I add random string of length (?:')(?P<length>.*)(?:') composed of (?:')(?P<character_type>alphabetic characters|numeric characters|alphabetic and numeric characters)(?:') to field (?:')(?P<locator_path>.*)(?:')(\s+)?((?:and save as)\s+(?:')(?P<storage_var>\w+)(?:') environment variable)?$"))
 @when(parsers.re(
@@ -364,7 +362,6 @@ def set_random_element_value(selenium_generics: SeleniumGenerics, length: str, c
 
 
 # WEB & MOBILE contexts Predefined Step
-# ID 419
 @given(
     parsers.re(r"I add a random email to field '(?P<locator_path>.*)'((\s+)?with (?:')(?P<domain>.*)(?:') domain)?$"),
     converters=dict(domain=data_manager.text_formatted), )

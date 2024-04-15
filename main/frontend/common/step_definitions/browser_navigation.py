@@ -22,7 +22,6 @@ logger = structlog.get_logger(__name__)
 
 
 # WEB context Predefined Step
-# ID 101, 102
 @given(parsers.re("The browser resolution is '(?P<width>.*)' per '(?P<height>.*)'"),
        converters=dict(width=data_manager.text_formatted, height=data_manager.text_formatted), )
 @given(parsers.re("My screen resolution is '(?P<width>.*)' by '(?P<height>.*)' pixels"),
@@ -36,7 +35,6 @@ def window_size(width: int, height: int, selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 103
 @given("Browser is maximized")
 @when("Browser is maximized")
 def maximize(selenium_generics: SeleniumGenerics):
@@ -44,7 +42,6 @@ def maximize(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 104
 @given(parsers.re("I am on the (url|page|site) '(?P<page_url>.*)'"),
        converters=dict(page_url=data_manager.text_formatted), )
 @when(parsers.re("I am on the (url|page|site) '(?P<page_url>.*)'"),
@@ -60,7 +57,6 @@ def open_base_url(selenium_generics: SeleniumGenerics, base_url):
 
 
 # WEB context Predefined Step
-# ID 105
 @given(parsers.re("I navigate to external page '(?P<url>.*)'"),
        converters=dict(url=data_manager.text_formatted), )
 @when(parsers.re("I navigate to external page '(?P<url>.*)'"),
@@ -70,7 +66,6 @@ def navigate_to_external_page(selenium_generics: SeleniumGenerics, url: str):
 
 
 # WEB context Predefined Step
-# ID 106
 @given(parsers.re("I get current browser url and store it to '(?P<env_var>.*)'"))
 @when(parsers.re("I get current browser url and store it to '(?P<env_var>.*)'"))
 @then(parsers.re("I get current browser url and store it to '(?P<env_var>.*)'"))
@@ -121,7 +116,6 @@ def page_title_is_not(selenium_generics: SeleniumGenerics, soft_assert: str, tit
 
 
 # WEB context Predefined Step
-# ID 110
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that the title contains '(?P<title>.*)'"),
       converters=dict(title=data_manager.text_formatted), )
 def check_title_contains(selenium_generics: SeleniumGenerics, soft_assert: str, title: str):
@@ -133,7 +127,6 @@ def check_title_contains(selenium_generics: SeleniumGenerics, soft_assert: str, 
 
 
 # WEB context Predefined Step
-# ID 111
 @then(
     parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect that the title does not contain '(?P<title>.*)'"),
     converters=dict(title=data_manager.text_formatted), )
@@ -146,7 +139,6 @@ def check_title_not_contains(selenium_generics: SeleniumGenerics, soft_assert: s
 
 
 # WEB context Predefined Step
-# ID 112
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The page url is '(?P<url>.*)'"),
        converters=dict(url=data_manager.text_formatted), )
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The page url is '(?P<url>.*)'"),
@@ -162,7 +154,6 @@ def given_page_url_is(selenium_generics: SeleniumGenerics, soft_assert: str, url
 
 
 # WEB context Predefined Step
-# ID 113
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The page url is not '(?P<url>.*)'"),
        converters=dict(url=data_manager.text_formatted), )
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The page url is not '(?P<url>.*)'"),
@@ -178,7 +169,6 @@ def given_page_url_is_not(selenium_generics: SeleniumGenerics, soft_assert: str,
 
 
 # WEB context Predefined Step
-# ID 114
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The page (path is|url contains) '(?P<url>.*)'"),
       converters=dict(url=data_manager.text_formatted), )
 def check_page_url_contains(selenium_generics: SeleniumGenerics, soft_assert: str, url: str):
@@ -190,7 +180,6 @@ def check_page_url_contains(selenium_generics: SeleniumGenerics, soft_assert: st
 
 
 # WEB context Predefined Step
-# ID 115
 @then(parsers.re(
     "(With soft assertion '(?P<soft_assert>.*)' )?The page (path is not|url does not contain) '(?P<url>.*)'"),
       converters=dict(url=data_manager.text_formatted), )
@@ -203,7 +192,6 @@ def check_page_url_not_contains(selenium_generics: SeleniumGenerics, soft_assert
 
 
 # WEB context Predefined Step
-# ID 116
 @given(parsers.re("I refresh the current page"))
 @when(parsers.re("I refresh the current page"))
 def refresh_page(selenium_generics: SeleniumGenerics):
@@ -211,7 +199,6 @@ def refresh_page(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 117
 @given(parsers.re("There is just one (browser tab|window) open"))
 @when(parsers.re("There is just one (browser tab|window) open"))
 def close_all_but_first_tab(selenium_generics: SeleniumGenerics):
@@ -223,7 +210,6 @@ def close_all_but_first_tab(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 118
 @given(parsers.re("I open new tab with url '(?P<page_url>.*)'"),
        converters=dict(page_url=data_manager.text_formatted), )
 @when(parsers.re("I open new tab with url '(?P<page_url>.*)'"),
@@ -233,7 +219,6 @@ def open_specific_tab(selenium_generics: SeleniumGenerics, base_url: str, page_u
 
 
 # WEB context Predefined Step
-# ID 119
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The url '(?P<url>.*)' is opened in a new (tab|window)"),
       converters=dict(url=data_manager.text_formatted), )
 def check_is_opened_in_new_window(selenium_generics: SeleniumGenerics, soft_assert: str, url: str):
@@ -246,7 +231,6 @@ def check_is_opened_in_new_window(selenium_generics: SeleniumGenerics, soft_asse
 
 
 # WEB context Predefined Step
-# ID 120
 @given(parsers.re("I close the last opened window"))
 @given(parsers.re("I close the last opened tab"))
 @when(parsers.re("I close the last opened window"))
@@ -266,7 +250,6 @@ def switch_to_last(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 122
 @then(parsers.re(
     "(With soft assertion '(?P<soft_assert>.*)' )?There are '(?P<count>.*)' (tabs|windows) currently opened"),
       converters=dict(count=data_manager.text_formatted))
@@ -279,7 +262,6 @@ def check_number_of_tabs(selenium_generics: SeleniumGenerics, soft_assert: str, 
 
 
 # WEB context Predefined Step
-# ID 123
 @given(parsers.re("I close the current opened tab"))
 @when(parsers.re("I close the current opened tab"))
 def close_current_opened_tab(selenium_generics: SeleniumGenerics):
@@ -367,7 +349,6 @@ def disable_cache(driver, cache_option: str):
 
 
 # WEB context Predefined Step
-# ID 132
 @given(parsers.re("I attach file '(?P<file_path>.*)' to input field '(?P<locator_path>.*)'"),
        converters=dict(file_path=data_manager.text_formatted), )
 @when(parsers.re("I attach file '(?P<file_path>.*)' to input field '(?P<locator_path>.*)'"),
@@ -382,7 +363,6 @@ def attach_file(selenium_generics: SeleniumGenerics, file_path: str, locators: L
 
 
 # WEB context Predefined Step
-# ID 133
 @given(parsers.re(
     "(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' contains the value '(?P<value>.*)'"),
     converters=dict(value=data_manager.text_formatted))
@@ -401,7 +381,6 @@ def check_cookie_content(selenium_generics: SeleniumGenerics, soft_assert: str, 
 
 
 # WEB context Predefined Step
-# ID 134
 @given(parsers.re(
     "(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' does not contain the value '(?P<value>.*)'"),
     converters=dict(value=data_manager.text_formatted))
@@ -420,7 +399,6 @@ def check_cookie_content_is_not(selenium_generics: SeleniumGenerics, soft_assert
 
 
 # WEB context Predefined Step
-# ID 135
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' exists"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' exists"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' exists"))
@@ -433,7 +411,6 @@ def check_cookie_exists(selenium_generics: SeleniumGenerics, soft_assert: str, n
 
 
 # WEB context Predefined Step
-# ID 136
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' does not exist"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' does not exist"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?The cookie '(?P<name>.*)' does not exist"))
@@ -446,7 +423,6 @@ def check_cookie_does_not_exist(selenium_generics: SeleniumGenerics, soft_assert
 
 
 # WEB context Predefined Step
-# ID 137
 @given("I fetch existing cookies from the site")
 @when("I fetch existing cookies from the site")
 def fetch_cookies(selenium_generics: SeleniumGenerics):
@@ -454,7 +430,6 @@ def fetch_cookies(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 138, 139
 @given(
     parsers.re("I update the value of newly added cookie '(?P<name>.*)' with '(?P<value>.*)' for path '(?P<path>.*)'"),
     converters=dict(value=data_manager.text_formatted))
@@ -470,7 +445,6 @@ def check_cookie_content(selenium_generics: SeleniumGenerics, name, value: str, 
 
 
 # WEB context Predefined Step
-# ID 140
 @given(parsers.re("I delete the cookie '(?P<name>.*)'"))
 @when(parsers.re("I delete the cookie '(?P<name>.*)'"))
 def delete_cookie(selenium_generics: SeleniumGenerics, name):
@@ -478,7 +452,6 @@ def delete_cookie(selenium_generics: SeleniumGenerics, name):
 
 
 # WEB context Predefined Step
-# ID 141
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect the cookies to be present"))
 def check_cookies_presence(selenium_generics: SeleniumGenerics, soft_assert: str):
     if soft_assert is not None and soft_assert.lower() == 'true':
@@ -489,7 +462,6 @@ def check_cookies_presence(selenium_generics: SeleniumGenerics, soft_assert: str
 
 
 # WEB context Predefined Step
-# ID 142, 143
 @then(parsers.re(
     "(With soft assertion '(?P<soft_assert>.*)' )?I expect cookie '(?P<name>.*)' with value '(?P<value>.*)' to be present"),
     converters=dict(value=data_manager.text_formatted))
@@ -505,7 +477,6 @@ def check_cookie_presence(selenium_generics: SeleniumGenerics, soft_assert: str,
 
 
 # WEB context Predefined Step
-# ID 144
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I expect cookie '(?P<name>.*)' to be deleted"))
 def check_cookie_delete(selenium_generics: SeleniumGenerics, soft_assert: str, name):
     if soft_assert is not None and soft_assert.lower() == 'true':
@@ -516,7 +487,6 @@ def check_cookie_delete(selenium_generics: SeleniumGenerics, soft_assert: str, n
 
 
 # WEB context Predefined Step
-# ID 145
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is opened"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is opened"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is opened"))
@@ -529,7 +499,6 @@ def step_presence_of_alert(selenium_generics: SeleniumGenerics, soft_assert: str
 
 
 # WEB context Predefined Step
-# ID 146
 @given(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is not opened"))
 @when(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is not opened"))
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?A (alertbox|confirmbox|prompt) is not opened"))
@@ -542,7 +511,6 @@ def check_modal_not_present(selenium_generics: SeleniumGenerics, soft_assert: st
 
 
 # WEB context Predefined Step
-# ID 147
 @given(parsers.re("I accept popup (prompt|alertbox|confirmbox)"))
 @when(parsers.re("I accept popup (prompt|alertbox|confirmbox)"))
 def accept_alert(selenium_generics: SeleniumGenerics):
@@ -550,7 +518,6 @@ def accept_alert(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 148
 @given(parsers.re("I dismiss popup (prompt|alertbox|confirmbox)"))
 @when(parsers.re("I dismiss popup (prompt|alertbox|confirmbox)"))
 def dismiss_modal(selenium_generics: SeleniumGenerics):
@@ -558,7 +525,6 @@ def dismiss_modal(selenium_generics: SeleniumGenerics):
 
 
 # WEB context Predefined Step
-# ID 149
 @given(parsers.re("I enter '(?P<text>.*)' into popup (alertbox|confirmbox|prompt)"),
        converters=dict(text=data_manager.text_formatted), )
 @when(parsers.re("I enter '(?P<text>.*)' into popup (alertbox|confirmbox|prompt)"),
@@ -568,7 +534,6 @@ def check_modal(selenium_generics: SeleniumGenerics, text: str):
 
 
 # WEB context Predefined Step
-# ID 150, 151
 @given(parsers.re("I set the (locale|language) for locators to '(?P<locale>.*)'"),
        converters=dict(locale=data_manager.text_formatted), )
 @when(parsers.re("I set the (locale|language) for locators to '(?P<locale>.*)'"),
