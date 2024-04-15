@@ -160,4 +160,5 @@ allure-report/*
 reports/screenshots/*
 /test_data/visualtesting/test/*
 /output/
-/test_data/files/*
+/test_data/files/*.json
+/test_data/files/*.txt
