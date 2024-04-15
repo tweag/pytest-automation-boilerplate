@@ -60,7 +60,7 @@ jobs:
 
           - name: Linux Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
-            tags: web_tests and firefox
+            tags: web_tests
             config_file: ./env_configs/docker_firefox.json
             html_report: linux-firefox
             concurrent_thread: 3
