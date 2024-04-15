@@ -1,13 +1,13 @@
-import structlog
-
 import base64
-import os, re
+import json
+import os
+import re
 import time
 
 import pytest
-import json
-
+import structlog
 from bs4 import BeautifulSoup
+from collections import defaultdict
 
 from main.utils.email_reader import create_json
 
@@ -18,9 +18,12 @@ from pytest_bdd import parsers, when, then
 from main.frontend.common.helpers.selenium_generics import SeleniumGenerics
 
 logger = structlog.get_logger(__name__)
+pytest.globalDict = defaultdict()
 
 
-@when(parsers.re("I get email for '(?P<user_type>.*)'"),
+@when(parsers.re("I get about link from email '(?P<user_type>.*)'"),
+      converters=dict(user_type=str))
+@then(parsers.re("I get about link from email '(?P<user_type>.*)'"),
       converters=dict(user_type=str))
 def check_email(user_type, selenium_generics: SeleniumGenerics):
     time.sleep(5)
@@ -38,8 +41,8 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
     data = json.load(f)
     for i in data:
         value = i
-        if "Test Data" in value["Subject"] or "Test Data" in value["Subject"] and \
-                "noreply@test.com" in value["From"] and date_today in value["Date"] or \
+        if "Test Project Data" in value["Subject"] or "Test Data" in value["Subject"] and \
+                "tauqirsarwar1@gmail.com" in value["From"] and date_today in value["Date"] or \
                 date_yesterday in value["Date"] and user_type in value["To"]:
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
@@ -57,7 +60,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
                                  email_body)
                 new_url = ''
                 for j in url:
-                    if 'Test Data' in j or 'Test Data' in j:
+                    if 'Test Project Data' in j or 'Test Data' in j:
                         new_url = j
                 final_url = str(new_url).replace('amp;', '')
                 pytest.globalDict['final_url'] = final_url
@@ -65,3 +68,9 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
 
             break
     f.close()
+
+
+@then('I reopen the email link')
+def reopen_final_url(selenium_generics: SeleniumGenerics):
+        final_url = pytest.globalDict['final_url']
+        selenium_generics.navigate_to_url(final_url)
