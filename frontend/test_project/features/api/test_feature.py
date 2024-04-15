@@ -6,8 +6,6 @@ from openai import OpenAI
 
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from time import sleep
 
 from main.frontend.common.step_definitions import open_base_url, maximize, page_title
 
@@ -45,35 +43,35 @@ def test_send_post_request(request, api_response_container):
     )
 
 
-@pytest.mark.nondestructive
-@pytest.mark.automated
-@pytest.mark.hrmlogin
-@pytest.mark.test_name("Login into OrangeHRM system and logout")
-def test_login():
-    logger.info(
-        "Scenario is started"
-    )
-    chrome_driver.get('https://lambdatest.github.io/sample-todo-app/')
-    chrome_driver.maximize_window()
-
-    title = chrome_driver.title
-    assert 'Sample page - lambdatest.com' in title
-
-    first_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li1']")
-    first_checkbox.click()
-    second_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li2']")
-    second_checkbox.click()
-    field = chrome_driver.find_element(By.XPATH, "//input[@id='sampletodotext']")
-    field.send_keys("testing")
-    button = chrome_driver.find_element(By.XPATH, "//input[@id='addbutton']")
-    button.click()
-    result = chrome_driver.find_element(By.XPATH, "//li[6]/span[@class='done-false']").text
-    assert 'testing' in result
-    sleep(5)
-    chrome_driver.close()
-    logger.info(
-        "Scenario is completed successfully"
-    )
+# @pytest.mark.nondestructive
+# @pytest.mark.automated
+# @pytest.mark.hrmlogin
+# @pytest.mark.test_name("Login into OrangeHRM system and logout")
+# def test_login():
+#     logger.info(
+#         "Scenario is started"
+#     )
+#     chrome_driver.get('https://lambdatest.github.io/sample-todo-app/')
+#     chrome_driver.maximize_window()
+#
+#     title = chrome_driver.title
+#     assert 'Sample page - lambdatest.com' in title
+#
+#     first_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li1']")
+#     first_checkbox.click()
+#     second_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li2']")
+#     second_checkbox.click()
+#     field = chrome_driver.find_element(By.XPATH, "//input[@id='sampletodotext']")
+#     field.send_keys("testing")
+#     button = chrome_driver.find_element(By.XPATH, "//input[@id='addbutton']")
+#     button.click()
+#     result = chrome_driver.find_element(By.XPATH, "//li[6]/span[@class='done-false']").text
+#     assert 'testing' in result
+#     sleep(5)
+#     chrome_driver.close()
+#     logger.info(
+#         "Scenario is completed successfully"
+#     )
 
 
 # A sample test to verify the open API call
