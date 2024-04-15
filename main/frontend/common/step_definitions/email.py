@@ -45,7 +45,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
             email_body = str(soup.body()[0])
-            url = re.findall('https://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+            url = re.findall('https?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
                              email_body)
             final_url = ""
             if len(url) >= 1:
@@ -54,7 +54,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
                 decoded_data = base64.b64decode(value["Url"])
                 soup = BeautifulSoup(decoded_data, "lxml")
                 email_body = str(soup.body()[0])
-                url = re.findall('https://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                url = re.findall('https?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
                                  email_body)
                 new_url = ''
                 for j in url:
