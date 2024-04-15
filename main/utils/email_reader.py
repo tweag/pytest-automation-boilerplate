@@ -29,10 +29,11 @@ def get_email():
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(test_data_dir_utils+'/cred.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+            # creds.refresh(Request())
+            creds = None
+            flow = InstalledAppFlow.from_client_secrets_file(test_data_dir_utils+'/cred.json', scopes=SCOPES)
+            creds = flow.run_local_server(port=0, timeout_seconds=10)
+            session = flow.authorized_session()
 
         with open(test_data_dir_utils+'/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
