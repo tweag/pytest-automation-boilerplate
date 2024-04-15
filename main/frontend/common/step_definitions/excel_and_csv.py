@@ -12,7 +12,6 @@ from main.utils import data_manager
 logger = structlog.get_logger(__name__)
 
 
-# ID 901
 @given(parsers.re("Text inside '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' is equal to '(?P<expected_text>.+)'"),
       converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted, expected_text=data_manager.text_formatted))
 @when(parsers.re("Text inside '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' is equal to '(?P<expected_text>.+)'"),
@@ -36,7 +35,6 @@ def cell_text_contains(cell:str, sheet_name: str, file_path: str, expected_text:
     assert_that(sheet[cell].value).contains(expected_text)
 
 
-# ID 903
 @given(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' does not contain any text"),
       converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' does not contain any text"),
@@ -48,7 +46,6 @@ def cell_text_is_empty(cell:str, sheet_name: str, file_path: str):
     assert_that(sheet[cell].value).is_none()
 
 
-# ID 904
 @given(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' text is equal with the text of the '(?P<locator_path>.+)'"),
       converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' text is equal with the text of the '(?P<locator_path>.+)'"),
@@ -60,7 +57,6 @@ def cell_text_equals_element_text(selenium_generics, locators, cell:str, sheet_n
     assert_that(sheet[cell].value).is_equal_to(selenium_generics.get_element_text(locators.parse_and_get(locator_path, selenium_generics)))
 
 
-# ID 905
 @given(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' is contained in the text of '(?P<locator_path>.+)'"),
       converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.+)' on sheet '(?P<sheet_name>.+)' of excel file '(?P<file_path>.+)' is contained in the text of '(?P<locator_path>.+)'"),
@@ -72,7 +68,6 @@ def element_text_contains_cell_text(selenium_generics, locators, cell:str, sheet
     assert_that(selenium_generics.get_element_text(locators.parse_and_get(locator_path, selenium_generics))).contains(sheet[cell].value)
 
 
-# ID 906
 @given(parsers.re("I delete '(?P<file_path>.*)' file"))
 @when(parsers.re("I delete '(?P<file_path>.*)' file"))
 def delete_file(file_path: str):
@@ -91,7 +86,6 @@ def create_excel_file(file_name: str, file_path: str):
     openpyxl.Workbook().save(excel_file.as_posix())
 
 
-# ID 908
 @given(parsers.re("I write '(?P<text>.*)' to '(?P<cell>.*)' on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)'"),
        converters=dict(cell=data_manager.text_formatted, sheet_name=data_manager.text_formatted,
        text=data_manager.text_formatted))
@@ -105,7 +99,6 @@ def write_text_to_excel_file(text: str, cell: str, sheet_name: str, file_path: s
     wb.save(excel_file)
 
 
-# ID 911
 @given(parsers.re("Number of total rows on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
       converters=dict(row_count=data_manager.text_formatted, sheet_name=data_manager.text_formatted))
 @when(parsers.re("Number of total rows on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
@@ -121,7 +114,6 @@ def total_rows_number_with_data_is_equal_to(sheet_name: str, file_path: str, row
     assert_that(int(num_rows)).is_equal_to(int(row_count))
 
 
-# ID 912
 @given(parsers.re("Number of rows containing '(?P<expected_text>.*)' on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
       converters=dict(row_count=data_manager.text_formatted, sheet_name=data_manager.text_formatted, text=data_manager.text_formatted))
 @when(parsers.re("Number of rows containing '(?P<expected_text>.*)' on '(?P<sheet_name>.*)' of excel file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
@@ -137,7 +129,6 @@ def number_rows_with_text_is_equal_to(expected_text: str, sheet_name: str, file_
     assert_that(int(num_rows)).is_equal_to(int(row_count))
 
 
-# ID 913
 @given(parsers.re("Text inside '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' is equal to '(?P<expected_text>.+)'"),
       converters=dict(expected_text=data_manager.text_formatted, cell=data_manager.text_formatted))
 @when(parsers.re("Text inside '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' is equal to '(?P<expected_text>.+)'"),
@@ -161,7 +152,6 @@ def csv_cell_text_is_equal_to(cell: str, file_path: str, expected_text: str):
     assert_that(sheet[cell].value).is_equal_to(expected_text)
 
 
-# ID 914
 @given(parsers.re("Text inside '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' contains '(?P<expected_text>.+)'"),
       converters=dict(expected_text=data_manager.text_formatted, cell=data_manager.text_formatted))
 @when(parsers.re("Text inside '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' contains '(?P<expected_text>.+)'"),
@@ -185,7 +175,6 @@ def csv_cell_text_contains(cell: str, file_path: str, expected_text: str):
     assert_that(sheet[cell].value).contains(expected_text)
 
 
-# ID 915
 @given(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' text is equal with the text of the '(?P<locator_path>.+)'"),
       converters=dict(cell=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' text is equal with the text of the '(?P<locator_path>.+)'"),
@@ -209,7 +198,6 @@ def csv_cell_text_equals_element_text(selenium_generics, locators, cell: str, fi
     assert_that(sheet[cell].value).is_equal_to(selenium_generics.get_element_text(locators.parse_and_get(locator_path, selenium_generics)))
 
 
-# ID 916
 @given(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' is contained in the text of '(?P<locator_path>.+)'"),
       converters=dict(cell=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' is contained in the text of '(?P<locator_path>.+)'"),
@@ -234,7 +222,6 @@ def element_text_contains_csv_cell_text(selenium_generics, locators, cell: str, 
         sheet[cell].value)
 
 
-# ID 917
 @given(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' does not contain any text"),
       converters=dict(cell=data_manager.text_formatted))
 @when(parsers.re("The '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)' does not contain any text"),
@@ -258,7 +245,6 @@ def csv_cell_text_is_empty(cell: str, file_path: str):
     assert_that(sheet[cell].value).is_empty()
 
 
-# ID 918
 @given(parsers.re("Number of rows containing '(?P<expected_text>.*)' of csv file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
       converters=dict(expected_text=data_manager.text_formatted, row_count=data_manager.text_formatted))
 @when(parsers.re("Number of rows containing '(?P<expected_text>.*)' of csv file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
@@ -287,7 +273,6 @@ def number_csv_rows_with_text_is_equal_to(expected_text: str, file_path: str, ro
     assert_that(int(num_rows)).is_equal_to(int(row_count))
 
 
-# ID 919
 @given(parsers.re("Number of total rows of csv file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
       converters=dict(row_count=data_manager.text_formatted))
 @when(parsers.re("Number of total rows of csv file '(?P<file_path>.*)' is '(?P<row_count>.*)'"),
@@ -316,7 +301,6 @@ def total_csv_rows_number_with_data_is_equal_to(file_path: str, row_count: str):
     assert_that(int(num_rows)).is_equal_to(int(row_count))
 
 
-# ID 921
 @given(parsers.re("I Write '(?P<text>.+)' to '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)'"),
        converters=dict(cell=data_manager.text_formatted, text=data_manager.text_formatted))
 @when(parsers.re("I Write '(?P<text>.+)' to '(?P<cell>.*)' cell of csv file '(?P<file_path>.*)'"),
@@ -350,7 +334,6 @@ def write_text_to_csv_cell(text: str, cell: str, file_path: str):
             writer.writerow([cell.value for cell in row])
 
 
-# ID 922
 @given(parsers.re("I create csv file '(?P<file_name>.*)' and save on '(?P<file_path>.+)'"))
 @when(parsers.re("I create csv file '(?P<file_name>.*)' and save on '(?P<file_path>.+)'"))
 def create_csv_file(file_name: str, file_path: str):

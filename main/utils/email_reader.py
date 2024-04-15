@@ -4,21 +4,20 @@ from google.auth.transport.requests import Request
 import pickle
 import os.path
 import json
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 PROJECT_DIR = os.getcwd()
 test_data_dir_utils = os.path.join(PROJECT_DIR, "main/utils")
 test_data_dir_email = os.path.join(PROJECT_DIR, "test_data/files")
-# if 'utils' in PROJECT_DIRECTORY:
-#     PROJECT_DIR = PROJECT_DIRECTORY.replace("utils", "test_data")
 print(PROJECT_DIR)
 
 
 def get_email():
     count = 0
     creds = None
-    with open(test_data_dir_utils+'/token.pickle', 'rb') as token:
+    with open(test_data_dir_utils + '/token.pickle', 'rb') as token:
         creds = pickle.load(token)
-    with open(test_data_dir_utils+'/cred.json', 'r') as infile:
+    with open(test_data_dir_utils + '/cred.json', 'r') as infile:
         my_data = json.load(infile)
 
     if not creds.valid:
@@ -31,13 +30,13 @@ def get_email():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(test_data_dir_utils+'/cred.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+            flow = InstalledAppFlow.from_client_secrets_file(test_data_dir_utils + '/cred.json', SCOPES)
+            creds = flow.run_local_server(port=0, timeout_seconds=20)
 
-        with open(test_data_dir_utils+'/token.pickle', 'wb') as token:
+        with open(test_data_dir_utils + '/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
         my_data['installed']['refresh_token'] = creds.refresh_token
-        with open(test_data_dir_utils+'/cred.json', 'w') as outfile:
+        with open(test_data_dir_utils + '/cred.json', 'w') as outfile:
             json.dump(my_data, outfile, indent=4)
 
     service = build('gmail', 'v1', credentials=creds)

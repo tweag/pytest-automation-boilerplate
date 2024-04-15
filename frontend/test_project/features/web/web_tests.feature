@@ -176,6 +176,15 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
 
 
-  @email @automated
-  Scenario: Email verification
-    When I get email for 'moduspytestboilerplate@gmail.com'
+  @email @automated @firefox
+  Scenario: Email Verification with email link
+    Given I set web base url '{%BASE_URL%}'
+    And Browser is maximized
+    And The title is 'OrangeHRM'
+    When The element 'OrangeHRM > username' is displayed
+    And I set text '{%HRM_USER_NAME%}' to field 'OrangeHRM > username'
+    And I set text '{%HRM_PASSWORD%}' to field 'OrangeHRM > password'
+    And I click on element 'OrangeHRM > login_button'
+    Then The title is 'OrangeHRM'
+    And The page url contains 'dashboard'
+    When I get link from email 'moduspytestboilerplate@gmail.com'

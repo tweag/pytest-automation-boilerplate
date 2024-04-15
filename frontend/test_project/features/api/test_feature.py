@@ -1,17 +1,23 @@
 from os import environ
 
-import pytest
 from main.backend.common.step_definitions.steps_common import *
 from assertpy import assert_that
 from openai import OpenAI
 
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from time import sleep
+
+from main.frontend.common.step_definitions import open_base_url, maximize, page_title
+
 logger = structlog.get_logger(__name__)
 client = OpenAI(api_key=environ.get("OPEN_KEY"))
-
 
 API_POST_CALL = "post_call"
 DELETE_ENDPOINT = "/posts/1"
 POST_ENDPOINT = "/posts"
+chrome_driver = webdriver.Chrome()
 
 
 @pytest.mark.nondestructive
@@ -26,7 +32,7 @@ def test_send_post_request(request, api_response_container):
         test_case_name=request.node.name,
     )
     set_request_endpoint(request, request_name=API_POST_CALL, base_url='{%API_BASE_URL%}', endpoint=POST_ENDPOINT)
-    set_request_headers(request, request_name=API_POST_CALL,headers="./test_data/api/payloads/sample/headers.json")
+    set_request_headers(request, request_name=API_POST_CALL, headers="./test_data/api/payloads/sample/headers.json")
     add_json_payload(request, request_name=API_POST_CALL, json_payload="./test_data/api/payloads/post_payload_1.json")
     make_api_request(request, api_response_container, request_name=API_POST_CALL, request_type='POST')
 
@@ -36,6 +42,37 @@ def test_send_post_request(request, api_response_container):
         "Scenario is completed successfully",
         request_name=API_POST_CALL,
         test_case_name=request.node.name,
+    )
+
+
+@pytest.mark.nondestructive
+@pytest.mark.automated
+@pytest.mark.hrmlogin
+@pytest.mark.test_name("Login into OrangeHRM system and logout")
+def test_login():
+    logger.info(
+        "Scenario is started"
+    )
+    chrome_driver.get('https://lambdatest.github.io/sample-todo-app/')
+    chrome_driver.maximize_window()
+
+    title = chrome_driver.title
+    assert 'Sample page - lambdatest.com' in title
+
+    first_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li1']")
+    first_checkbox.click()
+    second_checkbox = chrome_driver.find_element(By.XPATH, "//input[@name='li2']")
+    second_checkbox.click()
+    field = chrome_driver.find_element(By.XPATH, "//input[@id='sampletodotext']")
+    field.send_keys("testing")
+    button = chrome_driver.find_element(By.XPATH, "//input[@id='addbutton']")
+    button.click()
+    result = chrome_driver.find_element(By.XPATH, "//li[6]/span[@class='done-false']").text
+    assert 'testing' in result
+    sleep(5)
+    chrome_driver.close()
+    logger.info(
+        "Scenario is completed successfully"
     )
 
 

@@ -12,7 +12,6 @@ logger = structlog.get_logger(__name__)
 
 
 # MOBILE Predefined Step
-# ID 1202
 @when("I reset the mobile app")
 @then("I reset the mobile app")
 def reset_app(selenium_generics: SeleniumGenerics):
@@ -23,7 +22,6 @@ def reset_app(selenium_generics: SeleniumGenerics):
 
 
 # MOBILE Predefined Step
-# 1203
 @when(parsers.re("I put the mobile app in background for '(?P<seconds>.*)' seconds"),
       converters=dict(seconds=data_manager.text_formatted))
 @then(parsers.re("I put the mobile app in background for '(?P<seconds>.*)' seconds"),

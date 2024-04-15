@@ -10,7 +10,7 @@ import copy
 from _pytest.fixtures import FixtureLookupError
 
 from py.xml import html
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import List
@@ -72,6 +72,7 @@ def pytest_configure(config: pytest_config.Config) -> None:
     """
     config.option.keyword = "automated"
     config.option.markexpr = "not not_in_scope"
+    pytest.globalDict = defaultdict()
     is_driver = [arg for arg in config.invocation_params.args if "driver" in arg]
     if is_driver and not os.environ.get('BOILERPLATE_INSTALLATION'):
         config.pluginmanager.import_plugin("main.frontend.frontend_plugin")
