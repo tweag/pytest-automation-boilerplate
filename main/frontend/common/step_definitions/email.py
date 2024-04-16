@@ -36,9 +36,8 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
     data = json.load(f)
     for i in data:
         value = i
-        if "Test Project Data" in value["Subject"] or "Test Data" in value["Subject"] and \
-                "tauqirsarwar1@gmail.com" in value["From"] and date_today in value["Date"] or \
-                date_yesterday in value["Date"] and user_type in value["To"]:
+        if ("Test Project Data" in value["Subject"] and "tauqirsarwar1@gmail.com" in value["From"]) \
+                and (date_today in value["Date"] or date_yesterday in value["Date"]) and (user_type in value["To"]):
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
             email_body = str(soup.body()[0])
@@ -58,7 +57,8 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
                     if 'Test Project Data' in j or 'Test Data' in j:
                         new_url = j
                 final_url = str(new_url).replace('amp;', '')
-            selenium_generics.navigate_to_url(final_url)
-
+                os.environ['FINAL_URL'] = final_url
+            if final_url != "":
+                selenium_generics.navigate_to_url(final_url)
             break
     f.close()
