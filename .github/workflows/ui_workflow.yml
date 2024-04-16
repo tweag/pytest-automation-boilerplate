@@ -72,7 +72,7 @@ jobs:
 
           - name: Win Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
-            tags: web_tests
+            tags: 'web_tests and firefox'
             config_file: ./env_configs/win_firefox.json
             html_report: win-firefox
             testrail_configuration_name: 'Firefox, Windows'
@@ -88,11 +88,11 @@ jobs:
 
           - name: Mac Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
-            tags: web_tests
+            tags: 'web_tests and firefox'
             config_file: ./env_configs/mac_firefox.json
             html_report: mac-firefox
             testrail_configuration_name: 'Firefox, MacOS'
-            testrail_run_name: 'MAC Desktop Chrome'
+            testrail_run_name: 'MAC Desktop Firefox'
 
           - name: Mac Chrome
             baseurl: https://opensource-demo.orangehrmlive.com
