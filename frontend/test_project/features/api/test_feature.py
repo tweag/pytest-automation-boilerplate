@@ -5,7 +5,6 @@ from assertpy import assert_that
 from openai import OpenAI
 
 import pytest
-from selenium import webdriver
 
 from main.frontend.common.step_definitions import open_base_url, maximize, page_title
 
@@ -15,7 +14,6 @@ client = OpenAI(api_key=environ.get("OPEN_KEY"))
 API_POST_CALL = "post_call"
 DELETE_ENDPOINT = "/posts/1"
 POST_ENDPOINT = "/posts"
-chrome_driver = webdriver.Chrome()
 
 
 @pytest.mark.nondestructive
