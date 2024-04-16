@@ -27,18 +27,17 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
     today = date.today()
     from datetime import timedelta
 
-    thirty_days = today - timedelta(days=30)
+    yesterday = today - timedelta(days=1)
     date_today = today.strftime("%d %b %Y")
-    date_old = thirty_days.strftime("%d %b %Y")
+    date_yesterday = yesterday.strftime("%d %b %Y")
     if '0' in date_today[0]:
         date_today = date_today[1:]
     f = open(test_data_dir)
     data = json.load(f)
     for i in data:
         value = i
-        if "Test Project Data" in value["Subject"] or "Test Data" in value["Subject"] and \
-                "tauqirsarwar1@gmail.com" in value["From"] and date_today in value["Date"] or \
-                date_old in value["Date"] and user_type in value["To"]:
+        if ("Test Project Data" in value["Subject"] and "tauqirsarwar1@gmail.com" in value["From"]) \
+                and (date_today in value["Date"] or date_yesterday in value["Date"]) and (user_type in value["To"]):
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
             email_body = str(soup.body()[0])
@@ -58,7 +57,8 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
                     if 'Test Project Data' in j or 'Test Data' in j:
                         new_url = j
                 final_url = str(new_url).replace('amp;', '')
-            selenium_generics.navigate_to_url(final_url)
-
+                os.environ['FINAL_URL'] = final_url
+            if final_url != "":
+                selenium_generics.navigate_to_url(final_url)
             break
     f.close()
