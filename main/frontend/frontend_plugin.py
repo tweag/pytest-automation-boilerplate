@@ -124,6 +124,9 @@ def chrome_options(chrome_options, variables, proxy_url, env_variables, request)
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1367,768")
+    chrome_options.add_argument("--disable-cookies")
+    chrome_options.add_argument("--disable-extensions")
+
     if os.environ.get("USING_DOCKER", False) == 'True':
         chrome_options.add_argument("--ignore-certificate-errors")
     if proxy_url:
