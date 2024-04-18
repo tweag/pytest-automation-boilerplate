@@ -17,7 +17,6 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Logout' for element 'OrangeHRM > logout_button'
     Then The element 'OrangeHRM > username' is displayed
 
-    # This test case fails on Edge browser (Linux), because success message is not displayed  after adding user (application issue)
   @hrm_add_user @automated @firefox
   Scenario: Login and add admin user in OrangeHRM system
     Given I set web base url '{%BASE_URL%}'
@@ -153,6 +152,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     When The element 'Modus_Site > Careers > resume_link' is displayed
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
+    And I move to an element 'Modus_Site > Careers > move_form_dropdown' with offset '50' '50'
     And I click item 'Please select the country where you are living' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'Afghanistan' for element 'Modus_Site > Careers > country_dropdown'
     And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'

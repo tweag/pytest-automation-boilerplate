@@ -54,6 +54,7 @@
       "country_value": "//div/ul[@id='select2List0']/li/div[contains(text(),'{}')]",
       "current_company": "//input[@id='job_application_answers_attributes_3_text_value']",
       "current_title": "//input[@id='job_application_answers_attributes_4_text_value']",
+      "move_form_dropdown": "//label[contains(text(),'Please select the country where you are living')]/div/a/span",
       "form_dropdown": "//label[contains(text(),'{}')]/div/a/span",
       "country_dropdown": "//ul[@id='select2List0']/li/div[contains(text(),'{}')]",
       "legal_dropdown": "//ul[@id='select2List1']/li/div[contains(text(),'{}')]",
