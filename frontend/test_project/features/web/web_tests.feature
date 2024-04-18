@@ -152,7 +152,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     When The element 'Modus_Site > Careers > resume_link' is displayed
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
-    And I move to an element 'Modus_Site > Careers > move_form_dropdown' with offset '0' '100'
+    And I move to an element 'Modus_Site > Careers > move_form_dropdown' with offset '50' '100'
     And I click item 'Please select the country where you are living' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'Afghanistan' for element 'Modus_Site > Careers > country_dropdown'
     And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'
