@@ -30,26 +30,30 @@ jobs:
             tags: 'web_tests and healthcheck'
             config_file: ./env_configs/win_chrome.json
             html_report: win-chrome
+            suite_name: 'Health Check'
 
           - name: Win Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: 'web_tests and firefox and smoke'
             config_file: ./env_configs/win_firefox.json
             html_report: win-firefox
+            suite_name: 'Smoke'
 
           - name: Win Edge
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: 'web_tests and sanity'
             config_file: ./env_configs/win_edge.json
             html_report: win-edge
+            suite_name: 'Sanity'
 
           - name: Mac Safari
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: 'web_tests and regression'
             config_file: ./env_configs/mac_safari.json
             html_report: mac-safari
+            suite_name: 'Regression'
 
-    name: ${{ matrix.name }} - Regression
+    name: ${{ matrix.name }} - ${{ matrix.suite_name }}
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
