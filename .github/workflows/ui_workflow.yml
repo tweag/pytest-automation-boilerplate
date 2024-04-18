@@ -170,13 +170,6 @@ jobs:
         with:
           local-testing: stop
         if: ${{ always() }}
-      - name: Get Allure history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
 
       - name: Upload HTML run report in the Artifacts Folder
         uses: actions/upload-artifact@v4

@@ -1,0 +1,100 @@
+name: BS - Web UI Suites Tests
+
+env:
+  TAGS: 'web_tests'
+  BASE_URL: https://opensource-demo.orangehrmlive.com
+  BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
+  BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+  HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
+  HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+
+on:
+  schedule:
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: Gherkin Tags
+        required: true
+        default: 'web_tests'
+
+jobs:
+  web-suites-regression:
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        include:
+          - name: Win Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and healthcheck'
+            config_file: ./env_configs/win_chrome.json
+            html_report: win-chrome
+
+          - name: Win Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and firefox and smoke'
+            config_file: ./env_configs/win_firefox.json
+            html_report: win-firefox
+
+          - name: Win Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and sanity'
+            config_file: ./env_configs/win_edge.json
+            html_report: win-edge
+
+          - name: Mac Safari
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and regression'
+            config_file: ./env_configs/mac_safari.json
+            html_report: mac-safari
+
+    name: ${{ matrix.name }} - Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: BrowserStack Env Setup
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username: ${{secrets.BROWSERSTACK_API_USERNAME}}
+          access-key: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+
+      - name: BrowserStack Local Tunnel Setup
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        run: |
+          sh setup_install.sh
+
+      - name: Run All Tests
+        run: |
+          env
+          source $HOME/.bp-venv/bin/activate
+          sh ci_run_web.sh ${{secrets.BROWSERSTACK_API_USERNAME}} ${{secrets.BROWSERSTACK_ACCESS_KEY}} "${{ matrix.config_file }}" "${{ matrix.tags }}" "${{ matrix.baseurl }}" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+
+      - name: BrowserStackLocal Stop
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop
+        if: ${{ always() }}
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.html_report }}
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+            ./test_data/visualtesting/test/*.png
+        if: ${{ always() }}

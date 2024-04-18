@@ -1,7 +1,7 @@
 @nondestructive @web_tests
 Feature:  OrangeHRM Login and Modus QA blog
 
-  @hrm_login @hrm_logout @automated @firefox
+  @hrm_login @hrm_logout @automated @firefox @healthcheck
   Scenario: Login into OrangeHRM system and logout
     Given I set web base url '{%BASE_URL%}'
     And Browser is maximized
@@ -17,7 +17,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Logout' for element 'OrangeHRM > logout_button'
     Then The element 'OrangeHRM > username' is displayed
 
-  @hrm_add_user @automated @firefox
+  @hrm_add_user @automated @firefox @smoke
   Scenario: Login and add admin user in OrangeHRM system
     Given I set web base url '{%BASE_URL%}'
     And Browser is maximized
@@ -58,7 +58,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on button 'OrangeHRM > User > delete_confirm'
     Then The element 'OrangeHRM > User > success_message' is displayed
 
-  @blog_search @automated @firefox
+  @blog_search @automated @firefox @sanity
   Scenario: Check QA modus blog Search
     Given I set web base url 'https://moduscreate.com'
     And The browser resolution is '1024' per '768'
@@ -80,7 +80,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The element 'Modus_Site > sub_popup_close' is displayed
 
 
-  @sd_login @sd_login_error @sd_checkout @automated @firefox
+  @sd_login @sd_login_error @sd_checkout @automated @firefox @sanity
   Scenario: Login into saucedemo site with valid credentials
     Given I set web base url 'https://www.saucedemo.com'
     And Browser is maximized
@@ -115,7 +115,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The element 'SourceDemo_Site > Checkout_page > thank_you_message' is displayed
 
 
-  @sd_failure_message @automated @firefox
+  @sd_failure_message @automated @firefox @regression
   Scenario: Try to login into saucedemo site with in-valid credentials
     Given I set web base url 'https://www.saucedemo.com'
     And Browser is maximized
@@ -126,7 +126,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click on element 'SourceDemo_Site > login_button'
     Then The element 'SourceDemo_Site > login_error_message' is displayed
 
-  @job_search @automated
+  @job_search @automated @healthcheck
   Scenario: Check QA modus job Search
     Given I set web base url 'https://moduscreate.com'
     And Browser is maximized
@@ -152,7 +152,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     When The element 'Modus_Site > Careers > resume_link' is displayed
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
-    And I move to an element 'Modus_Site > Careers > move_form_dropdown' with offset '50' '50'
+    And I move to an element 'Modus_Site > Careers > move_form_dropdown' with offset '50' '100'
     And I click item 'Please select the country where you are living' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'Afghanistan' for element 'Modus_Site > Careers > country_dropdown'
     And I set text 'Modus Create' to field 'Modus_Site > Careers > current_company'
@@ -176,7 +176,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'data protection apps upon hire' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
 
-  @gmail @automated @firefox
+  @gmail @automated @firefox @regression
   Scenario: Email Verification with email link
     Given I set web base url '{%BASE_URL%}'
     And Browser is maximized
