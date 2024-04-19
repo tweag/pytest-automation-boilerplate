@@ -29,7 +29,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
 
     yesterday = today - timedelta(days=1)
     date_today = today.strftime("%d %b %Y")
-    date_yesterday = yesterday.strftime("%d %b %Y")
+    date_old = yesterday.strftime("%d %b %Y")
     if '0' in date_today[0]:
         date_today = date_today[1:]
     f = open(test_data_dir)
@@ -37,7 +37,7 @@ def check_email(user_type, selenium_generics: SeleniumGenerics):
     for i in data:
         value = i
         if ("Test Project Data" in value["Subject"] and "tauqirsarwar1@gmail.com" in value["From"]) \
-                and (date_today in value["Date"] or date_yesterday in value["Date"]) and (user_type in value["To"]):
+                and (date_old < value["Date"]) and (user_type in value["To"]):
             decoded_data = base64.b64decode(value["Message"])
             soup = BeautifulSoup(decoded_data, "lxml")
             email_body = str(soup.body()[0])
