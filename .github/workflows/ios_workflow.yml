@@ -1,7 +1,7 @@
 name: BS - IOS App Tests
 
 env:
-    TAGS: "ios_mobile_test"
+    TAGS: "ios_mobile_tests"
     BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
     BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
 
@@ -13,7 +13,7 @@ on:
             tags:
                 description: Gherkin Tags
                 required: true
-                default: ios_mobile_test
+                default: ios_mobile_tests
 
 jobs:
     scheduled-regression:
@@ -24,7 +24,7 @@ jobs:
             matrix:
                 include:
                     -   name: IOS Mobile
-                        tags: 'ios_mobile_test'
+                        tags: 'ios_mobile_tests'
                         config_file: ./env_configs/ios_mobile_BS.json
                         html_report: ios-mobile
                         testrail_configuration_name: 'iPhone 15 Plus'
