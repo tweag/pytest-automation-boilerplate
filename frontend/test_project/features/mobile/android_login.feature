@@ -14,6 +14,7 @@ Feature: Basic App functionality
         And The element 'Android > _mob > MyDemoApp > login_button' is displayed
         And I click on element 'Android > _mob > MyDemoApp > login_button'
         When The element 'Android > _mob > MyDemoApp > menu_icon' is displayed
+        And The element 'Android > _mob > MyDemoApp > menu_icon' is clickable
 
     @mobile_test @android
     Scenario: Verify logout from app on android app
