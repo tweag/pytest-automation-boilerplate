@@ -3,6 +3,8 @@ from os import environ
 from main.backend.common.step_definitions.steps_common import *
 from assertpy import assert_that
 from openai import OpenAI
+from hypothesis import given
+import hypothesis.strategies as st
 
 import pytest
 
@@ -64,3 +66,39 @@ def search_text(text: str):
         model="gpt-3.5-turbo",
     )
     return response.choices[0].message.content
+
+
+@pytest.mark.nondestructive
+@pytest.mark.automated
+@pytest.mark.propertytest1
+@pytest.mark.test_name("Verify values are equal")
+@given(st.integers(), st.integers())
+def test_ints_are_commutative(x, y):
+    assert x + y == y + x
+    print(f"Test passed for x={x} and y={y}")
+
+
+@pytest.mark.nondestructive
+@pytest.mark.automated
+@pytest.mark.propertytest
+@pytest.mark.test_name("Verify reversing twice gives same list")
+@given(st.lists(st.integers()))
+def test_reversing_twice_gives_same_list(xs):
+    ys = list(xs)
+    reversed_list = list(reversed(ys))
+    reversed_back = list(reversed(reversed_list))
+    assert xs == reversed_back
+    print(f"Test passed for xs={xs} and reversed_back={reversed_back}")
+
+
+@pytest.mark.nondestructive
+@pytest.mark.automated
+@pytest.mark.propertytest1
+@pytest.mark.test_name("Verify look tuples work too")
+@given(st.tuples(st.booleans(), st.text()))
+def test_look_tuples_work_too(t):
+    # A tuple is generated as the one you provided, with the corresponding
+    # types in those positions.
+    assert len(t) == 2
+    assert isinstance(t[0], bool)
+    assert isinstance(t[1], str)
