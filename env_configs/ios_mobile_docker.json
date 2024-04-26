@@ -1,6 +1,6 @@
 {
     "capabilities": {
-        "platformVersion": "16.2",
+        "platformVersion": "17.5",
         "deviceName": "iPhone 14 Pro",
         "platformName": "iOS",
         "app": "/Users/runner/work/pytest-automation-boilerplate/pytest-automation-boilerplate/app files/builds/MyRNDemoApp.app",
