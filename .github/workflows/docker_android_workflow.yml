@@ -18,7 +18,7 @@ jobs:
   scheduled-regression:
     if: github.event_name == 'schedule'
     name: Schedule Android - Regression
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Setup Python
         id: setup_python
@@ -124,7 +124,7 @@ jobs:
   docker-manual-android-run:
     if: github.event_name != 'schedule'
     name: Manual - ${{ inputs.tags }}
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Validate Input Parameter
         id: validate_input
