@@ -50,7 +50,7 @@ jobs:
         id: setup_xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.4.0'
+          xcode-version: '15.3.0'
 
       - name: Open IOS simulator
         id: open_ios_simulator
@@ -134,7 +134,7 @@ jobs:
         id: setup_xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.4.0'
+          xcode-version: '15.3.0'
 
       - name: Open IOS simulator
         id: open_ios_simulator
