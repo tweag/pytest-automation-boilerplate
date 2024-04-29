@@ -50,7 +50,7 @@ jobs:
         id: setup_xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest
+          xcode-version: '15.4.0'
 
       - name: Open IOS simulator
         id: open_ios_simulator
@@ -58,7 +58,7 @@ jobs:
         run: |
           xcrun simctl list
           sleep 5
-          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
+          open -a Simulator --args -CurrentDeviceUDID 6158282B-6478-42BF-9B60-C38B95EE46E5
           sleep 10
 
       - name: Setup dependencies
@@ -134,7 +134,7 @@ jobs:
         id: setup_xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest
+          xcode-version: '15.4.0'
 
       - name: Open IOS simulator
         id: open_ios_simulator
@@ -142,7 +142,7 @@ jobs:
         run: |
           xcrun simctl list
           sleep 5
-          open -a Simulator --args -CurrentDeviceUDID 948EB4DC-22AF-4F28-97AA-160EDC5FB6E2
+          open -a Simulator --args -CurrentDeviceUDID 6158282B-6478-42BF-9B60-C38B95EE46E5
           sleep 10
 
       - name: Setup dependencies
