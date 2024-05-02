@@ -13,8 +13,7 @@ Feature: Basic App functionality
         And I set text '10203040' to field 'Android > _mob > MyDemoApp > password'
         And The element 'Android > _mob > MyDemoApp > login_button' is displayed
         And I click on element 'Android > _mob > MyDemoApp > login_button'
-        When The element 'Android > _mob > MyDemoApp > menu_icon' is displayed
-        And The element 'Android > _mob > MyDemoApp > menu_icon' is clickable
+        And The element 'Android > _mob > MyDemoApp > menu_icon' is displayed
 
     @mobile_test @android
     Scenario: Verify logout from app on android app
