@@ -56,21 +56,21 @@ jobs:
             tags: web_tests
             config_file: ./env_configs/docker_chrome.json
             html_report: linux-chrome
-            concurrent_thread: 3
+            concurrent_thread: 1
 
           - name: Linux Firefox
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: 'web_tests and firefox'
             config_file: ./env_configs/docker_firefox.json
             html_report: linux-firefox
-            concurrent_thread: 3
+            concurrent_thread: 1
 
           - name: Linux Edge
             baseurl: https://opensource-demo.orangehrmlive.com
             tags: web_tests
             config_file: ./env_configs/docker_edge.json
             html_report: linux-edge
-            concurrent_thread: 3
+            concurrent_thread: 1
 
     name: ${{ matrix.name }} - Regression
     runs-on: ubuntu-latest
@@ -111,7 +111,7 @@ jobs:
           env
            source $HOME/.bp-venv/bin/activate
 
-           python -m pytest -v --driver Remote --selenium-host 'localhost' --selenium-port '4444' \
+           python -m pytest -v --gherkin-terminal-reporter --driver Remote --selenium-host 'localhost' --selenium-port '4444' \
             --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
             --base-url="${{ matrix.baseurl }}" \
             --reruns 1 --reruns-delay 5 \
@@ -200,7 +200,7 @@ jobs:
             BASE_URL="${{ github.event.inputs.baseurl }}"
           fi
 
-          concurrent_thread=3
+          concurrent_thread=1
 
           if [[ "${{ github.event.inputs.browser }}" == "chrome" ]]; then
             BROWSER=./env_configs/docker_chrome.json
@@ -215,7 +215,7 @@ jobs:
 
           env
           source $HOME/.bp-venv/bin/activate
-          python -m pytest -v --driver Remote \
+          python -m pytest -v --gherkin-terminal-reporter --driver Remote \
             --selenium-host 'localhost' --selenium-port '4444' \
             --variables "$BROWSER" \
             --reruns 1 --reruns-delay 5 \
