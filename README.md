@@ -2,7 +2,6 @@ Pytest Automation Boilerplate
 ==================================
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-1EAEDB)]()
 [![license](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/license/mit)
-[![Release](https://img.shields.io/github/release/rife2/tests-badge.svg)](https://github.com/tweag/pytest-automation-boilerplate/releases/latest)
 
 About the Project
 -----------------
