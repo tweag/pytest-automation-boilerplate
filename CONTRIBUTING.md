@@ -29,7 +29,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[pytest-automation-boilerplate Code of Conduct](https://github.com/tweag/pytest-automation-boilerplateblob/master/CODE_OF_CONDUCT.md).
+[pytest-automation-boilerplate Code of Conduct](https://github.com/tweag/pytest-automation-boilerplate/blob/master/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
 to <tauqir.sarwar@moduscreate.com>.
 
