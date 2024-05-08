@@ -121,7 +121,7 @@ This document assumes that user has:
 
     ```shell
     mkdir workspaces && cd workspaces
-    git clone https://github.com/modus/pytest-automation-boilerplate.git
+    git clone https://github.com/tweag/pytest-automation-boilerplate.git
     # alternatively, you could use ssh link if you have setup ssh in your work machine.
     ```
 
