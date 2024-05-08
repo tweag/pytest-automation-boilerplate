@@ -1,0 +1,14 @@
+{
+    "capabilities": {
+        "platformVersion": "16.7",
+        "deviceName": "iPhone 12",
+        "platformName": "iOS",
+        "app": "storage:filename=iOS-Real-Device-MyRNDemoApp.1.3.0-162.ipa",
+        "appiumVersion": "latest",
+        "sauce:options": {
+            "build": "Pytest-Automation-Boilerplate",
+            "name": "IOS App Tests",
+            "extendedDebugging": true
+        }
+    }
+}

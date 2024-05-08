@@ -1,0 +1,12 @@
+{
+    "capabilities": {
+        "browserName": "Chrome",
+        "browserVersion": "latest",
+        "platformName": "Windows 11",
+        "sauce:options": {
+            "build": "Pytest-Automation-Boilerplate",
+            "name": "Web UI Tests",
+            "extendedDebugging": true
+        }
+    }
+}
