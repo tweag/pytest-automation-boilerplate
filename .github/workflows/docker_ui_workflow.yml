@@ -6,7 +6,8 @@ env:
   HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
   HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
   PROJECT_LOCATION: ${{ github.workspace }}
-  USING_DOCKER: 'True'
+  USING_ENV: "DOCKER"
+
 
 
 on:
