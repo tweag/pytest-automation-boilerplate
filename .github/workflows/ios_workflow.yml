@@ -4,6 +4,8 @@ env:
     TAGS: "ios_mobile_tests"
     BROWSERSTACK_USER: ${{secrets.BROWSERSTACK_API_USERNAME}}
     BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
+    USING_ENV: "BROWSERSTACK"
+
 
 on:
     schedule:

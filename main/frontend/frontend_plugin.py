@@ -233,7 +233,7 @@ def driver_options_factory(session_capabilities):
 
 @pytest.fixture(scope="session", autouse=True)
 def configure_driver_executor(session_capabilities, driver_options_factory):
-    if session_capabilities.get("browserstack", "False") == 'True':
+    if os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("browserstack", "False") == 'True':
         value, options = driver_options_factory
 
         for k, v in session_capabilities.items():
@@ -281,7 +281,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
         appium.driver_kwargs = driver_kwargs
 
     # To pass options for local Android and iOS test executions
-    elif session_capabilities.get("platformName", "").lower() in ("android", "ios"):
+    elif os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("platformName", "").lower() in ("android", "ios"):
         value, options = driver_options_factory
         for k, v in session_capabilities.items():
             options.set_capability(k, v)
@@ -298,7 +298,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
 
         appium.driver_kwargs = driver_kwargs
 
-    elif os.environ.get("USING_DOCKER", "False") == 'True':
+    elif os.environ.get("USING_ENV", "") == 'DOCKER':
         value, options = driver_options_factory
         for k, v in session_capabilities.items():
             options.set_capability(k, v)

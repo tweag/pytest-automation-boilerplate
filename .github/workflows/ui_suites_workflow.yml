@@ -7,6 +7,8 @@ env:
   BROWSERSTACK_ACCESS_KEY: ${{secrets.BROWSERSTACK_ACCESS_KEY}}
   HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
   HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+  USING_ENV: "BROWSERSTACK"
+
 
 on:
   schedule:
