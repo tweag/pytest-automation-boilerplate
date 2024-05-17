@@ -9,7 +9,6 @@ env:
   USING_ENV: "DOCKER"
 
 
-
 on:
   schedule:
     - cron: '0 23 * * *'

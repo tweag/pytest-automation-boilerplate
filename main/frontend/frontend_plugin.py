@@ -127,7 +127,7 @@ def chrome_options(chrome_options, variables, proxy_url, env_variables, request)
     chrome_options.add_argument("--disable-cookies")
     chrome_options.add_argument("--disable-extensions")
 
-    if os.environ.get("USING_DOCKER", False) == 'True':
+    if os.environ.get("USING_ENV", "") == 'DOCKER':
         chrome_options.add_argument("--ignore-certificate-errors")
     if proxy_url:
         chrome_options.add_argument("--ignore-certificate-errors")
@@ -233,7 +233,8 @@ def driver_options_factory(session_capabilities):
 
 @pytest.fixture(scope="session", autouse=True)
 def configure_driver_executor(session_capabilities, driver_options_factory):
-    if os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("browserstack", "False") == 'True':
+    if os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("browserstack",
+                                                                                      "False") == 'True':
         value, options = driver_options_factory
 
         for k, v in session_capabilities.items():
@@ -281,7 +282,8 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
         appium.driver_kwargs = driver_kwargs
 
     # To pass options for local Android and iOS test executions
-    elif os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("platformName", "").lower() in ("android", "ios"):
+    elif os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("platformName", "").lower() in (
+    "android", "ios"):
         value, options = driver_options_factory
         for k, v in session_capabilities.items():
             options.set_capability(k, v)
@@ -340,6 +342,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
             return kwargs
 
         remote.driver_kwargs = driver_kwargs
+
 
 # Define selenium generics as a fixture
 # This is UI specific implementation
