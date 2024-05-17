@@ -2,7 +2,6 @@ name: Docker - IOS App Tests
 
 env:
   TAGS: "ios_mobile_tests"
-  USING_ENV: "DOCKER"
 
 on:
   schedule:

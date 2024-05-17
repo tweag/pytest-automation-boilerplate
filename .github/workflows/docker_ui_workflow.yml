@@ -9,7 +9,6 @@ env:
   USING_ENV: "DOCKER"
 
 
-
 on:
   schedule:
     - cron: '0 23 * * *'
@@ -112,7 +111,7 @@ jobs:
           env
            source $HOME/.bp-venv/bin/activate
 
-           python -m pytest -v --gherkin-terminal-reporter --driver Remote --selenium-host 'localhost' --selenium-port '4444' \
+           python -m pytest -v --driver Remote --selenium-host 'localhost' --selenium-port '4444' \
             --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
             --base-url="${{ matrix.baseurl }}" \
             --reruns 1 --reruns-delay 5 \
@@ -216,7 +215,7 @@ jobs:
 
           env
           source $HOME/.bp-venv/bin/activate
-          python -m pytest -v --gherkin-terminal-reporter --driver Remote \
+          python -m pytest -v --driver Remote \
             --selenium-host 'localhost' --selenium-port '4444' \
             --variables "$BROWSER" \
             --reruns 1 --reruns-delay 5 \

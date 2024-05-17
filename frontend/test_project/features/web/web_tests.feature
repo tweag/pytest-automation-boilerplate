@@ -67,7 +67,8 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item 'Blog' for element 'Modus_Site > header_link'
     And The title is 'Blog | Digital Transformation Insights - Modus Create'
     When The element 'Modus_Site > dropdown' is displayed
-    And I select the option 'quality-assurance' by value for element 'Modus_Site > dropdown'
+#   Dropdown has some specific values now so can't select
+#   And I select the option 'quality-assurance' by value for element 'Modus_Site > dropdown'
     And I pause for '5' s
     And I set text 'How to Avoid Flaky' to field 'Modus_Site > search_bar'
     When I click on button 'Modus_Site > search_icon'
