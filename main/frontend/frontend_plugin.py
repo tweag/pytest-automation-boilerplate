@@ -282,8 +282,7 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
         appium.driver_kwargs = driver_kwargs
 
     # To pass options for local Android and iOS test executions
-    elif os.environ.get("USING_ENV", "") == 'BROWSERSTACK' and session_capabilities.get("platformName", "").lower() in (
-    "android", "ios"):
+    elif session_capabilities.get("platformName", "").lower() in ("android", "ios"):
         value, options = driver_options_factory
         for k, v in session_capabilities.items():
             options.set_capability(k, v)
