@@ -355,7 +355,11 @@ Command for local run on BS with IOS:
 ```shell
 -v -s --gherkin-terminal-reporter --disable-warnings --driver=Appium --html="./output/reports/" --selenium-host '[BS_USERNAME]:[BS_KEY]@hub-cloud.browserstack.com' --variables="env_configs/ios_mobile_BS.json" --self-contained-html --tags="mobile_test and ios" --reruns 1 --reruns-delay 2
 ```
-
+There is a param in .local.env file to set the integration:
+```shell
+# BROWSERSTACK , SAUCELABS, DOCKER
+USING_ENV=SAUCELABS
+```
 ### Html Test Reports
 To generate a html report please add following arguments to your command:
 ```shell

@@ -278,7 +278,6 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
 
             return kwargs
 
-        remote.driver_kwargs = driver_kwargs
         appium.driver_kwargs = driver_kwargs
 
     # To pass options for local Android and iOS test executions
