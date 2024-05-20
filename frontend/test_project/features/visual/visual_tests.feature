@@ -26,8 +26,8 @@ Feature:  OrangeHRM Visual Tests
             | mac-chrome-login-button.png |
 
 
-    @blog @automated
-    Scenario: Check QA modus blog
+    @blog_page @automated
+    Scenario: Check QA modus blog design
         Given I set web base url 'https://moduscreate.com'
         And The browser resolution is '1024' per '768'
         And The title is 'Modus Create | Consulting and Product Development Partner'
@@ -35,7 +35,8 @@ Feature:  OrangeHRM Visual Tests
         And I click item 'Blog' for element 'Modus_Site > header_link'
         And The title is 'Blog | Digital Transformation Insights - Modus Create'
         When The element 'Modus_Site > dropdown' is displayed
-        And I select the option 'quality-assurance' by value for element 'Modus_Site > dropdown'
+#        Dropdown has some specific values now so can't select
+#        And I select the option 'quality-assurance' by value for element 'Modus_Site > dropdown'
         And I pause for '5' s
         And I set text 'How to Avoid Flaky' to field 'Modus_Site > search_bar'
         When I click on button 'Modus_Site > search_icon'
