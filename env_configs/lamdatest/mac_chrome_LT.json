@@ -1,0 +1,13 @@
+{
+  "capabilities": {
+	"browserName": "Chrome",
+	"LT:Options": {
+		"platformName": "Windows 10",
+		"build": "Python-Automation-Boilerplate",
+		"project": "Pytest-Automation-Boilerplate",
+		"w3c": "True",
+		"plugin": "python-pytest",
+		"tunnel": "True"
+	}
+  }
+}
