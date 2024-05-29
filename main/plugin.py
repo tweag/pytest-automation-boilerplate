@@ -82,17 +82,14 @@ def pytest_configure(config: pytest_config.Config) -> None:
     if os.path.exists("html_env_vars.pickle"):
         os.remove("html_env_vars.pickle")
 
-    # pre-load env. variables in order to meet TestRail requirements
     load_env_from_local_dotenv_file()
 
-    # delete temporary screenshots directory if exist
     if Path(f"{os.getcwd()}/{TEMP_SCREENSHOTS}").exists():
         try:
             shutil.rmtree(Path(f"{os.getcwd()}/{TEMP_SCREENSHOTS}"))
         finally:
             ...
 
-    # HTML Report: Report name
     if config.option.htmlpath:
         not_allowed_filename_characters = ["/", "\\"]
         report_path: Path = Path(config.option.htmlpath)
@@ -118,44 +115,7 @@ def pytest_configure(config: pytest_config.Config) -> None:
 
 # CLI params are added (we need this hook for every new parameters that will need to be added)
 def pytest_addoption(parser: pytest_argparsing.Parser) -> None:
-    """Register argparse-style options and ini-style config values,
-    called once at the beginning of a test run.
 
-    .. note::
-
-        This function should be implemented only in plugins or ``conftest.py``
-        files situated at the tests root directoy due to how pytest
-        :ref:`discovers plugins during startup <pluginorder>`.
-
-    :param _pytest.config.argparsing.Parser parser:
-        To add command line options, call
-        :py:func:`parser.addoption(...) <_pytest.config.argparsing.Parser.addoption>`.
-        To add ini-file values call :py:func:`parser.addini(...)
-        <_pytest.config.argparsing.Parser.addini>`.
-
-    :param _pytest.config.PytestPluginManager pluginmanager:
-        pytest plugin manager, which can be used to install :py:func:`hookspec`'s
-        or :py:func:`hookimpl`'s and allow one plugin to call another plugin's hooks
-        to change how command line options are added.
-
-    Options can later be accessed through the
-    :py:class:`config <_pytest.config.Config>` object, respectively:
-
-    - :py:func:`config.getoption(name) <_pytest.config.Config.getoption>` to
-      retrieve the value of a command line option.
-
-    - :py:func:`config.getini(name) <_pytest.config.Config.getini>` to retrieve
-      a value read from an ini-style file.
-
-    The config object is passed around on many internal objects via the ``.config``
-    attribute or can be retrieved as the ``pytestconfig`` fixture.
-
-    .. note::
-        This hook is incompatible with ``hookwrapper=True``.
-
-    Reference for docstring:
-    https://docs.pytest.org/en/6.2.x/_modules/_pytest/hookspec.html#pytest_addoption
-    """
     parser.addoption(
         "--language",
         action="store",
@@ -191,16 +151,7 @@ def pytest_addoption(parser: pytest_argparsing.Parser) -> None:
     )
 
 
-# Initialize output directories & override selenium fixture based on the platform
 def pytest_sessionstart(session: pytest.Session) -> None:
-    """Called after the ``Session`` object has been created and before performing collection
-    and entering the run test loop.
-
-    :param pytest.Session session: The pytest session object.
-
-    Reference for docstring:
-    https://docs.pytest.org/en/6.2.x/_modules/_pytest/hookspec.html#pytest_sessionstart
-    """
     initialize_output_dirs()
 
     # HTML Report: Environment section: removing unnecessary data
@@ -221,11 +172,6 @@ def pytest_sessionstart(session: pytest.Session) -> None:
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_sessionfinish(session, exitstatus) -> None:
-    """Called after whole test run finished, right before returning the exit status to the system.
-
-        :param pytest.Session session: The pytest session object.
-        :param int exitstatus: The status which pytest will return to the system.
-    """
 
     if exitstatus == 0 or exitstatus == 1 or exitstatus == 6:
         command_generate_allure_report = [
@@ -298,19 +244,9 @@ def pytest_sessionfinish(session, exitstatus) -> None:
     session.config._metadata = ordered_metadata
 
 
-# Collect all tags / markers for the tests
 def pytest_collection_modifyitems(
         config: pytest_config.Config, items: List[pytest.Item]
 ) -> None:
-    """Called after collection has been performed. May filter or re-order
-    the items in-place.
-
-    :param _pytest.config.Config config: The pytest config object.
-    :param List[pytest.Item] items: List of item objects.
-
-    Reference for docstring:
-    https://docs.pytest.org/en/6.2.x/_modules/_pytest/hookspec.html#pytest_collection_modifyitems
-    """
     for item in items:
         if item.cls:
             for marker in item.cls.pytestmark:
@@ -336,19 +272,12 @@ def pytest_collection_modifyitems(
         config.pluginmanager.import_plugin("main.frontend.frontend_plugin")
 
 
-"2. API & UI - common implementation"
-
-
-# Define the environment variables fixture
-# This is API & UI specific implementation
 @pytest.fixture(scope='session')
 def env_variables(request):
     env_vars_file_path = f"{request.session.config.known_args_namespace.confcutdir}/configs/.local.env"
     return EnvVariables(env_vars_file_path)
 
 
-# Define the base url fixture
-# This is API & UI specific implementation
 @pytest.fixture(scope="session")
 def base_url(request, env_variables) -> str:
     # get base url value from command line
@@ -358,16 +287,12 @@ def base_url(request, env_variables) -> str:
     )
 
 
-# Define the language fixture
-# This is API & UI specific implementation
 @pytest.fixture(scope="session")
 def language(request):
     language_value = request.config.getoption("language")
     return language_value if language_value else None
 
 
-# Define the project directory fixture
-# This is API & UI specific implementation
 @pytest.fixture(scope="session", autouse=True)
 def project_dir(request, pytestconfig) -> str:
     path_str = request.session.config.known_args_namespace.confcutdir
@@ -375,8 +300,6 @@ def project_dir(request, pytestconfig) -> str:
     return path_str if path_str else str(pytestconfig.rootdir)
 
 
-# Define proxy-url as a fixture
-# This is API & UI specific implementation
 @pytest.fixture(scope="session")
 def proxy_url(request):
     proxy_url_value = request.config.getoption("--proxy-url")
@@ -493,8 +416,6 @@ def pytest_runtest_makereport(item, call):
         rep.test_name = [test_name.args[0] for test_name in item.iter_markers() if test_name.name == 'test_name']
 
 
-# Define an extra column for HTML report: Section
-# Set the order of the columns
 def pytest_html_results_table_header(cells):
     if cells:
         if not bp_storage.is_api_testing():
