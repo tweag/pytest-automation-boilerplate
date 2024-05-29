@@ -15,19 +15,7 @@ logger = structlog.get_logger(__name__)
 
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I verify images '(?P<name>.*)' have no visual regression"))
 def image_visual_is_valid(soft_assert: str, name):
-    """Step Definition to verify if two images are same (Standalone Visual Testing)
 
-    Both Base Image and Test Image are saved in respective directories as defined by boilerplate
-    framework, i.e. test_data/visualtesting/base and test_data/visualtesting/test directories, with the
-    same name (argument name passed in feature file).
-
-    Args:
-        name: str - Image Name to perform visual regression.
-
-    Asserts:
-        If Base and Test Images are same. Else raises AssertionError.
-
-    """
     if soft_assert is not None and soft_assert.lower() == 'true':
         with check:
             assert are_two_images_look_same(name)
@@ -38,21 +26,6 @@ def image_visual_is_valid(soft_assert: str, name):
 @then(parsers.re("(With soft assertion '(?P<soft_assert>.*)' )?I verify that element '(?P<locator_path>.*)' is not visually regressed:(?P<data_table>.*)",
                  flags=re.S, ), converters=dict(data_table=data_table_horizontal_converter), )
 def element_visual_is_valid(selenium_generics: SeleniumGenerics, locators: Locators, soft_assert: str, locator_path: str, data_table: dict):
-    """Step Definition to verify if a particular webelement is not visually regressed.
-
-    Base Image should be saved in output/screenshots/base directory (name as provided in
-    the data table). Test Function would take screenshot of corresponding webelement as
-    provided in locator path, and asserts if it is same as base image.
-
-    Args:
-        selenium_generics - SeleniumGenerics instance
-        locators - Locators instance
-        locator_path - as provided in feature file step.
-        data_table - retrieved from feature file - scenario - step.
-
-    Asserts:
-        If the webelement captured during test is same as the base image provided.
-    """
     locator = locators.parse_and_get(locator_path, selenium_generics)
     if soft_assert is not None and soft_assert.lower() == 'true':
         with check:
