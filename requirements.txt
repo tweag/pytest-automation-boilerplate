@@ -2,7 +2,7 @@
 wheel == 0.38.1
 Appium-Python-Client == 3.1.1
 selenium == 4.12
-requests == 2.32.0
+requests == 2.32.3
 Pillow == 10.3.0
 beautifulsoup4 == 4.11.0
 polling == 0.3.0
