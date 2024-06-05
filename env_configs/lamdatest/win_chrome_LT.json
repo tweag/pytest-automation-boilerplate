@@ -7,7 +7,7 @@
 		"project": "Pytest-Automation-Boilerplate",
 		"w3c": "True",
 		"plugin": "python-pytest",
-		"tunnel": "True"
+		"tunnel": "false"
 	}
   }
 }
