@@ -1,3 +1,4 @@
+import time
 
 import structlog
 from pytest_bdd import parsers, given, when, then
@@ -172,3 +173,9 @@ def add_item_for_element(selenium_generics: SeleniumGenerics, locators: Locators
     locator = locators.parse_and_get(locator_path, selenium_generics)
     locator = locator.format(inner_text)
     selenium_generics.enter_text(locator, value)
+
+
+@given(parsers.re("I pause for '(?P<seconds>.*)' s"), converters=dict(seconds=int))
+@when(parsers.re("I pause for '(?P<seconds>.*)' s"), converters=dict(seconds=int))
+def pause_execution(seconds: int):
+    time.sleep(seconds)
