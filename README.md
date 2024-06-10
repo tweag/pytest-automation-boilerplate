@@ -23,6 +23,7 @@ Usages
 * Reporting with Allure & Custom HTML
 * Parallel Execution with Pytest-xdist
 
+
 Getting Started
 ---------------
 ### Prerequisites
