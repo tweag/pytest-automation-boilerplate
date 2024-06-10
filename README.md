@@ -2,7 +2,7 @@ Pytest Automation Boilerplate
 ==================================
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-1EAEDB)]()
 [![license](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/license/mit)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tweag/pytest-automation-boilerplate/docker_android_workflow.yml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tweag/pytest-automation-boilerplate/api_workflow.yml)
 ![GitHub repo size](https://img.shields.io/github/repo-size/tweag/pytest-automation-boilerplate)
 ![GitHub last commit](https://img.shields.io/github/last-commit/tweag/pytest-automation-boilerplate)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/tweag/pytest-automation-boilerplate)
