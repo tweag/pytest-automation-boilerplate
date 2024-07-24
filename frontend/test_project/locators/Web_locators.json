@@ -25,7 +25,9 @@
     }
   },
   "Modus_Site": {
-    "header_link": "//ul[@id='menu-main-nav-1']//a[@class='nav-link'][normalize-space()='{}']",
+    "header_link": "//ul[@class='brex-mega-menu']//a[normalize-space()='{}']",
+    "header_menu_link": "//ul[@class='brex-mega-menu']//a[normalize-space()='WHO WE ARE']",
+    "sub_header_link": "//strong[normalize-space()='Careers']",
     "main_heading": "//span[normalize-space()='World-Class Product Partner']",
     "dropdown": "//select[@class='facetwp-dropdown']",
     "search_bar": "//input[@placeholder='Search']",
