@@ -64,7 +64,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The browser resolution is '1024' per '768'
     And The title is 'Modus Create | Consulting and Product Development Partner'
     When The element 'Modus_Site > main_heading' is displayed
-    And I click item 'Blog' for element 'Modus_Site > header_link'
+    And I click item 'OUR RESOURCES' for element 'Modus_Site > header_link'
     And The title is 'Blog | Digital Transformation Insights - Modus Create'
     When The element 'Modus_Site > dropdown' is displayed
 #   Dropdown has some specific values now so can't select
@@ -133,7 +133,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And Browser is maximized
     And The title is 'Modus Create | Consulting and Product Development Partner'
     When The element 'Modus_Site > main_heading' is displayed
-    And I click item 'Careers' for element 'Modus_Site > header_link'
+    And I hover over 'Modus_Site > header_menu_link' and click element 'sub_header_link'
     And The title is 'Modus Create - Careers | Digital Transformation Consultants'
     And The element 'Modus_Site > Careers > dropdown_area' is displayed
     And The element 'Modus_Site > Careers > job_container' is displayed
