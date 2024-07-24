@@ -133,14 +133,14 @@ Feature:  OrangeHRM Login and Modus QA blog
     And Browser is maximized
     And The title is 'Modus Create | Consulting and Product Development Partner'
     When The element 'Modus_Site > main_heading' is displayed
-    And I hover over 'Modus_Site > header_menu_link' and click element 'sub_header_link'
+    And I hover over 'Modus_Site > jobs_link' and click element 'Modus_Site > jobs_link'
     And The title is 'Modus Create - Careers | Digital Transformation Consultants'
     And The element 'Modus_Site > Careers > dropdown_area' is displayed
     And The element 'Modus_Site > Careers > job_container' is displayed
     And I move to element 'Modus_Site > Careers > dropdown_area'
     And The element 'Modus_Site > Careers > job_container' is clickable
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
-    And I click item 'Bazel Engineer' for element 'Modus_Site > Careers > job_title'
+    And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains 'com/careers/'
     When The element 'Modus_Site > Careers > main_iframe' is displayed
     And I switch to iframe 'Modus_Site > Careers > main_iframe'
