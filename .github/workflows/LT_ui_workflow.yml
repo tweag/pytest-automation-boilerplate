@@ -138,8 +138,9 @@ jobs:
         id: tunnel
         with:
           user: ${{ secrets.LT_USERNAME }}
-          access-key: ${{ secrets.LT_ACCESS_KEY }}
+          accessKey: ${{ secrets.LT_ACCESS_KEY }}
           tunnelName: "pytestTunnel"
+          verbose: true
 
       - name: Check out code
         uses: actions/checkout@v4
