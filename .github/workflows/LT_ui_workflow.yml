@@ -215,7 +215,7 @@ jobs:
 
       - name: Check out code
         id: co_code
-        if: steps.bs_local_tunnel_setup.outcome == 'success'
+        if: steps.tunnel.outcome == 'success'
         uses: actions/checkout@v4
 
       - name: Setup dependencies
@@ -236,27 +236,26 @@ jobs:
             BASE_URL="${{ github.event.inputs.baseurl }}"
           fi
 
-
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./env_configs/win_chrome.json
+            BROWSER=./env_configs/lamdatest/win_chrome_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./env_configs/win_firefox.json
+            BROWSER=./env_configs/lamdatest/win_firefox_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "window" ]]; then
-            BROWSER=./env_configs/win_edge.json
+            BROWSER=./env_configs/lamdatest/win_edge_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./env_configs/mac_chrome.json
+            BROWSER=./env_configs/lamdatest/mac_chrome_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./env_configs/mac_firefox.json
+            BROWSER=./env_configs/lamdatest/mac_firefox_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "safari" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./env_configs/mac_safari.json
+            BROWSER=./env_configs/lamdatest/mac_safari_LT.json
           fi
           if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "mac" ]]; then
-            BROWSER=./env_configs/mac_edge.json
+            BROWSER=./env_configs/lamdatest/mac_edge_LT.json
           fi
           
           env
