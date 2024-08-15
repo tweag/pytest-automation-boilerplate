@@ -1,8 +1,8 @@
 {
   "capabilities": {
-	"browserName": "Chrome",
+	"browserName": "MicrosoftEdge",
 	"LT:Options": {
-		"platformName": "Windows 10",
+		"platformName": "macOS Sonoma",
 		"build": "Python-Automation-Boilerplate",
 		"project": "Pytest-Automation-Boilerplate",
 		"w3c": "True",

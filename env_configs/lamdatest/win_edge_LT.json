@@ -1,6 +1,6 @@
 {
   "capabilities": {
-	"browserName": "Chrome",
+	"browserName": "MicrosoftEdge",
 	"LT:Options": {
 		"platformName": "Windows 10",
 		"build": "Python-Automation-Boilerplate",
