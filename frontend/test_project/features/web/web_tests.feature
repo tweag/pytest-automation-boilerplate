@@ -64,7 +64,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The browser resolution is '1024' per '768'
     And The title is 'Modus Create | Consulting and Product Development Partner'
     When The element 'Modus_Site > main_heading' is displayed
-    And I click item 'OUR RESOURCES' for element 'Modus_Site > header_link'
+    And I click item 'BLOG' for element 'Modus_Site > header_link'
     And The title is 'Blog | Digital Transformation Insights - Modus Create'
     When The element 'Modus_Site > dropdown' is displayed
 #   Dropdown has some specific values now so can't select
@@ -140,7 +140,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I move to element 'Modus_Site > Careers > dropdown_area'
     And The element 'Modus_Site > Careers > job_container' is clickable
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
-    And I click item 'Android Engineer' for element 'Modus_Site > Careers > job_title'
+    And I click item 'Bazel Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains 'com/careers/'
     When The element 'Modus_Site > Careers > main_iframe' is displayed
     And I switch to iframe 'Modus_Site > Careers > main_iframe'
