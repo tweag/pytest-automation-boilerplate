@@ -1,0 +1,275 @@
+name: LT - Web UI Tests
+
+env:
+  TAGS: web_tests
+  BASE_URL: https://opensource-demo.orangehrmlive.com
+  LT_USER: ${{secrets.LT_USERNAME}}
+  LT_ACCESS_KEY: ${{secrets.LT_ACCESS_KEY}}
+  HRM_USER_NAME: ${{ secrets.HRM_USER_NAME }}
+  HRM_PASSWORD: ${{ secrets.HRM_PASSWORD }}
+  USING_ENV: "LAMDATEST"
+
+on:
+  schedule:
+    - cron: '30 22 * * *'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: Gherkin Tags
+        required: true
+        default: web_tests
+
+      baseurl:
+        description: Base URL
+        required: true
+        type: choice
+        default: https://opensource-demo.orangehrmlive.com
+        options:
+          - https://opensource-demo.orangehrmlive.com
+          - other
+
+      inputurl:
+        description: Other than default Base URL (e.g portal url)
+        required: true
+        default: https://opensource-demo.orangehrmlive.com
+
+      os:
+        description: 'Operating system (window or mac)'
+        required: true
+        type: choice
+        default: mac
+        options:
+          - mac
+          - window
+
+      browser:
+        description: Browser Name
+        required: true
+        type: choice
+        default: chrome
+        options:
+          - chrome
+          - firefox
+          - edge
+          - safari
+
+jobs:
+  web-scheduled-regression:
+    if: github.event_name == 'schedule'
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        include:
+          - name: Win Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./env_configs/win_chrome.json
+            html_report: win-chrome
+            testrail_configuration_name: 'Chrome, Windows'
+            testrail_run_name: 'Desktop Chrome'
+
+          - name: Win Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and firefox'
+            config_file: ./env_configs/win_firefox.json
+            html_report: win-firefox
+            testrail_configuration_name: 'Firefox, Windows'
+            testrail_run_name: 'Desktop Firefox'
+
+          - name: Win Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./env_configs/win_edge.json
+            html_report: win-edge
+            testrail_configuration_name: 'Edge, Windows'
+            testrail_run_name: 'Desktop Edge'
+
+          - name: Mac Firefox
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: 'web_tests and firefox'
+            config_file: ./env_configs/mac_firefox.json
+            html_report: mac-firefox
+            testrail_configuration_name: 'Firefox, MacOS'
+            testrail_run_name: 'MAC Desktop Firefox'
+
+          - name: Mac Chrome
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./env_configs/mac_chrome.json
+            html_report: mac-chrome
+            testrail_configuration_name: 'Chrome, MacOS'
+            testrail_run_name: 'MAC Desktop Chrome'
+
+          - name: Mac Edge
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./env_configs/mac_edge.json
+            html_report: mac-edge
+            testrail_configuration_name: 'Edge, MacOS'
+            testrail_run_name: 'MAC Desktop Edge'
+
+          - name: Mac Safari
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: web_tests
+            config_file: ./env_configs/mac_safari.json
+            html_report: mac-safari
+            testrail_configuration_name: 'Safari, MacOS'
+            testrail_run_name: 'MAC Desktop Safari'
+
+          - name: Mac Chrome Visual
+            baseurl: https://opensource-demo.orangehrmlive.com
+            tags: visual
+            config_file: ./env_configs/mac_chrome.json
+            html_report: mac-chrome-visual
+            testrail_configuration_name: 'Chrome, MacOS'
+            testrail_run_name: 'MAC Desktop Chrome Visual'
+
+    name: ${{ matrix.name }} - Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Start Tunnel
+        uses: LambdaTest/LambdaTest-tunnel-action@v2
+        id: tunnel
+        with:
+          user: ${{ secrets.LT_USERNAME }}
+          access-key: ${{ secrets.LT_ACCESS_KEY }}
+          tunnelName: "pytestTunnel"
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        run: |
+          sh setup_install.sh
+
+      - name: Run All Tests
+        run: |
+          env
+          source $HOME/.bp-venv/bin/activate
+          sh ci_lt_run_web.sh ${{secrets.LT_USERNAME}} ${{secrets.LT_ACCESS_KEY}} "${{ matrix.config_file }}" "${{ matrix.tags }}" "${{ matrix.baseurl }}" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.html_report }}
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+            ./test_data/visualtesting/test/*.png
+        if: ${{ always() }}
+
+  web-manual-run:
+    if: github.event_name != 'schedule'
+    name: Manual - ${{ inputs.os }} ${{ inputs.browser }} - ${{ inputs.tags }} - ${{ inputs.baseurl }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input Parameter
+        id: validate_input
+        run: |
+          if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+            echo "Invalid input: 'tags' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.baseurl }}" ]]; then
+            echo "Invalid input: 'baseurl' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.browser }}" ]]; then
+            echo "Invalid input: 'browser' is required but not provided."
+            exit 1
+          fi
+
+          if [[ -z "${{ github.event.inputs.os }}" ]]; then
+            echo "Invalid input: 'os' is required but not provided."
+            exit 1
+          fi
+
+          if [[ "${{ inputs.os }}" == "window" && "${{ inputs.browser }}" == "safari" ]]; then
+            echo "Invalid input: Safari is not supported on Windows OS."
+            exit 1
+          fi
+
+      - name: Setup Python
+        id: setup_python
+        if: steps.validate_input.outcome == 'success'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Start Tunnel
+        uses: LambdaTest/LambdaTest-tunnel-action@v2
+        id: tunnel
+        with:
+          user: ${{ secrets.LT_USERNAME }}
+          access-key: ${{ secrets.LT_ACCESS_KEY }}
+          tunnelName: "pytestTunnel"
+
+      - name: Check out code
+        id: co_code
+        if: steps.bs_local_tunnel_setup.outcome == 'success'
+        uses: actions/checkout@v4
+
+      - name: Setup dependencies
+        id: setup_dependencies
+        if: steps.co_code.outcome == 'success'
+        run: |
+          sh setup_install.sh
+
+      - name: Run Manual Job Tests
+        id: run_manual_job
+        if: steps.setup_dependencies.outcome == 'success'
+        run: |
+          TAGS="${{ github.event.inputs.tags }}"
+
+          if [[ "${{ github.event.inputs.baseurl }}" == "other" ]]; then
+            BASE_URL="${{ github.event.inputs.inputurl }}"
+          else
+            BASE_URL="${{ github.event.inputs.baseurl }}"
+          fi
+
+
+          if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./env_configs/win_chrome.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./env_configs/win_firefox.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "window" ]]; then
+            BROWSER=./env_configs/win_edge.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "chrome" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./env_configs/mac_chrome.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "firefox" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./env_configs/mac_firefox.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "safari" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./env_configs/mac_safari.json
+          fi
+          if [[ "${{ github.event.inputs.browser }}" == "edge" && "${{ github.event.inputs.os }}" == "mac" ]]; then
+            BROWSER=./env_configs/mac_edge.json
+          fi
+          
+          env
+          source $HOME/.bp-venv/bin/activate
+          sh ci_lt_run_web.sh ${{secrets.LT_USERNAME}} ${{secrets.LT_ACCESS_KEY}} "$BROWSER" "$TAGS" "$BASE_URL" "${{secrets.SLACK_WEBHOOK_URL}}" "${{secrets.TEAMS_WEBHOOK_URL}}"
+
+      - name: Upload HTML run report in the Artifacts Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-results
+          path: |
+            ./*.html
+            ./output/
+            ./assets/
+            ./test_data/visualtesting/test/*.png
+        if: ${{ always() }}
