@@ -8,7 +8,7 @@ env:
 
 on:
     schedule:
-        -   cron: '0 * * * *'
+        -   cron: '0 21 * * *'
     workflow_dispatch:
         inputs:
             tags:
@@ -39,10 +39,10 @@ jobs:
 
             -   name: Start Tunnel
                 uses: LambdaTest/LambdaTest-tunnel-action@v2
-                tunnelName: "androidPytestTunnel"
                 with:
                     user: ${{secrets.LT_USERNAME}}
                     accessKey: ${{secrets.LT_ACCESS_KEY}}
+                    tunnelName: "androidPytestTunnel"
                     verbose: true
 
             -   name: Check out code
