@@ -1,4 +1,4 @@
-name: BS - Android App Tests
+name: LT - Android App Tests
 
 env:
     TAGS: "android_mobile_tests"
