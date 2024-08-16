@@ -41,7 +41,7 @@
       "dropdown_filter": "//label[text()='Offices']/select",
       "main_iframe": "//iframe[@id='grnhse_iframe']",
       "job_container": "//h2[@class='job-title']",
-      "job_title": "//h2[@class='job-title']/a[contains(text(),'{}')]",
+      "job_title": "//div[@class='gh-row gh-item shuffle-item shuffle-item--visible']//h2[@class='job-title']/a[contains(text(),'{}')]",
       "first_name": "//input[@id='first_name']",
       "last_name": "//input[@id='last_name']",
       "email": "//input[@id='email']",
