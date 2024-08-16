@@ -140,6 +140,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I move to element 'Modus_Site > Careers > dropdown_area'
     And The element 'Modus_Site > Careers > job_container' is clickable
     And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
+    And I pause for '5' s
     And I click item 'Bazel Engineer' for element 'Modus_Site > Careers > job_title'
     Then The page url contains 'com/careers/'
     When The element 'Modus_Site > Careers > main_iframe' is displayed

@@ -57,7 +57,7 @@ jobs:
   web-scheduled-regression:
     if: github.event_name == 'schedule'
     strategy:
-      max-parallel: 1
+      max-parallel: 3
       fail-fast: false
       matrix:
         include:
