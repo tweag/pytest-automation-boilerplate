@@ -1,0 +1,9 @@
+{
+  "capabilities": {
+    "platformName": "android",
+	"deviceName": "Galaxy S24 Ultra",
+	"platformVersion": "14",
+    "isRealMobile": "True",
+    "app": "lt://APP10160522261723794660137359"
+  }
+}
