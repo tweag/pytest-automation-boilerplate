@@ -1,0 +1,135 @@
+name: BS - Android App Tests
+
+env:
+    TAGS: "android_mobile_tests"
+    LT_USER: ${{secrets.LT_USERNAME}}
+    LT_ACCESS_KEY: ${{secrets.LT_ACCESS_KEY}}
+    USING_ENV: "LAMDATEST"
+
+on:
+    schedule:
+        -   cron: '0 * * * *'
+    workflow_dispatch:
+        inputs:
+            tags:
+                description: Gherkin Tags
+                required: true
+                default: android_mobile_tests
+
+jobs:
+    scheduled-regression:
+        if: github.event_name == 'schedule'
+        strategy:
+            max-parallel: 1
+            fail-fast: false
+            matrix:
+                include:
+                    -   name: Android Mobile
+                        tags: 'android_mobile_tests'
+                        config_file: ./env_configs/lamdatest/android_mobile_LT.json
+                        html_report: android-mobile
+
+        name: ${{ matrix.name }} - Regression
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Setup Python
+                uses: actions/setup-python@v5
+                with:
+                    python-version: "3.9"
+
+            -   name: Start Tunnel
+                uses: LambdaTest/LambdaTest-tunnel-action@v2
+                tunnelName: "androidPytestTunnel"
+                with:
+                    user: ${{secrets.LT_USERNAME}}
+                    accessKey: ${{secrets.LT_ACCESS_KEY}}
+                    verbose: true
+
+            -   name: Check out code
+                uses: actions/checkout@v4
+
+            -   name: Setup dependencies
+                run: |
+                    sh setup_install.sh
+
+            -   name: Run All Tests
+                run: |
+                    env
+                     source $HOME/.bp-venv/bin/activate
+
+                     python -m pytest -v --driver Appium --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@hub.lambdatest.com' \
+                      --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
+                      --html=report.html \
+                      --self-contained-html \
+
+            -   name: Upload HTML run report in the Artifacts Folder
+                uses: actions/upload-artifact@v4
+                with:
+                    name: ${{ matrix.html_report }}
+                    path: |
+                        ./*.html
+                        ./output/
+                        ./assets/
+                if: ${{ always() }}
+
+    manual-run:
+        if: github.event_name != 'schedule'
+        name: Manual - ${{ inputs.tags }}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Validate Input Parameter
+                id: validate_input
+                run: |
+                    if [[ -z "${{ github.event.inputs.tags }}" ]]; then
+                      echo "Invalid input: 'tags' is required but not provided."
+                      exit 1
+                    fi
+
+            -   name: Setup Python
+                id: setup_python
+                if: steps.validate_input.outcome == 'success'
+                uses: actions/setup-python@v5
+                with:
+                    python-version: "3.9"
+
+            -   name: Start Tunnel
+                uses: LambdaTest/LambdaTest-tunnel-action@v2
+                tunnelName: "androidPytestTunnel"
+                with:
+                    user: ${{secrets.LT_USERNAME}}
+                    accessKey: ${{secrets.LT_ACCESS_KEY}}
+                    verbose: true
+
+            -   name: Check out code
+                id: co_code
+                uses: actions/checkout@v4
+
+            -   name: Setup dependencies
+                id: setup_dependencies
+                if: steps.co_code.outcome == 'success'
+                run: |
+                    sh setup_install.sh
+
+            -   name: Run Manual Job Tests
+                id: run_manual_job
+                if: steps.setup_dependencies.outcome == 'success'
+                run: |
+                    TAGS="${{ github.event.inputs.tags }}"
+
+                    env
+                    source $HOME/.bp-venv/bin/activate
+                    python -m pytest -v --driver Appium \
+                      --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@hub.lambdatest.com' \
+                      --variables './env_configs/android_mobile_LT.json' \
+                      --tags="$TAGS" --html=report.html \
+                      --self-contained-html
+
+            -   name: Upload HTML run report in the Artifacts Folder
+                uses: actions/upload-artifact@v4
+                with:
+                    name: pytest-results
+                    path: |
+                        ./*.html
+                        ./output/
+                        ./assets/
+                if: ${{ always() }}

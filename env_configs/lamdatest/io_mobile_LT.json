@@ -1,0 +1,9 @@
+{
+  "capabilities": {
+	"platformName": "ios",
+	"deviceName": "iPhone 15 Plus",
+	"platformVersion": "17",
+    "isRealMobile": "True",
+    "app": "lt://APP10160522261723794660137359"
+  }
+}
