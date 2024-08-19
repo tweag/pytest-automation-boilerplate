@@ -1,6 +1,6 @@
 {
   "capabilities": {
-	"platformName": "ios",
+	"platformName": "iOS",
 	"deviceName": "iPhone 15 Plus",
 	"platformVersion": "17",
     "isRealMobile": "True",
