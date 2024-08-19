@@ -280,6 +280,29 @@ def configure_driver_executor(session_capabilities, driver_options_factory):
 
         appium.driver_kwargs = driver_kwargs
 
+    elif os.environ.get("USING_ENV", "") == 'LAMDATEST' and session_capabilities.get("platformName", "").lower() in (
+            "android", "ios"):
+        value, options = driver_options_factory
+
+        for k, v in session_capabilities.items():
+            options.set_capability(k, v)
+
+        def driver_kwargs(capabilities, host, port, **kwargs):  # noqa
+            _ = capabilities
+            if value in ("chrome", "edge", "firefox"):
+                browser_options = kwargs.get(f"{value}_options", None)
+                browser_options_arguments = getattr(browser_options, "arguments", [])
+                browser_options_capabilities = getattr(browser_options, "capabilities", {})
+                options.capabilities.update(browser_options_capabilities)
+                options.arguments.extend([x for x in browser_options_arguments if x not in options.arguments])
+
+            executor = f"https://{host}/wd/hub"
+            kwargs = {"command_executor": executor, "options": options}
+
+            return kwargs
+
+        appium.driver_kwargs = driver_kwargs
+
     # To pass options for local Android and iOS test executions
     elif session_capabilities.get("platformName", "").lower() in ("android", "ios"):
         value, options = driver_options_factory
