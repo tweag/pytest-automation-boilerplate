@@ -8,7 +8,7 @@ env:
 
 on:
     schedule:
-        -   cron: '0 19 * * *'
+        -   cron: '30 20 * * *'
     workflow_dispatch:
         inputs:
             tags:
@@ -57,7 +57,7 @@ jobs:
                     env
                      source $HOME/.bp-venv/bin/activate
 
-                     python -m pytest -v --driver Appium --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@hub.lambdatest.com' \
+                     python -m pytest -v --driver Appium --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@mobile-hub.lambdatest.com' \
                       --variables ${{ matrix.config_file }} --tags="${{ matrix.tags }}" \
                       --html=report.html \
                       --self-contained-html \
@@ -119,7 +119,7 @@ jobs:
                     env
                     source $HOME/.bp-venv/bin/activate
                     python -m pytest -v --driver Appium \
-                      --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@hub.lambdatest.com' \
+                      --selenium-host '${{secrets.LT_USERNAME}}:${{secrets.LT_ACCESS_KEY}}@mobile-hub.lambdatest.com' \
                       --variables './env_configs/lamdatest/ios_mobile_LT.json' \
                       --tags="$TAGS" --html=report.html \
                       --self-contained-html
