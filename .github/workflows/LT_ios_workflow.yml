@@ -14,7 +14,7 @@ on:
             tags:
                 description: Gherkin Tags
                 required: true
-                default: android_mobile_tests
+                default: ios_mobile_tests
 
 jobs:
     scheduled-regression:
@@ -25,7 +25,7 @@ jobs:
             matrix:
                 include:
                     -   name: IOS Mobile
-                        tags: 'android_mobile_tests'
+                        tags: 'ios_mobile_tests'
                         config_file: ./env_configs/lamdatest/ios_mobile_LT.json
                         html_report: ios-mobile
 
@@ -42,7 +42,7 @@ jobs:
                 with:
                     user: ${{secrets.LT_USERNAME}}
                     accessKey: ${{secrets.LT_ACCESS_KEY}}
-                    tunnelName: "androidPytestTunnel"
+                    tunnelName: "iosPytestTunnel"
                     verbose: true
 
             -   name: Check out code
