@@ -6,7 +6,7 @@ requests == 2.32.3
 Pillow == 10.3.0
 beautifulsoup4 == 4.11.0
 polling == 0.3.0
-opencv-python == 4.5.5.64
+opencv-python == 4.8.1.78
 pymsteams == 0.2.2
 
 
