@@ -66,7 +66,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     When The element 'Modus_Site > main_heading' is displayed
     And I click item 'BLOG' for element 'Modus_Site > header_link'
     And The title is 'Blog | Digital Transformation Insights - Modus Create'
-    When The element 'Modus_Site > dropdown' is displayed
+    When The element 'Modus_Site > search_bar' is displayed
 #   Dropdown has some specific values now so can't select
 #   And I select the option 'quality-assurance' by value for element 'Modus_Site > dropdown'
     And I pause for '5' s
