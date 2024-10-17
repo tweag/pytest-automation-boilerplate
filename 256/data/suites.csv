@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Oct 17 21:03:17 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","121","","","","","","Test UPDATE call [put_payload_1.json]",""
+"passed","Thu Oct 17 21:03:16 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","136","","","","","","Test POST Call [post_payload_1.json]",""
+"passed","Thu Oct 17 21:03:16 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","177","","","","","","Test POST Call [post_payload_2.json]",""
+"passed","Thu Oct 17 21:03:16 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","78","","","","","","Test GET Call",""
+"passed","Thu Oct 17 21:03:17 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","55","","","","","","Test DELETE Call",""
+"passed","Thu Oct 17 21:03:17 GMT 2024","Thu Oct 17 21:03:17 GMT 2024","90","","","","","","Test UPDATE call [put_payload_2.json]",""
