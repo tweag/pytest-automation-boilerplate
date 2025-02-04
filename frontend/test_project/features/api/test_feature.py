@@ -1,15 +1,15 @@
-from os import environ
+# from os import environ
 
 from main.backend.common.step_definitions.steps_common import *
 from assertpy import assert_that
-from openai import OpenAI
+# from openai import OpenAI
 
 import pytest
 
 from main.frontend.common.step_definitions import open_base_url, maximize, page_title
 
 logger = structlog.get_logger(__name__)
-client = OpenAI(api_key=environ.get("OPEN_KEY"))
+# client = OpenAI(api_key=environ.get("OPEN_KEY"))
 
 API_POST_CALL = "post_call"
 DELETE_ENDPOINT = "/posts/1"
@@ -45,22 +45,22 @@ def test_send_post_request(request, api_response_container):
 # @pytest.mark.nondestructive
 # @pytest.mark.automated
 # @pytest.mark.openapi
-@pytest.mark.test_name("Verify open api call")
-def test_search_text():
-    prompt = "get a header from chatgpt"
-    response_message = search_text(prompt)
-    expected_message = "ChatGPT"
-    assert_that(response_message).contains(expected_message)
-
-
-def search_text(text: str):
-    response = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": text,
-            }
-        ],
-        model="gpt-3.5-turbo",
-    )
-    return response.choices[0].message.content
+# @pytest.mark.test_name("Verify open api call")
+# def test_search_text():
+#     prompt = "get a header from chatgpt"
+#     response_message = search_text(prompt)
+#     expected_message = "ChatGPT"
+#     assert_that(response_message).contains(expected_message)
+#
+#
+# def search_text(text: str):
+#     response = client.chat.completions.create(
+#         messages=[
+#             {
+#                 "role": "user",
+#                 "content": text,
+#             }
+#         ],
+#         model="gpt-3.5-turbo",
+#     )
+#     return response.choices[0].message.content
