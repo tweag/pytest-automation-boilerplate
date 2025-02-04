@@ -16,10 +16,10 @@ DELETE_ENDPOINT = "/posts/1"
 POST_ENDPOINT = "/posts"
 
 
-@pytest.mark.nondestructive
-@pytest.mark.automated
-@pytest.mark.api
-@pytest.mark.apitest
+# @pytest.mark.nondestructive
+# @pytest.mark.automated
+# @pytest.mark.api
+# @pytest.mark.apitest
 @pytest.mark.test_name("Verify post call")
 def test_send_post_request(request, api_response_container):
     logger.info(
