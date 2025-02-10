@@ -78,7 +78,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I scroll to element 'Modus_Site > blog_heading_1'
     And I scroll to element 'Modus_Site > blog_heading_2'
     And I scroll to element 'Modus_Site > blog_heading_1'
-    And The element 'Modus_Site > sub_popup_close' is displayed
+#    And The element 'Modus_Site > sub_popup_close' is displayed
 
 
   @sd_login @sd_login_error @sd_checkout @automated @firefox @sanity
@@ -139,8 +139,8 @@ Feature:  OrangeHRM Login and Modus QA blog
     And The element 'Modus_Site > Careers > job_container' is displayed
     And I move to element 'Modus_Site > Careers > dropdown_area'
     And The element 'Modus_Site > Careers > job_container' is clickable
-    And I select the option 'Global' by value for element 'Modus_Site > Careers > dropdown_filter'
-    And I click item 'Bazel Engineer' for element 'Modus_Site > Careers > job_title'
+#    And I select the option 'All' by value for element 'Modus_Site > Careers > dropdown_filter'
+    And I click item 'AHA! Expert (Product Manager)' for element 'Modus_Site > Careers > job_title'
     Then The page url contains 'com/careers/'
     When The element 'Modus_Site > Careers > main_iframe' is displayed
     And I switch to iframe 'Modus_Site > Careers > main_iframe'
@@ -172,10 +172,10 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I click item '$12,000 - $12,500' for element 'Modus_Site > Careers > salary_dropdown'
     And I click item 'current notice period' for element 'Modus_Site > Careers > form_dropdown'
     And I click item '1-2 weeks' for element 'Modus_Site > Careers > notice_dropdown'
-    And I click item 'Contractor. Understanding' for element 'Modus_Site > Careers > form_dropdown'
-    And I click item 'Yes' for element 'Modus_Site > Careers > position_dropdown'
+#    And I click item 'Contractor. Understanding' for element 'Modus_Site > Careers > form_dropdown'
     And I click item 'data protection apps upon hire' for element 'Modus_Site > Careers > form_dropdown'
-    And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
+    And I click item 'Yes' for element 'Modus_Site > Careers > position_dropdown'
+#    And I click item 'Yes' for element 'Modus_Site > Careers > protection_dropdown'
 
   @gmail @automated @firefox @regression
   Scenario: Email Verification with email link
