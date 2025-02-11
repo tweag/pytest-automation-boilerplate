@@ -8,8 +8,8 @@ env:
 
 
 on:
-    schedule:
-        -   cron: '0 22 * * *'
+#    schedule:
+#        -   cron: '0 22 * * *'
     workflow_dispatch:
         inputs:
             tags:
