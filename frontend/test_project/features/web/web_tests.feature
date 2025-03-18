@@ -140,7 +140,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I move to element 'Modus_Site > Careers > dropdown_area'
     And The element 'Modus_Site > Careers > job_container' is clickable
 #    And I select the option 'All' by value for element 'Modus_Site > Careers > dropdown_filter'
-    And I click item 'AHA! Expert (Product Manager)' for element 'Modus_Site > Careers > job_title'
+    And I click item 'AHA Expert! (Product Manager)' for element 'Modus_Site > Careers > job_title'
     Then The page url contains 'com/careers/'
     When The element 'Modus_Site > Careers > main_iframe' is displayed
     And I switch to iframe 'Modus_Site > Careers > main_iframe'
