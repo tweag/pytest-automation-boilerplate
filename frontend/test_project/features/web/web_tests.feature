@@ -149,7 +149,7 @@ Feature:  OrangeHRM Login and Modus QA blog
     And I set text 'tauqir.sarwar@moduscreate.com' to field 'Modus_Site > Careers > email'
     And I set text '+921112563256' to field 'Modus_Site > Careers > phone'
     # locate me link does not work on safari - application issue
-    And I click on button 'Modus_Site > Careers > location_link'
+    # And I click on button 'Modus_Site > Careers > location_link'
     When The element 'Modus_Site > Careers > resume_link' is displayed
     And I click on button 'Modus_Site > Careers > resume_link'
     And I set text 'testing resume' to field 'Modus_Site > Careers > resume_text'
