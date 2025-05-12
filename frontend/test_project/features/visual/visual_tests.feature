@@ -30,7 +30,7 @@ Feature:  OrangeHRM Visual Tests
     Scenario: Check QA modus blog design
         Given I set web base url 'https://moduscreate.com'
         And The browser resolution is '1024' per '768'
-        And The title is 'Modus Create | Digital Product Engineering Partner'
+        And The title is 'Modus Create | AI, meet ROI.'
         When The element 'Modus_Site > main_heading' is displayed
         And I click item 'Blog' for element 'Modus_Site > header_link'
         And The title is 'Blog | Digital Transformation Insights - Modus Create'
