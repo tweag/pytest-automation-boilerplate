@@ -27,7 +27,7 @@
   "Modus_Site": {
     "header_link": "//ul[@class='brex-mega-menu']//a[normalize-space()='{}']",
     "jobs_link": "//p/a[contains(text(),'Careers')]",
-    "main_heading": "//span[normalize-space()='World-Class Product Engineering Partner']",
+    "main_heading": "//p[normalize-space()='Modus Create helps global brands translate AI and other next-gen technologies into lasting returns, setting industry standards along the way.']",
     "dropdown": "//select[@class='facetwp-dropdown']",
     "search_bar": "//input[@placeholder='Search']",
     "search_icon": "//i[@class='facetwp-icon']",
